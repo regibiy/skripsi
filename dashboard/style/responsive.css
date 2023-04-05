@@ -1,9 +1,14 @@
+/* responsive tablet */
 @media (max-width: 1000px) {
   #menu {
     width: 270px;
     position: fixed;
     left: -270px;
     transition: 0.3s ease;
+  }
+
+  #menu .logo {
+    padding: 30px 15px 0 15px;
   }
 
   #menu .items .out {
@@ -57,6 +62,7 @@
   }
 }
 
+/* responsive smartphone */
 @media (max-width: 670px) {
   #interface .navbar {
     padding: 15px;
@@ -84,6 +90,7 @@
   }
 }
 
+/* responsive big device */
 @media (min-width: 1537px) {
   .board {
     width: 96.3%;

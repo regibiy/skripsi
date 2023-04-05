@@ -100,7 +100,7 @@ body {
   justify-content: space-between;
   background-color: #fff;
   padding: 15px 30px;
-  border-bottom: 3px solid #594ef7;
+  border-bottom: 3px solid #2cc185;
   position: fixed;
   width: calc(100% - 300px);
 }

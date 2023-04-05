@@ -18,27 +18,27 @@
 
     <section id="menu">
         <div class="logo">
-            <img src="../assets/images/logo.png" alt="logo puskesmas">
-            <h2>Dynamic</h2>
+            <img src="../assets/images/logo-upt.png" alt="logo puskesmas">
+            <h4>Puskesmas Alianyang</h4>
         </div>
         <div class="items">
             <li>
                 <i class="fa-solid fa-chart-pie"><a href="#">Dasbor</a></i>
             </li>
             <li>
-                <i class="fa-brands fa-uikit"><a href="#">Kegiatan</a></i>
+                <i class="fa-solid fa-chart-line"><a href="#">Kegiatan</a></i>
             </li>
             <li>
                 <i class="fa-solid fa-table"><a href="#">Poli</a></i>
             </li>
             <li>
-                <i class="fa-brands fa-cc-visa"><a href="#">Laporan</a></i>
+                <i class="fa-solid fa-file-csv"><a href="#">Laporan</a></i>
             </li>
             <li>
-                <i class="fa-solid fa-burger"><a href="#">Petugas</a></i>
+                <i class="fa-regular fa-user"><a href="#">Petugas</a></i>
             </li>
             <li class="out">
-                <i class="fa-solid fa-chart-line"><a href="#">Keluar</a></i>
+                <i class="fa-solid fa-right-from-bracket"><a href="#">Keluar</a></i>
             </li>
         </div>
     </section>
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="navbar-right">
-                <i class="fa-regular fa-bell"></i>
+                <!-- <i class="fa-regular fa-bell"></i> -->
                 <img src="../assets/images/1.jpg" alt="foto profil">
             </div>
         </div>
