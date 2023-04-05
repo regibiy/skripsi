@@ -47,12 +47,6 @@ body {
   transition: 0.3s ease;
 }
 
-#menu .items .out {
-  position: fixed;
-  bottom: 0;
-  width: 300px;
-}
-
 #menu .items li:hover {
   background-color: #253047;
   cursor: pointer;

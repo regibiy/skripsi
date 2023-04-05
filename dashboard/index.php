@@ -37,7 +37,7 @@
             <li>
                 <i class="fa-regular fa-user"><a href="#">Petugas</a></i>
             </li>
-            <li class="out">
+            <li>
                 <i class="fa-solid fa-right-from-bracket"><a href="#">Keluar</a></i>
             </li>
         </div>
