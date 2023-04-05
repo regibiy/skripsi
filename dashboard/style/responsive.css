@@ -6,6 +6,10 @@
     transition: 0.3s ease;
   }
 
+  #menu .items .out {
+    width: 270px;
+  }
+
   #menu.active {
     left: 0px;
   }

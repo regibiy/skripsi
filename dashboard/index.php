@@ -9,8 +9,8 @@
     <title>Dasbor</title>
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/responsive.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" /> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
@@ -26,22 +26,19 @@
                 <i class="fa-solid fa-chart-pie"><a href="#">Dasbor</a></i>
             </li>
             <li>
-                <i class="fa-brands fa-uikit"><a href="#">Elemen</a></i>
+                <i class="fa-brands fa-uikit"><a href="#">Kegiatan</a></i>
             </li>
             <li>
-                <i class="fa-solid fa-table"><a href="#">Tabel</a></i>
+                <i class="fa-solid fa-table"><a href="#">Poli</a></i>
             </li>
             <li>
-                <i class="fa-brands fa-wpforms"><a href="#">Formulir</a></i>
+                <i class="fa-brands fa-cc-visa"><a href="#">Laporan</a></i>
             </li>
             <li>
-                <i class="fa-brands fa-cc-visa"><a href="#">Kartu</a></i>
+                <i class="fa-solid fa-burger"><a href="#">Petugas</a></i>
             </li>
-            <li>
-                <i class="fa-solid fa-burger"><a href="#">Modal</a></i>
-            </li>
-            <li>
-                <i class="fa-solid fa-chart-line"><a href="#">Blank</a></i>
+            <li class="out">
+                <i class="fa-solid fa-chart-line"><a href="#">Keluar</a></i>
             </li>
         </div>
     </section>
@@ -283,11 +280,7 @@
     </section>
 
     <!-- interface end -->
-    <script>
-        $('#menu-button').click(function() {
-            $('#menu').toggleClass("active");
-        })
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
