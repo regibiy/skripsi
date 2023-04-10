@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rekam Medis</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .wrapper {
+      border: 0.1rem solid #000;
+      width: 90%;
+      padding: 0.3rem;
+      margin: 0.5rem;
+    }
+
+    .wrapper .top-info {
+      text-align: end;
+    }
+
+    .wrapper .info-pasien {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .wrapper .info-pasien div:nth-child(1) {
+      width: 50%;
+    }
+
+    .wrapper .info-pasien div:nth-child(2) {
+      width: 50%;
+    }
+  </style>
+  <body>
+    <div class="wrapper">
+      <p class="top-info">No Rekam Medis: xxxxxxxx</p>
+      <p>LEMBAR REKAM MEDIS PASIEN</p>
+      <hr />
+      <div class="info-pasien">
+        <div class="left">
+          <p>Nama : xxxxxxxxxx</p>
+          <p>Tanggal Lahir : xxxxxxxxxx</p>
+          <p>Jenis Kelamin : L/P</p>
+          <p>Pekerjaan : xxxxxxxx</p>
+          <p>Alamat : xxxxxxxx</p>
+        </div>
+        <div class="right">
+          <p>Umum/BPJS : xxxxxxxxxx</p>
+          <p>No. KTP : xxxxxxxxxx</p>
+          <p>Nama KK : xxxxxxxxxx</p>
+          <p>Tanggal Masuk : xxxxxxxxxx</p>
+          <p>Riwayat Alergi Obat : xxxxxxxxxx</p>
+          <p>Telp/HP : xxxxxxxxxx</p>
+        </div>
+      </div>
+      <table border="1" style="border-collapse: collapse" width="100%">
+        <tr>
+          <th>Tanggal</th>
+          <th>Pemeriksaan Subjektif</th>
+          <th>Pemeriksaan Objektif</th>
+          <th>Diagnosa / Kode Diagnosa</th>
+          <th colspan="2">Tata Laksana</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <p style="padding-bottom: 2rem">Keluhan Utama :</p>
+            <p style="padding-bottom: 4rem">RPS :</p>
+            <p style="padding-bottom: 4rem">RPD :</p>
+            <p style="padding-bottom: 4rem">RPK :</p>
+            <p style="padding-bottom: 3rem">
+              kebutuhan biologis <br />
+              psikologis social <br />spiritual dan tata <br />nilai
+            </p>
+          </td>
+          <td style="vertical-align: top">
+            <p>KU</p>
+            <p>Kes</p>
+            <p>TTV</p>
+            <p>TD: <span>RR:</span></p>
+            <p>Antropometri</p>
+            <p>BB: <span>TB:</span></p>
+            <p style="padding-top: 1rem; padding-bottom: 5rem">Pemeriksaan Fisik</p>
+            <p>Pemeriksaan Penunjang :</p>
+          </td>
+          <td style="vertical-align: top">
+            <p style="padding-bottom: 10rem">ICD X:</p>
+            <hr />
+            <p style="padding-bottom: 5rem">
+              Diagnosa <br />
+              Keperawatan
+            </p>
+            <p>
+              ICD IX <br />
+              (Kode CA)
+            </p>
+          </td>
+          <td style="vertical-align: top">
+            <table>
+              <tr>
+                <td style="border-right: 1px solid black">
+                  <p style="padding-bottom: 12rem">R/</p>
+                  <table border="1" style="border-collapse: collapse; width: 100%">
+                    <tr>
+                      <th>Jenis Edukasi</th>
+                      <th>Paraf Pasien</th>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                    </tr>
+                    <tr>
+                      <td>4 ESO</td>
+                    </tr>
+                  </table>
+                </td>
+                <td>
+                  <p style="padding-bottom: 5rem">Asuhan Paramedis</p>
+                  <p>Rujukan Internal</p>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" style="border-top: 1px solid black">
+                  <p style="padding-bottom: 4rem">Rujukan eksternal</p>
+                  <p style="text-align: end">Paraf Petugas</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
