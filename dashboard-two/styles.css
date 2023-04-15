@@ -1,0 +1,180 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+  --main-bg-color: #e5e7eb;
+  --main-text-color: #fff;
+  --second-text-color: #bbbec5;
+  --second-bg-color: #c1efde;
+  --bg-blue: #111827;
+  --danger-text-color: #dc3545;
+  --bg-register: #7b74ec;
+  --bg-patient: #5c8af0;
+  --bg-polyrooms: #e45d99;
+  --bg-activity: #74daec;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.primary-text {
+  color: var(--main-text-color);
+}
+
+.second-text {
+  color: var(--second-text-color);
+}
+
+.danger-text {
+  color: var(--danger-text-color);
+}
+
+.primary-bg {
+  background-color: var(--main-bg-color);
+}
+
+.secondary-bg {
+  background-color: var(--second-bg-color);
+}
+
+/* awal kustom saya untuk warna sidebar */
+.bg-blue {
+  background-color: var(--bg-blue);
+}
+/* akhir kustom saya untuk warna sidebar */
+
+.rounded-full {
+  border-radius: 100%;
+}
+
+#wrapper {
+  overflow-x: hidden;
+  background-color: var(--main-bg-color);
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -19rem;
+  -webkit-transition: margin 0.25s ease-out;
+  -moz-transition: margin 0.25s ease-out;
+  -o-transition: margin 0.25s ease-out;
+  transition: margin 0.25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 18.72rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+  margin-left: 18.5rem;
+}
+
+.my-margin-left {
+  margin-left: 18.7rem;
+}
+
+/* awal jarak antara navbar */
+
+.container-fluid {
+  padding-top: 5.5rem;
+}
+
+/* akhir jarak antara navbar */
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+/* awal kustom saya untuk mengatur ukuran logo di sidebar */
+.img-logo {
+  width: 40px;
+}
+/* akhir kustom saya untuk mengatur ukuran logo di sidebar */
+
+/* awal kustom saya untuk hover list yang ada di sidebar */
+.my-list-group-item-action:hover {
+  cursor: pointer;
+  color: var(--main-text-color);
+}
+
+.my-list-group-item-action-out:hover {
+  cursor: pointer;
+  color: var(--danger-text-color);
+}
+/* akhir kustom saya untuk hover list yang ada di sidebar */
+
+#menu-toggle {
+  cursor: pointer;
+  display: none;
+}
+
+.list-group-item {
+  border: none;
+  padding: 20px 30px;
+  display: inline-flex;
+}
+
+.list-group-item.active {
+  background-color: transparent;
+  color: var(--main-text-color);
+  font-weight: bold;
+  border: none;
+  display: inline-flex;
+  border-left: 0.3rem solid var(--main-text-color);
+}
+
+/* awal style search box */
+.search::placeholder {
+  text-transform: capitalize;
+}
+/* akhir style search box */
+
+/* awal style navbar */
+.navbar {
+  border-bottom: 0.3rem solid #2cc185;
+}
+/* akhir style navbar */
+
+/* awal main content dashboard */
+.bg-icon {
+  height: 3rem;
+  width: 3rem;
+}
+
+.regist {
+  background-color: var(--bg-register);
+}
+
+.patient {
+  background-color: var(--bg-patient);
+}
+
+.poly {
+  background-color: var(--bg-polyrooms);
+}
+
+.activity {
+  background-color: var(--bg-activity);
+}
+/* akhir main content dashboard */
+
+/* awal tabel dashboard */
+.action a {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.action a:nth-child(1) {
+  padding-right: 0.5rem;
+}
+
+.action a:nth-child(2) {
+  padding-left: 0.5rem;
+}
+/* akhir tabel dashbord */

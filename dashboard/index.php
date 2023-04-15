@@ -271,6 +271,138 @@
                             <a href="#">Edit</a>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="people">
+                            <img src="../assets/images/3.jpg" alt="foto user">
+                            <div class="people-descript">
+                                <h5>Lorem, ipsum.</h5>
+                                <p>example.domain.com</p>
+                            </div>
+                        </td>
+                        <td class="people-des">
+                            <h5>Lorem, ipsum.</h5>
+                            <p>Lorem, ipsum.</p>
+                        </td>
+                        <td class="active">
+                            <p>Active</p>
+                        </td>
+                        <td class="role">
+                            <p>Lorem, ipsum.</p>
+                        </td>
+                        <td class="edit">
+                            <a href="#">Edit</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="people">
+                            <img src="../assets/images/3.jpg" alt="foto user">
+                            <div class="people-descript">
+                                <h5>Lorem, ipsum.</h5>
+                                <p>example.domain.com</p>
+                            </div>
+                        </td>
+                        <td class="people-des">
+                            <h5>Lorem, ipsum.</h5>
+                            <p>Lorem, ipsum.</p>
+                        </td>
+                        <td class="active">
+                            <p>Active</p>
+                        </td>
+                        <td class="role">
+                            <p>Lorem, ipsum.</p>
+                        </td>
+                        <td class="edit">
+                            <a href="#">Edit</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="people">
+                            <img src="../assets/images/3.jpg" alt="foto user">
+                            <div class="people-descript">
+                                <h5>Lorem, ipsum.</h5>
+                                <p>example.domain.com</p>
+                            </div>
+                        </td>
+                        <td class="people-des">
+                            <h5>Lorem, ipsum.</h5>
+                            <p>Lorem, ipsum.</p>
+                        </td>
+                        <td class="active">
+                            <p>Active</p>
+                        </td>
+                        <td class="role">
+                            <p>Lorem, ipsum.</p>
+                        </td>
+                        <td class="edit">
+                            <a href="#">Edit</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="people">
+                            <img src="../assets/images/3.jpg" alt="foto user">
+                            <div class="people-descript">
+                                <h5>Lorem, ipsum.</h5>
+                                <p>example.domain.com</p>
+                            </div>
+                        </td>
+                        <td class="people-des">
+                            <h5>Lorem, ipsum.</h5>
+                            <p>Lorem, ipsum.</p>
+                        </td>
+                        <td class="active">
+                            <p>Active</p>
+                        </td>
+                        <td class="role">
+                            <p>Lorem, ipsum.</p>
+                        </td>
+                        <td class="edit">
+                            <a href="#">Edit</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="people">
+                            <img src="../assets/images/3.jpg" alt="foto user">
+                            <div class="people-descript">
+                                <h5>Lorem, ipsum.</h5>
+                                <p>example.domain.com</p>
+                            </div>
+                        </td>
+                        <td class="people-des">
+                            <h5>Lorem, ipsum.</h5>
+                            <p>Lorem, ipsum.</p>
+                        </td>
+                        <td class="active">
+                            <p>Active</p>
+                        </td>
+                        <td class="role">
+                            <p>Lorem, ipsum.</p>
+                        </td>
+                        <td class="edit">
+                            <a href="#">Edit</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="people">
+                            <img src="../assets/images/3.jpg" alt="foto user">
+                            <div class="people-descript">
+                                <h5>Lorem, ipsum.</h5>
+                                <p>example.domain.com</p>
+                            </div>
+                        </td>
+                        <td class="people-des">
+                            <h5>Lorem, ipsum.</h5>
+                            <p>Lorem, ipsum.</p>
+                        </td>
+                        <td class="active">
+                            <p>Active</p>
+                        </td>
+                        <td class="role">
+                            <p>Lorem, ipsum.</p>
+                        </td>
+                        <td class="edit">
+                            <a href="#">Edit</a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

@@ -1,0 +1,38 @@
+@media (min-width: 1000px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -19rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  #menu-toggle {
+    display: initial;
+  }
+
+  #page-content-wrapper {
+    margin-left: 0;
+  }
+
+  .search {
+    width: 100% !important;
+  }
+
+  .my-margin-left {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  #page-content-wrapper .navbar .d-flex input[type="text"] {
+    width: 50% !important;
+  }
+}
