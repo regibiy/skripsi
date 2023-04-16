@@ -1,6 +1,6 @@
 // menu-button starts
 
-// toggle class active, toggle = jika sebelumnya tidak ada jadi ada, jiak sebelumnya ada jadi tidak ada
+// toggle class active, toggle = jika sebelumnya tidak ada jadi ada, jika sebelumnya ada jadi tidak ada
 const menu = document.querySelector("#wrapper");
 const sidebar = document.querySelector("#sidebar-wrapper");
 // ketika humberger menu diklik
