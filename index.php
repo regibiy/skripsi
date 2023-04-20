@@ -17,14 +17,14 @@
 <body>
     <!-- header starts -->
     <div class="my-order fixed-top">
-        <nav class="navbar navbar-expand-md top-infos" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-md top-infos bg-dark" data-bs-theme="dark">
             <div class="container-fluid d-flex justify-content-center flex-wrap top-info">
                 <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContentTop">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContentTop">
-                    <p class="d-inline-flex align-items-center mb-0 me-3 fw-light"><span class="material-symbols-sharp me-1">calendar_month</span>Senin, d-m</p>
-                    <p class="d-inline-flex align-items-center mb-0 me-3 fw-light"><span class="material-symbols-sharp me-1">schedule</span>Tutup dalam 30 menit</p>
+                    <p id="tanggal" class="d-inline-flex align-items-center mb-0 me-3 fw-light"><span class="material-symbols-sharp me-1 tanggal">calendar_month</span></p>
+                    <p id="timer" class="d-inline-flex align-items-center mb-0 me-3 fw-light"><span class="material-symbols-sharp me-1 timer">schedule</span></p>
                     <p class="d-inline-flex align-items-center mb-0 fw-light"><span class="material-symbols-sharp me-1">mail</span>alianyang.pnkkota@gmail.com</p>
                 </div>
             </div>
@@ -91,7 +91,7 @@
     <span id="informasi"></span>
     <div class="container my-4">
         <h2 class="fs-4 mb-4 text-center text-dark-emphasis">Informasi Kegiatan</h2>
-        <div class="informs">
+        <div class="informs d-flex flex-column align-items-center">
             <div class="inform d-flex flex-wrap justify-content-evenly align-items-center mb-3">
                 <div class="inform-img">
                     <img src="assets/images/1.jpg" alt="information image" class="img-fluid rounded" />
@@ -117,31 +117,7 @@
                 </div>
             </div>
             <div class="inform d-flex flex-wrap justify-content-evenly align-items-center mb-3">
-                <div class="inform-img">
-                    <img src="assets/images/1.jpg" alt="information image" class="img-fluid rounded" />
-                </div>
-                <div class="inform-body">
-                    <h2 class="mb-2 mt-3 fs-4 text-dark-emphasis">Praktik Dokter Spesialis Anak</h2>
-                    <p class="text-secondary">Ibu pintar, yuk konsultasikan tumbuh kembang dan kesehatan si buah hati anda. Kuota terbatas yaa.</p>
-                    <p class="text-secondary">Hari : Senin, 10 April 2023</p>
-                    <p class="text-secondary">Jam : 9AM sampai selesai</p>
-                    <p class="text-secondary">Dokter : dr. Rosyadi Akbari M.Sc.Sp.A</p>
-                </div>
-            </div>
-            <div class="inform d-flex flex-wrap justify-content-evenly align-items-center mb-3">
-                <div class="inform-img">
-                    <img src="assets/images/1.jpg" alt="information image" class="img-fluid rounded" />
-                </div>
-                <div class="inform-body">
-                    <h2 class="mb-2 mt-3 fs-4 text-dark-emphasis">Praktik Dokter Spesialis Anak</h2>
-                    <p class="text-secondary">Ibu pintar, yuk konsultasikan tumbuh kembang dan kesehatan si buah hati anda. Kuota terbatas yaa.</p>
-                    <p class="text-secondary">Hari : Senin, 10 April 2023</p>
-                    <p class="text-secondary">Jam : 9AM sampai selesai</p>
-                    <p class="text-secondary">Dokter : dr. Rosyadi Akbari M.Sc.Sp.A</p>
-                </div>
-            </div>
-            <div class="inform d-flex flex-wrap justify-content-evenly align-items-center mb-3">
-                <div class="inform-img">
+                <div class="inform-img text-end">
                     <img src="assets/images/1.jpg" alt="information image" class="img-fluid rounded" />
                 </div>
                 <div class="inform-body">
@@ -159,7 +135,7 @@
 
     <!-- footer starts -->
     <footer class="bg-dark py-5">
-        <div class="container d-flex flex-wrap justify-content-between align-items-start text-white">
+        <div class="container d-flex flex-wrap justify-content-md-evenly justify-content-sm-start align-items-start text-white">
             <div>
                 <img src="assets/images/logo-upt.png" alt="puskesmas's logo" class="img-fluid">
                 <img src="assets/images/logo.png" alt="goverment's logo" class="img-fluid">
@@ -171,9 +147,7 @@
             <div>
                 <p class="mb-0">Media Sosial Puskesmas</p>
                 <p class="mb-0"><i class="fa-brands fa-facebook"></i> Puskesmas Alianayang</p>
-                <p class="mb-0"><i class="fa-brands fa-instagram"></i> puskesmas_alianyangptk</p>
-            </div>
-            <div>
+                <p><i class="fa-brands fa-instagram"></i> puskesmas_alianyangptk</p>
                 <p class="mb-0">Link Navigasi</p>
                 <a href="#" class="text-decoration-none text-white d-block">Beranda</a>
                 <a href="#daftar" class="text-decoration-none text-white d-block">Pendaftaran</a>

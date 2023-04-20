@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 :root {
-  --bg-dark: #323232;
   --bg-green: #2cc185;
   --color-hover: #545454;
   --bg-body: #f4f4f4;
@@ -19,7 +18,6 @@
 }
 
 .top-infos {
-  background-color: var(--bg-dark);
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -55,12 +53,16 @@
 /* main ends */
 
 /* body starts */
-.reverse {
-  flex-direction: row-reverse;
+.inform {
+  width: 75vw;
+}
+
+.inform-img {
+  width: 30rem;
 }
 
 .inform-img img {
-  width: 30rem;
+  width: 20rem;
 }
 
 .inform .inform-body {
@@ -69,6 +71,14 @@
 
 .informs .inform:nth-child(even) {
   flex-direction: row-reverse;
+}
+
+.informs .inform:nth-child(even) .inform-body:nth-child(even) {
+  text-align: end;
+}
+
+.informs .inform:nth-child(odd) .inform-img:nth-child(odd) {
+  text-align: end;
 }
 /* body ends */
 
