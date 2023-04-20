@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- class yang dimulai dari my-, adalah style css manual -->
 
 <head>
     <meta charset="UTF-8">
@@ -8,13 +9,15 @@
     <title>UPT Puskesmas Alianyang</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="responsive.css">
 </head>
 
 <body>
-    <div class="my-order">
-        <nav class="navbar navbar-expand-lg top-infos" data-bs-theme="dark">
+    <!-- header starts -->
+    <div class="my-order fixed-top">
+        <nav class="navbar navbar-expand-md top-infos" data-bs-theme="dark">
             <div class="container-fluid d-flex justify-content-center flex-wrap top-info">
                 <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContentTop">
                     <span class="navbar-toggler-icon"></span>
@@ -27,7 +30,7 @@
             </div>
         </nav>
 
-        <nav class="navbar navbar-expand-lg header" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-md header" data-bs-theme="dark">
             <div class="container">
                 <div>
                     <img src="assets/images/logo-upt.png" alt="Puskesmas's logo" width="42">
@@ -37,7 +40,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav ms-auto mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link text-white" href="#">Beranda</a>
                         </li>
@@ -45,28 +48,142 @@
                             <a class="nav-link text-white" href="#">Pendaftaran</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Masuk</a>
+                            <a class="nav-link text-white" href="#informasi">Informasi</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </div>
-
     <!-- header ends -->
-    <!-- <header class="container-fluid header">
-        <div class="container d-flex justify-content-between align-items-center py-2">
-            <div class="left-header">
-                <img src="assets/images/logo-upt.png" alt="Logo Puskesmas" width="42">
-                <a href="#" class="text-black text-decoration-none text-white fw-medium">Puskesmas Alianyang</a>
+
+    <!-- main starts -->
+    <div class="container text-center mb-4 my-mt">
+        <div class="d-flex flex-wrap justify-content-evenly align-items-start">
+            <div class="main bg-white p-2">
+                <img src="assets/images/icon.png" alt="Puskesmas's Illust" width="500" class="img-fluid" loading="lazy">
+                <h1 class="fs-4 text-dark-emphasis">UPT Puskesmas Alianyang</h1>
+                <p class="text-secondary mb-0">Ujung tombak pembangunan kesehatan dengan visi "Pontianak Kota Khatulistiwa Berwawasan Lingkungan, Cerdas, dan Bermartabat".</p>
             </div>
-            <div class="right-header">
-                <a href="#" class="text-decoration-none text-white pe-4 fw-light test">Beranda</a>
-                <a href="#" class="text-decoration-none text-white pe-4 fw-light">Daftar Berobat</a>
-                <a href="#" class="text-decoration-none text-white fw-light">Masuk</a>
+            <div class="login bg-white p-4 my-4 rounded shadow">
+                <h1 class="fs-4 mb-3 text-dark-emphasis">Masuk</h1>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="12345678" autocomplete="off">
+                    <label for="floatingInput">Nomor Berobat</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="******">
+                    <label for="floatingPassword">Kata Sandi</label>
+                    <div class="form-check text-start mt-1">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label text-dark-emphasis" for="flexCheckDefault">Lihat Kata Sandi</label>
+                    </div>
+                </div>
+                <button class="btn btn-success">Masuk</button>
+                <p class="mt-3 mb-0 text-dark-emphasis">Belum memiliki akun? Silahkan <a href="#" class="text-decoration-none">klik di sini!</a></p>
             </div>
         </div>
-    </header> -->
+        <hr>
+    </div>
+    <!-- main ends -->
+
+    <!-- body starts  -->
+    <span id="informasi"></span>
+    <div class="container my-4">
+        <h2 class="fs-4 mb-4 text-center text-dark-emphasis">Informasi Kegiatan</h2>
+        <div class="informs">
+            <div class="inform d-flex flex-wrap justify-content-evenly align-items-center mb-3">
+                <div class="inform-img">
+                    <img src="assets/images/1.jpg" alt="information image" class="img-fluid rounded" />
+                </div>
+                <div class="inform-body">
+                    <h2 class="mb-2 mt-3 fs-4 text-dark-emphasis">Praktik Dokter Spesialis Anak</h2>
+                    <p class="text-secondary">Ibu pintar, yuk konsultasikan tumbuh kembang dan kesehatan si buah hati anda. Kuota terbatas yaa.</p>
+                    <p class="text-secondary">Hari : Senin, 10 April 2023</p>
+                    <p class="text-secondary">Jam : 9AM sampai selesai</p>
+                    <p class="text-secondary">Dokter : dr. Rosyadi Akbari M.Sc.Sp.A</p>
+                </div>
+            </div>
+            <div class="inform d-flex flex-wrap justify-content-evenly align-items-center mb-3">
+                <div class="inform-img">
+                    <img src="assets/images/1.jpg" alt="information image" class="img-fluid rounded" />
+                </div>
+                <div class="inform-body">
+                    <h2 class="mb-2 mt-3 fs-4 text-dark-emphasis">Praktik Dokter Spesialis Anak</h2>
+                    <p class="text-secondary">Ibu pintar, yuk konsultasikan tumbuh kembang dan kesehatan si buah hati anda. Kuota terbatas yaa.</p>
+                    <p class="text-secondary">Hari : Senin, 10 April 2023</p>
+                    <p class="text-secondary">Jam : 9AM sampai selesai</p>
+                    <p class="text-secondary">Dokter : dr. Rosyadi Akbari M.Sc.Sp.A</p>
+                </div>
+            </div>
+            <div class="inform d-flex flex-wrap justify-content-evenly align-items-center mb-3">
+                <div class="inform-img">
+                    <img src="assets/images/1.jpg" alt="information image" class="img-fluid rounded" />
+                </div>
+                <div class="inform-body">
+                    <h2 class="mb-2 mt-3 fs-4 text-dark-emphasis">Praktik Dokter Spesialis Anak</h2>
+                    <p class="text-secondary">Ibu pintar, yuk konsultasikan tumbuh kembang dan kesehatan si buah hati anda. Kuota terbatas yaa.</p>
+                    <p class="text-secondary">Hari : Senin, 10 April 2023</p>
+                    <p class="text-secondary">Jam : 9AM sampai selesai</p>
+                    <p class="text-secondary">Dokter : dr. Rosyadi Akbari M.Sc.Sp.A</p>
+                </div>
+            </div>
+            <div class="inform d-flex flex-wrap justify-content-evenly align-items-center mb-3">
+                <div class="inform-img">
+                    <img src="assets/images/1.jpg" alt="information image" class="img-fluid rounded" />
+                </div>
+                <div class="inform-body">
+                    <h2 class="mb-2 mt-3 fs-4 text-dark-emphasis">Praktik Dokter Spesialis Anak</h2>
+                    <p class="text-secondary">Ibu pintar, yuk konsultasikan tumbuh kembang dan kesehatan si buah hati anda. Kuota terbatas yaa.</p>
+                    <p class="text-secondary">Hari : Senin, 10 April 2023</p>
+                    <p class="text-secondary">Jam : 9AM sampai selesai</p>
+                    <p class="text-secondary">Dokter : dr. Rosyadi Akbari M.Sc.Sp.A</p>
+                </div>
+            </div>
+            <div class="inform d-flex flex-wrap justify-content-evenly align-items-center mb-3">
+                <div class="inform-img">
+                    <img src="assets/images/1.jpg" alt="information image" class="img-fluid rounded" />
+                </div>
+                <div class="inform-body">
+                    <h2 class="mb-2 mt-3 fs-4 text-dark-emphasis">Praktik Dokter Spesialis Anak</h2>
+                    <p class="text-secondary">Ibu pintar, yuk konsultasikan tumbuh kembang dan kesehatan si buah hati anda. Kuota terbatas yaa.</p>
+                    <p class="text-secondary">Hari : Senin, 10 April 2023</p>
+                    <p class="text-secondary">Jam : 9AM sampai selesai</p>
+                    <p class="text-secondary">Dokter : dr. Rosyadi Akbari M.Sc.Sp.A</p>
+                </div>
+            </div>
+        </div>
+        <p class="mb-0 text-center"><a href="#" class="text-decoration-none">Selengkapnya. . .</a></p>
+    </div>
+    <!-- body ends -->
+
+    <!-- footer starts -->
+    <footer class="bg-dark py-5">
+        <div class="container d-flex flex-wrap justify-content-between align-items-start text-white">
+            <div>
+                <img src="assets/images/logo-upt.png" alt="puskesmas's logo" class="img-fluid">
+                <img src="assets/images/logo.png" alt="goverment's logo" class="img-fluid">
+                <p class="mb-0">UPT Puskesmas Alianyang</p>
+                <p class="mb-0">Jl. Pangeran Nata Kusuma <br> Kota Pontianak, Kalimantan Barat, 78113</p>
+                <p class="mb-0">Telp. 0561-8212307</p>
+                <p>email : alianyang.pnkkota@gmail.com</p>
+            </div>
+            <div>
+                <p class="mb-0">Media Sosial Puskesmas</p>
+                <p class="mb-0"><i class="fa-brands fa-facebook"></i> Puskesmas Alianayang</p>
+                <p class="mb-0"><i class="fa-brands fa-instagram"></i> puskesmas_alianyangptk</p>
+            </div>
+            <div>
+                <p class="mb-0">Link Navigasi</p>
+                <a href="#" class="text-decoration-none text-white d-block">Beranda</a>
+                <a href="#daftar" class="text-decoration-none text-white d-block">Pendaftaran</a>
+                <a href="#informasi" class="text-decoration-none text-white">Informasi</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- footer ends -->
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
     <script src="script.js"></script>

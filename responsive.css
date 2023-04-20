@@ -1,5 +1,9 @@
-@media all and (max-width: 768px) {
+@media all and (max-width: 767px) {
   .my-order {
     flex-direction: column-reverse;
+  }
+
+  #navbarSupportedContentTop {
+    padding-top: 0.8rem;
   }
 }

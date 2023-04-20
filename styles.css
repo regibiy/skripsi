@@ -4,6 +4,7 @@
   --bg-dark: #323232;
   --bg-green: #2cc185;
   --color-hover: #545454;
+  --bg-body: #f4f4f4;
 }
 
 * {
@@ -37,4 +38,43 @@
 .navbar-toggler {
   font-size: 0.8rem;
 }
-/* top info end */
+/* top info ends */
+
+/* main starts */
+.my-mt {
+  margin-top: 7.5rem;
+}
+
+.main {
+  width: 35rem;
+}
+
+.login {
+  width: 25rem;
+}
+/* main ends */
+
+/* body starts */
+.reverse {
+  flex-direction: row-reverse;
+}
+
+.inform-img img {
+  width: 30rem;
+}
+
+.inform .inform-body {
+  width: 30rem;
+}
+
+.informs .inform:nth-child(even) {
+  flex-direction: row-reverse;
+}
+/* body ends */
+
+/* footer starts */
+footer .container img {
+  width: 45px;
+  object-fit: contain;
+}
+/* footer ends */
