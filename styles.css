@@ -39,16 +39,27 @@
 /* top info ends */
 
 /* main starts */
+.my-container {
+  width: 70vw;
+}
+
 .my-mt {
   margin-top: 7.5rem;
 }
 
 .main {
-  width: 35rem;
+  width: 70%;
 }
 
 .login {
-  width: 25rem;
+  width: 30%;
+  padding: 1.5rem;
+  transition: padding-top 0.5s ease;
+}
+
+.login:hover {
+  padding-top: 1.9rem;
+  transition: padding-top 0.5s ease;
 }
 /* main ends */
 
