@@ -28,7 +28,7 @@ setInterval(() => {
       let a = [];
       for (let i = 0; i <= data.length - 1; i++) {
         a[i] = new Date(data[i].holiday_date);
-        if ((a[i].getDate() === today.getDate() && a[i].getMonth() === today.getMonth() && a[i].getFullYear() === today.getFullYear()) || a[i].getDay() === 0) {
+        if (a[i].getDate() === today.getDate() && a[i].getMonth() === today.getMonth() && a[i].getFullYear() === today.getFullYear()) {
           time = `Tutup Memperingati `;
           time += data[i].holiday_name;
           break;
