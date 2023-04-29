@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <!-- class yang dimulai dari my-, adalah style css manual -->
 
 <head>
@@ -19,13 +19,24 @@
     <div class="my-order fixed-top">
         <nav class="navbar navbar-expand-md top-infos bg-dark" data-bs-theme="dark">
             <div class="container-fluid d-flex justify-content-center flex-wrap top-info">
-                <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContentTop">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContentTop">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContentTop">
-                    <p id="tanggal" class="d-inline-flex align-items-center mb-0 me-3 fw-light"><span class="material-symbols-sharp me-1 tanggal">calendar_month</span></p>
-                    <p id="timer" class="d-inline-flex align-items-center mb-0 me-3 fw-light"><span class="material-symbols-sharp me-1 timer">schedule</span></p>
-                    <p class="d-inline-flex align-items-center mb-0 fw-light"><span class="material-symbols-sharp me-1">mail</span>alianyang.pnkkota@gmail.com</p>
+                    <div class="navbar-nav">
+                        <div class="d-inline-flex align-items-center">
+                            <span class="material-symbols-sharp me-1">calendar_month</span>
+                            <p id="tanggal" class="mb-0 me-3 fw-light"></p>
+                        </div>
+                        <div class="d-inline-flex align-items-center">
+                            <span class="material-symbols-sharp me-1">schedule</span>
+                            <p id="timer" class="mb-0 me-3 fw-light"></p>
+                        </div>
+                        <div class="d-inline-flex align-items-center">
+                            <span class="material-symbols-sharp me-1">mail</span>
+                            <p class="mb-0 fw-light">alianyang.pnkkota@gmail.com</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -58,14 +69,14 @@
     <!-- header ends -->
 
     <!-- main starts -->
-    <div class="container text-center mb-4 my-mt">
-        <div class="d-flex flex-wrap justify-content-evenly align-items-start">
+    <div class="d-flex justify-content-center text-center mb-4 my-mt">
+        <div class="container d-flex flex-wrap justify-content-between align-items-start border-bottom">
             <div class="main bg-white p-2">
                 <img src="assets/images/icon.png" alt="Puskesmas's Illust" width="500" class="img-fluid" loading="lazy">
-                <h1 class="fs-4 text-dark-emphasis">UPT Puskesmas Alianyang</h1>
-                <p class="text-secondary mb-0">Ujung tombak pembangunan kesehatan dengan visi "Pontianak Kota Khatulistiwa Berwawasan Lingkungan, Cerdas, dan Bermartabat".</p>
+                <h1 class="fs-4 text-dark-emphasis">Ujung Tombak Pembangunan Kesehatan</h1>
+                <p class="text-secondary mb-0">Selamat datang di web Puskesmas Alianyang! Melalui web ini, Anda dapat mendaftarkan diri dan keluarga Anda untuk mendapatkan akses ke berbagai layanan kesehatan yang tersedia di Puskesmas kami.</p>
             </div>
-            <div class="login bg-white p-4 my-4 rounded shadow">
+            <div class="login bg-white my-4 rounded shadow">
                 <h1 class="fs-4 mb-3 text-dark-emphasis">Masuk</h1>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="floatingInput" placeholder="12345678" autocomplete="off">
@@ -83,13 +94,62 @@
                 <p class="mt-3 mb-0 text-dark-emphasis">Belum memiliki akun? Silahkan <a href="#" class="text-decoration-none">klik di sini!</a></p>
             </div>
         </div>
-        <hr>
     </div>
     <!-- main ends -->
 
     <!-- body starts  -->
     <span id="informasi"></span>
-    <div class="container my-4">
+    <div class="container">
+        <h2 class="fs-4 text-center text-dark-emphasis mb-4">Informasi Kegiatan</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="container my-4">
         <h2 class="fs-4 mb-4 text-center text-dark-emphasis">Informasi Kegiatan</h2>
         <div class="informs d-flex flex-column align-items-center">
             <div class="inform d-flex flex-wrap justify-content-evenly align-items-center mb-3">
@@ -130,12 +190,12 @@
             </div>
         </div>
         <p class="mb-0 text-center"><a href="#" class="text-decoration-none">Selengkapnya. . .</a></p>
-    </div>
+    </div> -->
     <!-- body ends -->
 
     <!-- footer starts -->
     <footer class="bg-dark py-5">
-        <div class="container d-flex flex-wrap justify-content-md-evenly justify-content-sm-start align-items-start text-white">
+        <div class="container d-flex flex-wrap justify-content-md-between justify-content-sm-start align-items-start text-white">
             <div>
                 <img src="assets/images/logo-upt.png" alt="puskesmas's logo" class="img-fluid">
                 <img src="assets/images/logo.png" alt="goverment's logo" class="img-fluid">
@@ -146,7 +206,7 @@
             </div>
             <div>
                 <p class="mb-0">Media Sosial Puskesmas</p>
-                <p class="mb-0"><i class="fa-brands fa-facebook"></i> Puskesmas Alianayang</p>
+                <p class="mb-0"><i class="fa-brands fa-facebook"></i> Puskesmas Alianyang</p>
                 <p><i class="fa-brands fa-instagram"></i> puskesmas_alianyangptk</p>
                 <p class="mb-0">Link Navigasi</p>
                 <a href="#" class="text-decoration-none text-white d-block">Beranda</a>
