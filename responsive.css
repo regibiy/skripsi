@@ -1,9 +1,64 @@
-@media all and (max-width: 767px) {
+@media only screen and (max-width: 767px) {
+  .my-container {
+    width: 90vw;
+    justify-content: center !important;
+    flex-wrap: wrap;
+  }
+
+  .main {
+    width: 100vw;
+  }
+
+  .login {
+    width: 100vw;
+  }
+
   .my-order {
     flex-direction: column-reverse;
   }
 
-  #navbarSupportedContentTop {
-    padding-top: 0.8rem;
+  .informs .inform:nth-child(even) .inform-body:nth-child(even) {
+    text-align: start;
+  }
+
+  .inform {
+    width: 80vw;
+  }
+
+  #navbarSupportedContent {
+    font-size: 0.875rem;
+  }
+
+  .navbar-brand {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 991px) {
+  .my-container {
+    width: 90vw;
+    justify-content: center !important;
+  }
+
+  .main {
+    width: 100vw;
+  }
+
+  .login {
+    width: 100vw;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1400px) {
+  .my-container {
+    width: 80vw;
+  }
+
+  .main {
+    width: 70%;
+  }
+
+  .login {
+    width: 30%;
   }
 }
