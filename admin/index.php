@@ -9,13 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="responsive.css" />
+    <link rel="stylesheet" href="style/variables.css" />
+    <link rel="stylesheet" href="style/styles.css" />
+    <link rel="stylesheet" href="style/responsive.css" />
     <title>Dasbor</title>
 </head>
 
 <body>
-    <div class="d-flex" id="wrapper">
+    <div class="d-flex main-bg" id="wrapper">
         <!-- Sidebar starts-->
         <div class="bg-blue position-fixed z-3" id="sidebar-wrapper">
             <div class="sidebar-heading text-center py-4 primary-text fw-bold fs-6"><img src="../assets/images/logo-upt.png" class="img-logo me-2" alt="logo puskesmas">Puskesmas Alianyang</div>

@@ -1,18 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
-:root {
-  --main-bg-color: #e5e7eb;
-  --main-text-color: #fff;
-  --second-text-color: #bbbec5;
-  --second-bg-color: #c1efde;
-  --bg-blue: #111827;
-  --danger-text-color: #dc3545;
-  --bg-register: #7b74ec;
-  --bg-patient: #5c8af0;
-  --bg-polyrooms: #e45d99;
-  --bg-activity: #74daec;
-}
-
 * {
   font-family: "Poppins", sans-serif;
 }
@@ -25,16 +12,8 @@
   color: var(--second-text-color);
 }
 
-.danger-text {
-  color: var(--danger-text-color);
-}
-
-.primary-bg {
+.main-bg {
   background-color: var(--main-bg-color);
-}
-
-.secondary-bg {
-  background-color: var(--second-bg-color);
 }
 
 /* awal kustom saya untuk warna sidebar */
@@ -43,13 +22,8 @@
 }
 /* akhir kustom saya untuk warna sidebar */
 
-.rounded-full {
-  border-radius: 100%;
-}
-
 #wrapper {
   overflow-x: hidden;
-  background-color: var(--main-bg-color);
 }
 
 #sidebar-wrapper {

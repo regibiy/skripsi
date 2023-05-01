@@ -34,18 +34,18 @@ setInterval(() => {
           break;
         } else if (dayOfWeek >= 1 && dayOfWeek <= 4) {
           if (hours < 7 || (hours == 7 && minutes < 15) || hours >= 12) {
-            time = "Tutup a";
+            time = "Tutup";
           } else {
             time = "07:15 - 12:00";
           }
         } else if (dayOfWeek == 5 || dayOfWeek == 6) {
           if (hours < 7 || (hours == 7 && minutes < 15) || hours >= 11) {
-            time = "Tutup b";
+            time = "Tutup";
           } else {
             time = "07:15 - 11:00";
           }
         } else if (dayOfWeek == 0) {
-          time = "Tutup c";
+          time = "Tutup";
         }
       }
       timeP.innerHTML = time;
@@ -54,3 +54,11 @@ setInterval(() => {
 }, 1000);
 
 // akhir menampilkan tanggal di top info
+
+// awal menampilkan password
+const passwordInput = document.getElementById("floatingPassword");
+function showPassword() {
+  if (passwordInput.type == "password") passwordInput.type = "text";
+  else passwordInput.type = "password";
+}
+// akhir menampilkan password

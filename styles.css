@@ -4,6 +4,7 @@
   --bg-green: #2cc185;
   --color-hover: #545454;
   --bg-body: #f4f4f4;
+  --danger: #dc3545;
 }
 
 * {
@@ -36,60 +37,62 @@
 .navbar-toggler {
   font-size: 0.8rem;
 }
+
+.dropdown-menu li .my-dropdown-menu:active {
+  background-color: var(--bg-green);
+  color: #fff !important;
+}
+
+.dropdown-menu li .my-dropdown-menu-logout:active {
+  background-color: var(--danger);
+  color: #fff !important;
+}
+
 /* top info ends */
 
 /* main starts */
-.my-container {
-  width: 70vw;
+.my-pt-main {
+  padding-top: 8rem;
 }
 
-.my-mt {
-  margin-top: 7.5rem;
+.my-mtb-body {
+  margin-top: 8rem;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
 }
 
-.main {
-  width: 70%;
+.my-mtb-body:hover {
+  padding-top: 1.9rem;
+  padding-bottom: 1.9rem;
+  transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
 }
 
 .login {
-  width: 30%;
   padding: 1.5rem;
-  transition: padding-top 0.5s ease;
+  transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
 }
 
 .login:hover {
   padding-top: 1.9rem;
-  transition: padding-top 0.5s ease;
+  padding-bottom: 1.9rem;
+  transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
 }
 /* main ends */
 
 /* body starts */
-.inform {
-  width: 75vw;
+.information .col:last-child {
+  margin-bottom: 1.5rem;
 }
 
-.inform-img {
-  width: 30rem;
+.information .col .card {
+  padding: 0;
+  transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
 }
 
-.inform-img img {
-  width: 20rem;
-}
-
-.inform .inform-body {
-  width: 30rem;
-}
-
-.informs .inform:nth-child(even) {
-  flex-direction: row-reverse;
-}
-
-.informs .inform:nth-child(even) .inform-body:nth-child(even) {
-  text-align: end;
-}
-
-.informs .inform:nth-child(odd) .inform-img:nth-child(odd) {
-  text-align: end;
+.information .col .card:hover {
+  padding-top: 0.5rem;
+  transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
 }
 /* body ends */
 
