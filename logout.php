@@ -1,6 +1,7 @@
 <?php
-require("connection.php");
-require("Users.php");
+require("cores/connection.php");
+require("cores/Users.php");
 session_start();
+
 session_destroy();
 header('Location: index.php');
