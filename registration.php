@@ -8,7 +8,7 @@ if (!check_status_login_pasien()) {
     header("Location: index.php");
 }
 ?>
-<div class="container my-mtb-body shadow-sm rounded d-flex justify-content-center flex-wrap gap-4">
+<div class="container my-mtb-body d-flex justify-content-center flex-wrap gap-4">
     <div class="card" style="width: 18rem;">
         <img src="..." class="card-img-top" alt="...">
         <div class="card-body">

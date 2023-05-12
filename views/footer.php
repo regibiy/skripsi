@@ -1,6 +1,6 @@
 <!-- footer starts -->
 <footer class="bg-dark py-5">
-    <div class="container d-flex flex-wrap justify-content-md-between justify-content-sm-start align-items-start text-white">
+    <div class="container d-flex flex-wrap justify-content-md-between justify-content-sm-start justify-content-lg-between text-white">
         <div>
             <img src="assets/images/logo-upt.png" alt="puskesmas's logo" class="img-fluid">
             <img src="assets/images/logo.png" alt="goverment's logo" class="img-fluid">

@@ -1,7 +1,8 @@
 <?php
-require("cores/connection.php");
-require("cores/Users.php");
-session_start();
+include("action.php");
 
-session_destroy();
+unset($_SESSION['status_login_pasien']);
+unset($_SESSION['no_berobat']);
+unset($_SESSION['nama_pasien']);
+
 header('Location: index.php');

@@ -1,7 +1,6 @@
 <?php
-require("../cores/connection.php");
-require("../cores/Users.php");
-session_start();
+include("action-admin.php");
 
-session_destroy();
+unset($_SESSION['status_login_admin']);
+
 header('Location: login.php');
