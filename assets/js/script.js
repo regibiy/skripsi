@@ -1,6 +1,7 @@
 // awal menampilkan tanggal di top info
 const dateP = document.getElementById("tanggal");
 const timeP = document.getElementById("timer");
+const greetingH1 = document.querySelector(".greeting");
 
 const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
@@ -51,14 +52,18 @@ setInterval(() => {
       timeP.innerHTML = time;
     });
   // akhir jam operasional
+
+  // awal greeting
+  if (hours >= 6 && hours <= 9 && minutes <= 59) {
+    greetingH1.innerHTML = "Selamat Pagi...";
+  } else if (hours >= 10 && hours <= 14 && minutes <= 59) {
+    greetingH1.innerHTML = "Selamat Siang...";
+  } else if (hours >= 15 && hours <= 18 && minutes <= 59) {
+    greetingH1.innerHTML = "Selamat Sore...";
+  } else {
+    greetingH1.innerHTML = "Selamat Malam...";
+  }
+  // akhir greeting
 }, 1000);
 
 // akhir menampilkan tanggal di top info
-
-// awal menampilkan password
-const passwordInput = document.getElementById("floatingPassword");
-function showPassword() {
-  if (passwordInput.type == "password") passwordInput.type = "text";
-  else passwordInput.type = "password";
-}
-// akhir menampilkan password

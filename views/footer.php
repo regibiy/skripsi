@@ -15,8 +15,8 @@
             <p><i class="fa-brands fa-instagram"></i> puskesmas_alianyangptk</p>
             <p class="mb-0">Link Navigasi</p>
             <a href="#" class="text-decoration-none text-white d-block">Beranda</a>
-            <a href="#daftar" class="text-decoration-none text-white d-block">Pendaftaran</a>
-            <a href="#informasi" class="text-decoration-none text-white">Informasi</a>
+            <a href="registration.php" class="text-decoration-none text-white d-block">Pendaftaran</a>
+            <a href="#information" class="text-decoration-none text-white">Informasi</a>
         </div>
     </div>
 </footer>
@@ -25,7 +25,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
-<script src="script.js"></script>
+<script src="assets/js/script.js"></script>
+<script src="assets/js/common.js"></script>
 </body>
 
 </html>

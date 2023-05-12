@@ -20,3 +20,24 @@ class Pasien
         return $this->password;
     }
 }
+
+class Petugas
+{
+    //properties
+    private $username;
+    private $password;
+    //method
+    function set_login_data($username, $password)
+    {
+        $this->username = $username;
+        $this->password = $password;
+    }
+    function get_username()
+    {
+        return $this->username;
+    }
+    function get_password()
+    {
+        return $this->password;
+    }
+}

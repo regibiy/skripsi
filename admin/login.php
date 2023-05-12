@@ -1,39 +1,45 @@
-<!DOCTYPE html>
-<html lang="id">
+<?php
+$title = "Masuk";
+include("action-admin.php");
+include("views/login-header.php");
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masuk</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="style/login-styles.css" />
-</head>
+if (isset($_SESSION['status_login_admin'])) {
+    header("Location: index.php");
+}
 
-<body>
-    <div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-        <div class="container text-center text-dark-emphasis col-lg-3 col-sm-12 col-md-6">
-            <img src="../assets/images/logo.png" alt="goverment's logo" class="img-fluid" width="100">
-            <img src="../assets/images/logo-upt.png" alt="puskesmas's logo" class="img-fluid" width="100">
+?>
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+    <div class="container text-center text-dark-emphasis col-lg-3 col-sm-12 col-md-6">
+        <img src="../assets/images/logo.png" alt="goverment's logo" class="img-fluid" width="100">
+        <img src="../assets/images/logo-upt.png" alt="puskesmas's logo" class="img-fluid" width="100">
+        <form action="action-admin.php" method="post">
             <div class="d-flex flex-column gap-3 shadow-sm rounded p-4 bg-white">
                 <h1 class="fs-5">Masuk</h1>
+                <?php
+                if (isset($_SESSION['error_msg'])) {
+                ?>
+                    <p class="mb-0 bg-danger rounded text-white fs-6 py-1"><?= $_SESSION['error_msg'] ?></p>
+                <?php
+                    unset($_SESSION['error_msg']);
+                }
+                ?>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="regibiy">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="regi123" name="username">
                     <label for="floatingInput">Username</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="******">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="******" name="password">
                     <label for="floatingPassword">Password</label>
                     <div class="form-check text-start">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" id="flexCheckDefault" onclick="showPassword()">
                         <label class="form-check-label text-dark-emphasis" for="flexCheckDefault">Lihat Kata Sandi</label>
                     </div>
                 </div>
-                <button class="btn btn-primary">Masuk</button>
-            </div>
-        </div>
+                <button type="submit" class="btn btn-primary" name="login">Masuk</button>
+        </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+</div>
+</div>
 
-</html>
+<?php
+include("views/login-footer.php");

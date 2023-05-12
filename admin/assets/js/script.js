@@ -1,5 +1,4 @@
 // menu-button starts
-
 // toggle class active, toggle = jika sebelumnya tidak ada jadi ada, jika sebelumnya ada jadi tidak ada
 const menu = document.querySelector("#wrapper");
 const sidebar = document.querySelector("#sidebar-wrapper");
@@ -15,7 +14,6 @@ document.addEventListener("click", function (event) {
     menu.classList.remove("toggled");
   }
 });
-
 // menu button ends
 
 // status starts

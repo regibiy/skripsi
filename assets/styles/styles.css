@@ -5,6 +5,7 @@
   --color-hover: #545454;
   --bg-body: #f4f4f4;
   --danger: #dc3545;
+  --color-white: #fff;
 }
 
 * {
@@ -40,12 +41,12 @@
 
 .dropdown-menu li .my-dropdown-menu:active {
   background-color: var(--bg-green);
-  color: #fff !important;
+  color: var(--color-white) !important;
 }
 
 .dropdown-menu li .my-dropdown-menu-logout:active {
   background-color: var(--danger);
-  color: #fff !important;
+  color: var(--color-white) !important;
 }
 
 /* top info ends */
@@ -53,19 +54,24 @@
 /* main starts */
 .my-pt-main {
   padding-top: 8rem;
+  padding-bottom: 1rem;
+  background-image: url(../images/upt.jpg);
+  background-size: cover;
 }
 
 .my-mtb-body {
-  margin-top: 8rem;
-  margin-bottom: 1.5rem;
+  margin-top: 10rem;
+  margin-bottom: 3rem;
+}
+
+.my-p-body {
   padding: 1.5rem;
   transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
 }
 
-.my-mtb-body:hover {
+.my-p-body:hover {
   padding-top: 1.9rem;
   padding-bottom: 1.9rem;
-  transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
 }
 
 .login {
@@ -76,8 +82,8 @@
 .login:hover {
   padding-top: 1.9rem;
   padding-bottom: 1.9rem;
-  transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
 }
+
 /* main ends */
 
 /* body starts */
@@ -92,7 +98,6 @@
 
 .information .col .card:hover {
   padding-top: 0.5rem;
-  transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
 }
 /* body ends */
 

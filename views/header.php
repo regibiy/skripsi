@@ -10,8 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="assets/styles/styles.css">
+    <link rel="stylesheet" href="assets/styles/responsive.css">
 </head>
 
 <body>
@@ -55,7 +55,7 @@
                             <a class="nav-link text-white" href="index.php#information">Informasi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="index.php">Pendaftaran</a>
+                            <a class="nav-link text-white" href="registration.php">Pendaftaran</a>
                         </li>
                         <?php
                         if (check_status_login_pasien()) {
@@ -67,8 +67,8 @@
                                     ?>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item text-dark-emphasis my-dropdown-menu" href="#">Pendaftaran</a></li>
-                                    <li><a class="dropdown-item text-dark-emphasis my-dropdown-menu" href="#">Data Keluarga</a></li>
+                                    <li><a class="dropdown-item text-dark-emphasis my-dropdown-menu" href="registration.php">Pendaftaran</a></li>
+                                    <li><a class="dropdown-item text-dark-emphasis my-dropdown-menu" href="data-user.php">Data Keluarga</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
