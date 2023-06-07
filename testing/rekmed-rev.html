@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    .border-all {
+      border: 1px solid black;
+    }
+
+    .no-border {
+      border-top: none;
+      border-bottom: none;
+    }
+    .l-r {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+    }
+    .l-b-r {
+      border-left: 1px solid black;
+      border-right: 1px solid black;
+      border-bottom: 1px solid black;
+    }
+  </style>
+  <body>
+    <table>
+      <tr>
+        <th class="border-all">Header 1</th>
+        <th class="border-all">Header 2</th>
+        <th class="border-all">Header 3</th>
+      </tr>
+      <tr>
+        <td class="l-r">Data 1</td>
+        <td class="no-border">Data 2</td>
+        <td class="border-all">Data 3</td>
+      </tr>
+      <tr>
+        <td class="l-b-r">Data 4</td>
+        <td class="no-border">Data 5</td>
+        <td class="border-all">Data 6</td>
+      </tr>
+    </table>
+  </body>
+</html>

@@ -6,15 +6,15 @@ const greetingH1 = document.querySelector(".greeting");
 const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
-setInterval(() => {
-  let today = new Date();
-  // awal tanggal
-  let day = days[today.getDay()];
-  let date = today.getDate();
-  let month = months[today.getMonth()];
-  dateP.innerHTML = `${day}, ${date}-${month}`;
-  // akhir tanggal
+let today = new Date();
+// awal tanggal
+let day = days[today.getDay()];
+let date = today.getDate();
+let month = months[today.getMonth()];
+dateP.innerHTML = `${day}, ${date}-${month}`;
+// akhir tanggal
 
+function dinamisTopInfo() {
   // awal jam operasional
   let time;
   let hours = today.getHours();
@@ -40,10 +40,10 @@ setInterval(() => {
             time = "07:15 - 12:00";
           }
         } else if (dayOfWeek == 5 || dayOfWeek == 6) {
-          if (hours < 7 || (hours == 7 && minutes < 15) || hours >= 11) {
+          if (hours < 7 || (hours == 7 && minutes < 15) || hours >= 10) {
             time = "Tutup";
           } else {
-            time = "07:15 - 11:00";
+            time = "07:15 - 10:00";
           }
         } else if (dayOfWeek == 0) {
           time = "Tutup";
@@ -64,6 +64,12 @@ setInterval(() => {
     greetingH1.innerHTML = "Selamat Malam...";
   }
   // akhir greeting
-}, 1000);
+}
+
+dinamisTopInfo();
+
+setInterval(() => {
+  dinamisTopInfo();
+}, 3600000);
 
 // akhir menampilkan tanggal di top info

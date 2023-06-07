@@ -1,5 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
+:root {
+  --main-bg-color: #e5e7eb;
+  --main-text-color: #fff;
+  --second-text-color: #bbbec5;
+  --second-bg-color: #c1efde;
+  --bg-blue: #111827;
+  --danger-text-color: #dc3545;
+  --bg-register: #7b74ec;
+  --bg-patient: #5c8af0;
+  --bg-polyrooms: #e45d99;
+  --bg-activity: #74daec;
+}
+
 * {
   font-family: "Poppins", sans-serif;
 }
@@ -14,6 +27,10 @@
 
 .main-bg {
   background-color: var(--main-bg-color);
+}
+
+.fs-7 {
+  font-size: 14px;
 }
 
 /* awal kustom saya untuk warna sidebar */

@@ -8,12 +8,17 @@
   --color-white: #fff;
 }
 
+/* default styling starts*/
+.fs-7 {
+  font-size: 14px !important;
+}
+
 * {
   font-family: "Poppins", sans-serif;
 }
+/* default styling ends */
 
 /* top info starts */
-
 .my-order {
   display: flex;
   flex-direction: column;
@@ -48,7 +53,6 @@
   background-color: var(--danger);
   color: var(--color-white) !important;
 }
-
 /* top info ends */
 
 /* main starts */
@@ -64,16 +68,6 @@
   margin-bottom: 3rem;
 }
 
-.my-p-body {
-  padding: 1.5rem;
-  transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
-}
-
-.my-p-body:hover {
-  padding-top: 1.9rem;
-  padding-bottom: 1.9rem;
-}
-
 .login {
   padding: 1.5rem;
   transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
@@ -83,17 +77,12 @@
   padding-top: 1.9rem;
   padding-bottom: 1.9rem;
 }
-
 /* main ends */
 
 /* body starts */
-.information .col:last-child {
-  margin-bottom: 1.5rem;
-}
-
 .information .col .card {
   padding: 0;
-  transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
+  transition: padding-top 0.5s ease;
 }
 
 .information .col .card:hover {
@@ -101,9 +90,31 @@
 }
 /* body ends */
 
+/* body information.php starts */
+.my-p-body {
+  padding: 1.5rem;
+  transition: padding-top 0.5s ease, padding-bottom 0.5s ease;
+}
+
+.my-p-body:hover {
+  padding-top: 1.9rem;
+  padding-bottom: 1.9rem;
+}
+/* body information.php ends */
+
+/* body account-registration.php starts */
+.my-gap-6 {
+  margin-bottom: 43px;
+}
+/* body account-registration.php ends */
+
 /* footer starts */
 footer .container img {
   width: 45px;
   object-fit: contain;
+}
+
+.footer-nav a:hover {
+  color: var(--bg-green) !important;
 }
 /* footer ends */
