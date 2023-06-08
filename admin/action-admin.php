@@ -45,7 +45,7 @@ if (isset($_POST['login'])) {
                 }
             }
         } else {
-            $_SESSION['error_msg'] = "Username atau kata sandi salah";
+            $_SESSION['error_msg'] = "Username tidak ditemukan";
             header("Location: index.php");
         }
     }

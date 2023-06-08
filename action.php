@@ -3,8 +3,8 @@ include("cores/connection.php");
 include("cores/Users.php");
 session_start();
 
-$pasien = new Pasien();
 if (isset($_POST['login'])) {
+    $pasien = new Pasien();
     if (!trim(empty($_POST['no_berobat'])) && trim(empty($_POST['password']))) {
         $_SESSION['error_msg'] = "Silakan isi kata sandi";
         $_SESSION['no_berobat'] = $_POST['no_berobat'];
@@ -14,9 +14,9 @@ if (isset($_POST['login'])) {
         header("Location: index.php");
     } else {
         $pasien->set_login_data($_POST['no_berobat'], $_POST['password']);
-        $no_berobat = $pasien->get_no_berobat();
+        $no_indeks = $pasien->get_no_berobat();
         $password = $pasien->get_password();
-        $sql = "SELECT * FROM pasien WHERE no_berobat = '$no_berobat' AND password = '$password'";
+        $sql = "SELECT * FROM akun WHERE no_indeks = '$no_indeks' AND kata_sandi = '$password'";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -26,7 +26,7 @@ if (isset($_POST['login'])) {
             }
             header("Location: index.php");
         } else {
-            $_SESSION['error_msg'] = "No berobat atau kata sandi salah";
+            $_SESSION['error_msg'] = "No berobat tidak ditemukan";
             header("Location: index.php");
         }
     }
