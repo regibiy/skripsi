@@ -2,13 +2,6 @@ $(document).ready(function () {
   $("#my-registration").DataTable();
 });
 
-function scrollToTop() {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-}
-
 // show password starts
 const passwordInput = document.getElementById("floatingPassword");
 function showPassword() {
@@ -19,21 +12,53 @@ function showPassword() {
 
 // validasi form daftar starts
 const alertP = document.getElementById("alert");
+const inputKk = document.getElementById("noKk");
+const inputNik = document.getElementById("nik");
+const inputJK = document.getElementById("jenisKelamin");
+const inputAgama = document.getElementById("agama");
+const inputNoHp = document.getElementById("noHp");
+const inputRt = document.getElementById("rt");
+const inputRw = document.getElementById("rw");
 alertP.style.display = "none";
 
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+
+function alertError($message) {
+  alertP.innerHTML = $message;
+  alertP.style.display = "block";
+  scrollToTop();
+}
+
 function validasiForm() {
-  const btnDaftar = document.getElementById("daftar");
-  const inputKk = document.getElementById("noKk");
   let noKk, nik, valid;
   valid = false;
-  noKk = inputKk.value.trim();
-  if ((noKk.length >= 1 && noKk.length <= 16) || noKk.length >= 16) {
-    alertP.innerHTML = "Sesuaikan nomor KK Anda! nomor KK memiliki panjang 16 angka";
-    alertP.style.display = "block";
-    scrollToTop();
-    valid = false;
-  } else if (nik.length <= 16 || nik.length >= 16) {
-    alertP.innerHTML = "Sesuaikan NIK Anda! NIK memiliki panjang 16 angka";
+  noKk = inputKk.value;
+  nik = inputNik.value;
+  noHp = inputNoHp.value;
+  rt = inputRt.value;
+  rw = inputRw.value;
+  jk = inputJK.value;
+  agama = inputAgama.value;
+
+  if ((noKk.length >= 1 && noKk.length < 16) || noKk.length > 16) {
+    alertError("Sesuaikan Nomor KK Anda! Nomor KK memiliki panjang 16 angka");
+  } else if ((nik.length >= 1 && nik.length < 16) || nik.length > 16) {
+    alertError("Sesuaikan NIK Anda! NIK memiliki panjang 16 angka");
+  } else if (jk === "---") {
+    alertError("Silakan pilih jenis kelamin Anda");
+  } else if (agama === "---") {
+    alertError("Silakan pilih agama Anda");
+  } else if (noHp.length > 15) {
+    alertError("Nomor HP hanya dapat menyimpan 15 angka");
+  } else if (rt.length > 5 || rw.length > 5) {
+    alertError("RT dan RW hanya dapat menyimpan 5 angka");
+  } else {
+    valid = true;
   }
 
   if (valid === false) {
