@@ -97,7 +97,7 @@ include("views/index-header.php");
                         <td>06-06-2023</td>
                         <td><span class="status p-1 rounded">Diproses</span></td>
                         <td>
-                            <a href="#" class="btn btn-sm btn-primary">Cetak</a>
+                            <a href="print-medical-record.php" target="_blank" class="btn btn-sm btn-primary">Cetak</a>
                             <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#O001">Status</button>
                         </td>
                         <!-- modal edit contact starts-->

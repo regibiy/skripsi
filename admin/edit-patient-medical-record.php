@@ -13,12 +13,14 @@ if ($_SESSION['role'] != "rekmed") {
     </script>";
 }
 
+$status_hubungan = array("x-6-x", "Kepala Keluarga", "Istri", "Anak 1", "Anak 2", "Anak 3", "Anak 4", "Anak 5", "Anak 6", "Anak 7", "Anak 8", "Anak 9");
+
 include("views/index-header.php");
 ?>
 
 <div class="container-fluid px-4">
     <div class="row mt-3 mb-5 p-2 bg-white rounded">
-        <p class="fs-6 p-0 mb-2 fw-medium">Detail NIK 2151331605010002</p>
+        <p class="fs-6 p-0 mb-2 fw-medium">Edit NIK x-16-x</p>
         <div class="d-flex justify-content-between flex-wrap border rounded p-0 col-12 fs-7">
             <div class="col-lg-6 col-12">
                 <table class="table table-borderless">
@@ -28,7 +30,7 @@ include("views/index-header.php");
                         </td>
                         <td>
                             <div class="col-lg-8 col-12">
-                                <input type="number" class="form-control form-control-sm" name="nik" id="nik" required>
+                                <input type="number" class="form-control form-control-sm" name="nik" id="nik" placeholder="2151331605010002" required>
                             </div>
                         </td>
                     </tr>
@@ -38,7 +40,7 @@ include("views/index-header.php");
                         </td>
                         <td>
                             <div class="col-lg-8 col-12">
-                                <input type="text" class="form-control form-control-sm" name="nama_depan" id="namaDepan" required>
+                                <input type="text" class="form-control form-control-sm" name="nama_depan" id="namaDepan" placeholder="Fachri Andika" required>
                             </div>
                         </td>
                     </tr>
@@ -48,7 +50,7 @@ include("views/index-header.php");
                         </td>
                         <td>
                             <div class="col-lg-8 col-12">
-                                <input type="text" class="form-control form-control-sm" name="nama_belakang" id="namaBelakang">
+                                <input type="text" class="form-control form-control-sm" name="nama_belakang" id="namaBelakang" placeholder="Permana">
                             </div>
                         </td>
                     </tr>
@@ -58,7 +60,7 @@ include("views/index-header.php");
                         </td>
                         <td>
                             <div class="col-lg-8 col-12">
-                                <input type="text" class="form-control form-control-sm" name="tempat_lahir" id="tempatLahir" required>
+                                <input type="text" class="form-control form-control-sm" name="tempat_lahir" id="tempatLahir" placeholder="Pontianak" required>
                             </div>
                         </td>
                     </tr>
@@ -79,6 +81,7 @@ include("views/index-header.php");
                         <td>
                             <div class="col-lg-8 col-12">
                                 <select class="form-select form-select-sm text-dark-emphasis" name="jenis_kelamin" id="jenisKelamin">
+                                    <option value="">x-9-x</option>
                                     <option value="Laki-Laki">Laki-Laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
@@ -91,51 +94,59 @@ include("views/index-header.php");
                 <table class="table table-borderless">
                     <tr>
                         <td class="col-4">
-                            <label for="alamat" class="form-label form-label-sm">Alamat</label>
+                            <label for="agama" class="form-label form-label-sm">Agama</label>
                         </td>
                         <td>
                             <div class="col-lg-8 col-12">
-                                <textarea class="form-control form-control-sm text-dark-emphasis" name="alamat" id="alamat" rows="3" placeholder="Jalan Pangeran Nata Kusuma No. 76" required></textarea>
+                                <select class="form-select form-select-sm text-dark-emphasis" name="agama" id="agama">
+                                    <option value="">x-8-x</option>
+                                    <option value="Laki-Laki">Islam</option>
+                                    <option value="Perempuan">Kristen</option>
+                                </select>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-4">
-                            <label for="rt" class="form-label form-label-sm">RT</label>
+                            <label for="pekerjaan" class="form-label form-label-sm">Pekerjaan</label>
                         </td>
                         <td>
                             <div class="col-lg-8 col-12">
-                                <input type="number" class="form-control form-control-sm" name="rt" id="rt" required>
+                                <input type="text" class="form-control form-control-sm" name="pekerjaan" id="pekerjaan" placeholder="PNS Guru" required>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-4">
-                            <label for="rw" class="form-label form-label-sm">RW</label>
+                            <label for="status_hubungan" class="form-label form-label-sm">Status Hubungan</label>
                         </td>
                         <td>
                             <div class="col-lg-8 col-12">
-                                <input type="number" class="form-control form-control-sm" name="rw" id="rw" required>
+                                <select class="form-select form-select-sm fs-7" name="status_hubungan" id="status_hubungan" required>
+                                    <?php
+                                    foreach ($status_hubungan as $value) {
+                                        echo "<option value=" . $value . ">" . $value . "</option>";
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </td>
                     </tr>
                     <tr class="col-4">
                         <td>
-                            <label for="kelurahanDesa" class="form-label form-label-sm">Kelurahan / Desa</label>
+                            <label for="noHp" class="form-label form-label-sm">Nomor HP</label>
                         </td>
-                        <td>
-                            <div class="col-lg-8 col-12">
-                                <input type="text" class="form-control form-control-sm" name="kelurahan_desa" id="kelurahanDesa" required>
-                            </div>
-                        </td>
+                        <td class="fw-medium text-secondary">6281378300210</td>
                     </tr>
                     <tr class="col-4">
                         <td>
-                            <label for="kecamatan" class="form-label form-label-sm">Kecamatan</label>
+                            <label for="statusPasien" class="form-label form-label-sm">Status Pasien</label>
                         </td>
-                        <td>
+                        <td class="fw-medium text-secondary">
                             <div class="col-lg-8 col-12">
-                                <input type="text" class="form-control form-control-sm" name="kecamatan" id="kecamatan" required>
+                                <select class="form-select form-select-sm fs-7" name="status_pasien" id="statusPasien" required>
+                                    <option value="">Dalam KK</option>
+                                </select>
                             </div>
                         </td>
                     </tr>

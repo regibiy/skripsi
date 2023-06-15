@@ -18,20 +18,26 @@ include("views/header.php");
             $data = $result->fetch_assoc();
             echo "<p class='fs-7'>Kuota Tersedia: <span class='fw-medium'>" . $data['kuota_tersedia'] . "</span> dari <span class='fw-medium'>" . $data['kuota_tersedia'] . "</span></p>";
             ?>
-            <form action="action.php" id="selectDate">
+            <form action="action.php" method="post" onsubmit="return validasiTanggalDaftar()">
                 <div class="row g-3 align-items-center justify-content-center fs-7">
                     <div class="col-auto">
                         <label for="registerDate" class="col-form-label col-form-label-sm">Tanggal</label>
                     </div>
                     <div class="col-auto">
-                        <input type="date" id="registerDate" name="register_date" class="form-control form-control-sm" value="<?= date('Y-m-d') ?>">
+                        <input type="date" id="registerDate" name="register_date" class="form-control form-control-sm">
                     </div>
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-success btn-sm">Terapkan</button>
+                        <button type="submit" class="btn btn-success btn-sm" name="pilih_tanggal">Terapkan</button>
                     </div>
                 </div>
             </form>
         </div>
+        <?php
+        if (isset($_SESSION['error_msg'])) {
+            echo "<p class='bg-danger text-white py-1 px-2 rounded mb-0 mt-3 fs-7'>" . $_SESSION['error_msg'] . "</p>";
+            unset($_SESSION['error_msg']);
+        }
+        ?>
         <p id="alert" class="bg-danger text-white py-1 px-2 rounded mb-0 mt-3 fs-7" style="display: none;"></p>
     </div>
 </div>

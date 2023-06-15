@@ -12,7 +12,7 @@ if (check_status_login_pasien()) {
         <div class="container d-flex flex-wrap justify-content-between align-items-center">
             <div class="main p-2 col-lg-12 col-sm-12 col-md-12">
                 <h1 class="greeting text-dark-emphasis fs-4">......</h1>
-                <p class="text-dark-emphasis">Informasi terbaru seputar kegiatan di UPT Puskesmas Alianyang</p>
+                <p class="text-dark-emphasis mb-0">Informasi terbaru seputar kegiatan di UPT Puskesmas Alianyang</p>
             </div>
         </div>
     </div>

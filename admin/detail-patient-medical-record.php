@@ -205,7 +205,7 @@ include("views/index-header.php");
                         <td>Laki-Laki</td>
                         <td>Islam</td>
                         <td>PNS Guru</td>
-                        <td>Suami</td>
+                        <td>Kepala Keluarga</td>
                         <td>6281378300210</td>
                         <td class="text-secondary"><button type="button" class="btn btn-sm btn-outline-primary fs-7" data-bs-toggle="modal" data-bs-target="#ktpSuami">Lihat KTP</button></td>
                         <!-- Modal starts-->

@@ -106,7 +106,7 @@ $html = '
         </div>
     </header>
     <section class="second-info">
-        <p style="text-align: right; margin-bottom: 0;">No Rekam Medis : x-8-x</p>
+        <p style="text-align: right; margin-bottom: 0;">No Rekam Medis : 10912345</p>
         <p style="margin:0;">LEMBAR REKAM MEDIS PASIEN</p>
     </section>
     <section class="patient-info">
@@ -114,56 +114,50 @@ $html = '
             <tr>
                 <td>Nama</td>
                 <td>:</td>
-                <td>x-60-x</td>
-                <td></td>
+                <td>Dewi Sari Pramudita</td>
                 <td>Umum/BPJS</td>
                 <td>:</td>
-                <td width="310">Umum</td>
+                <td width="340">Umum</td>
             </tr>
             <tr>
                 <td>Tanggal Lahir</td>
                 <td>:</td>
-                <td width="230">dd-mm-yyyy</td>
-                <td>x-1-x</td>
+                <td width="230">12-12-2004</td>
                 <td>No KTP</td>
                 <td>:</td>
-                <td>x-16-x</td>
+                <td>7191064312040098</td>
+            </tr>
+            <tr>
+                <td>Jenis Kelamin</td>
+                <td>:</td>
+                <td width="230">Perempuan</td>
+                <td>Nama KK</td>
+                <td>:</td>
+                <td>Fachri Andika Permana</td>
             </tr>
             <tr>
                 <td>Agama</td>
                 <td>:</td>
-                <td width="230">x-8-x</td>
-                <td></td>
-                <td>Nama KK</td>
-                <td>:</td>
-                <td>x-60-x</td>
-            </tr>
-            <tr>
-                <td>Pekerjaan</td>
-                <td>:</td>
-                <td width="230">x-25-x</td>
-                <td></td>
+                <td width="230">Katolik</td>
                 <td>Tanggal Masuk</td>
                 <td>:</td>
-                <td>dd-mm-yyyy</td>
+                <td>03-01-2022</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;">Pekerjaan</td>
+                <td style="vertical-align: top;">:</td>
+                <td width="230" style="vertical-align: top;">Dokter Umum</td>
+                <td style="vertical-align: top;">Riwayat Alergi Obat</td>
+                <td style="vertical-align: top;">:</td>
+                <td>Tidak ada</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">Alamat</td>
                 <td style="vertical-align: top;">:</td>
-                <td width="230">x-150-x</td>
-                <td></td>
-                <td style="vertical-align: top;">Riwayat Alergi Obat</td>
+                <td width="230">Jalan Pancasila Gang Pancasila IV Nomor 12G</td>
+                <td style="vertical-align: top;">Telp/HP</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">x-255-x</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>Telp/HP</td>
-                <td>:</td>
-                <td>6281398301260</td>
+                <td style="vertical-align: top;">6281345674321</td>
             </tr>
         </table>
     </section>

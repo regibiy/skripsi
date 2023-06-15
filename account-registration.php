@@ -4,22 +4,23 @@ include("action.php");
 include("views/header.php");
 
 $agama = array("---", "Budha", "Islam", "Hindu", "Katolik", "Konghucu", "Kristen");
-$status_hubungan = array("---", "Suami", "Istri", "Anak 1", "Anak 2", "Anak 3", "Anak 4", "Anak 5", "Anak 6", "Anak 7", "Anak 8", "Anak 9");
+$status_hubungan = array("---", "Kepala Keluarga", "Istri", "Anak 1", "Anak 2", "Anak 3", "Anak 4", "Anak 5", "Anak 6", "Anak 7", "Anak 8", "Anak 9");
 ?>
 <!-- body starts -->
 <div class="mx-3 my-mtb-body">
-    <form action="action.php" method="post" enctype="multipart/form-data" onsubmit="return validasiForm()">
+    <form action="action.php" method="post" enctype="multipart/form-data" onsubmit="return validasiFormDaftar()">
         <div class="container  shadow-sm rounded border py-3">
             <h1 class="text-dark-emphasis fs-6 text-center mb-4">Daftar Pasien Baru</h1>
             <?php
             if (isset($_SESSION['error_msg'])) {
-            ?>
-                <p class="bg-danger p-1 text-white fs-7 rounded"><?= $_SESSION['error_msg'] ?></p>
-            <?php
+                echo "<p class='bg-danger p-1 text-white fs-7 rounded'>" . $_SESSION['error_msg'] . "</p>";
                 unset($_SESSION['error_msg']);
+            } elseif (isset($_SESSION['success_msg'])) {
+                echo "<p class='bg-success p-1 text-white fs-7 rounded'>" . $_SESSION['success_msg'] . "</p>";
+                unset($_SESSION['success_msg']);
             }
             ?>
-            <p id="alert" class="bg-danger p-1 text-white fs-7 rounded"></p>
+            <p id="alert" class="bg-danger p-1 text-white fs-7 rounded" style="display: none;"></p>
             <div class="d-flex justify-content-between col-12 flex-wrap p-2">
                 <div class="d-flex flex-column align-items-start col-lg-3 col-12 gap-3">
                     <h2 class="text-dark-emphasis fs-7">Data Identitas Kepala Keluarga</h2>

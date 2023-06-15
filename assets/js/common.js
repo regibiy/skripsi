@@ -79,65 +79,30 @@ if (registerDateInput) {
   registerDate.setAttribute("max", maxDate);
 }
 
-function getLiburNasional() {
-  alertP.style.display = "none";
-  try {
-    let dateValue = registerDateInput.value;
-    let dayRegisterUser = new Date(dateValue);
-    let selectedDate = dayRegisterUser.getDate();
-    let selectedMonth = dayRegisterUser.getMonth() + 1;
-    let url = `https://api-harilibur.vercel.app/api?month=${selectedMonth}`;
+function validasiTanggalDaftar() {
+  let valid;
+  valid = false;
+  let dateValue = registerDateInput.value;
+  let dayRegisterUser = new Date(dateValue);
+  let selectedDay = dayRegisterUser.getDay();
+  let selectedDate = dayRegisterUser.getDate();
+  let dayRegister = new Date();
+  let currentDay = dayRegister.getDay();
+  let currentDate = dayRegister.getDate();
+  let currentTime = dayRegister.getTime();
 
-    return new Promise((resolve, reject) => {
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          let holidayName;
-          data.forEach((value) => {
-            let holiday = new Date(value.holiday_date);
-            let holidayDate = holiday.getDate();
-            if (selectedDate === holidayDate) holidayName = value.holiday_name;
-          });
-          resolve(holidayName); // Mengembalikan nilai valid ke dalam Promise
-        })
-        .catch((error) => {
-          console.log(error);
-          reject(error); // Menolak Promise jika terjadi kesalahan
-        });
-    });
-  } catch (error) {
-    console.log(error);
-    return Promise.reject(error); // Menolak Promise jika terjadi kesalahan pada blok try-catch
-  }
+  if (currentDay >= 1 && currentDay <= 4) limitTime = dayRegister.setHours(11, 30, 0);
+  else if (currentDay == 5 || currentDay == 6) limitTime = dayRegister.setHours(9, 30, 0);
+
+  if (dateValue === "") alertError("Silakan pilih tanggal pendaftaran Anda");
+  else if (selectedDay === 0) alertError("Puskesmas tidak melayani apapun pada hari Minggu");
+  else if (currentDate === selectedDate) {
+    if (currentTime >= limitTime) alertError("Pendaftaran tidak dapat dilakukan karena jam pelayanan! Silakan pilih hari lain");
+  } else valid = true;
+
+  if (!valid) return false;
+  else return true;
 }
-
-const formSelectDate = document.getElementById("selectDate");
-formSelectDate.addEventListener("submit", function (event) {
-  event.preventDefault(); // Mencegah pengiriman form secara otomatis
-
-  getLiburNasional()
-    .then((holidayName) => {
-      let dateValue = registerDateInput.value;
-      let dayRegisterUser = new Date(dateValue);
-      let selectedDay = dayRegisterUser.getDay();
-      let dayRegister = new Date();
-      let currentDay = dayRegister.getDay();
-      let currentTime = dayRegister.getTime();
-
-      if (currentDay >= 1 && currentDay <= 4) limitTIme = dayRegister.setHours(11, 30, 0);
-      else if (currentDay == 5 || currentDay == 6) limitTIme = dayRegister.setHours(9, 30, 0);
-
-      if (holidayName) alertError(`Puskesmas tidak melayani apapun karena memperingati ${holidayName}. Silakan pilih hari lain`);
-      else if (selectedDay === 0) alertError(`Puskesmas tidak melayani apapun pada hari Minggu`);
-      else if (currentDay === selectedDay) {
-        if (currentTime >= limitTIme) alertError("Pendaftaran tidak dapat dilakukan karena jam pelayanan! Silakan pilih hari lain");
-      } else formSelectDate.submit();
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Terjadi kesalahan. Silakan coba lagi nanti.");
-    });
-});
 // membatasi tanggal ruang poly ends
 
 // dinamis form data keluarga starts SCRIPT DIBAWAH SEMENTARA

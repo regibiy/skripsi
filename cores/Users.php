@@ -132,10 +132,8 @@ class Pasien
 
 class Petugas
 {
-    //properties
-    private $username;
-    private $password;
-    //method
+    protected $username, $password;
+
     function set_login_data($username, $password)
     {
         $this->username = $username;
@@ -148,5 +146,54 @@ class Petugas
     function get_password()
     {
         return $this->password;
+    }
+}
+
+class Data_Petugas extends Petugas
+{
+    private $nama_depan, $nama_belakang, $role, $status;
+
+    function set_manage_data_officer($nama_depan, $nama_belakang, $role, $status)
+    {
+        $this->nama_depan = $nama_depan;
+        $this->nama_belakang = $nama_belakang;
+        $this->role = $role;
+        $this->status = $status;
+    }
+    function get_nama_depan()
+    {
+        return $this->nama_depan;
+    }
+    function get_nama_belakang()
+    {
+        return $this->nama_belakang;
+    }
+    function get_role()
+    {
+        return $this->role;
+    }
+    function get_status()
+    {
+        return $this->status;
+    }
+}
+
+class Ruang_Poli
+{
+    private $nama_ruang, $status_ruang;
+
+    function set_data_ruang($nama_ruang, $status_ruang)
+    {
+        $this->nama_ruang = $nama_ruang;
+        $this->status_ruang = $status_ruang;
+    }
+
+    function get_nama_ruang()
+    {
+        return $this->nama_ruang;
+    }
+    function get_status_ruang()
+    {
+        return $this->status_ruang;
     }
 }

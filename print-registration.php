@@ -99,12 +99,13 @@ $html = '
         </table>
     </section>
     <article>
-        <p>*Jika telah menerima notifikasi melalui Whatsapp atau Email, silakan langsung menghadap loket pendaftaran untuk informasi lebih lanjut.</p>
         <p>*Pendaftaran akan dikenai biaya administrasi sebesar Rp.3000,00</p>
+        <p>*Harap sudah berada di puskesmas 15 menit sebelum poli dibuka pukul 07:15</p>
+        <p>*Jika telah menerima notifikasi melalui Whatsapp atau Email, silakan langsung menghadap loket pendaftaran untuk informasi lebih lanjut.</p>
     </article>
 </div>';
 
 $mpdf->WriteHTML($html);
 
 // Output a PDF file directly to the browser
-$mpdf->Output('filename.pdf', \Mpdf\Output\Destination::DOWNLOAD);
+$mpdf->Output('filename.pdf', \Mpdf\Output\Destination::INLINE);
