@@ -19,7 +19,6 @@ const inputAgama = document.getElementById("agama");
 const inputNoHp = document.getElementById("noHp");
 const inputRt = document.getElementById("rt");
 const inputRw = document.getElementById("rw");
-alertP.style.display = "none";
 
 function scrollToTop() {
   window.scrollTo({
@@ -34,7 +33,7 @@ function alertError($message) {
   scrollToTop();
 }
 
-function validasiForm() {
+function validasiFormDaftar() {
   let noKk, nik, valid;
   valid = false;
   noKk = inputKk.value;
@@ -45,29 +44,101 @@ function validasiForm() {
   jk = inputJK.value;
   agama = inputAgama.value;
 
-  if ((noKk.length >= 1 && noKk.length < 16) || noKk.length > 16) {
-    alertError("Sesuaikan Nomor KK Anda! Nomor KK memiliki panjang 16 angka");
-  } else if ((nik.length >= 1 && nik.length < 16) || nik.length > 16) {
-    alertError("Sesuaikan NIK Anda! NIK memiliki panjang 16 angka");
-  } else if (jk === "---") {
-    alertError("Silakan pilih jenis kelamin Anda");
-  } else if (agama === "---") {
-    alertError("Silakan pilih agama Anda");
-  } else if (noHp.length > 15) {
-    alertError("Nomor HP hanya dapat menyimpan 15 angka");
-  } else if (rt.length > 5 || rw.length > 5) {
-    alertError("RT dan RW hanya dapat menyimpan 5 angka");
-  } else {
-    valid = true;
-  }
+  if ((noKk.length >= 1 && noKk.length < 16) || noKk.length > 16) alertError("Sesuaikan Nomor KK Anda! Nomor KK memiliki panjang 16 angka");
+  else if ((nik.length >= 1 && nik.length < 16) || nik.length > 16) alertError("Sesuaikan NIK Anda! NIK memiliki panjang 16 angka");
+  else if (jk === "---") alertError("Silakan pilih jenis kelamin Anda");
+  else if (agama === "---") alertError("Silakan pilih agama Anda");
+  else if (noHp.length > 15) alertError("Nomor HP hanya dapat menyimpan 15 angka");
+  else if (rt.length > 5 || rw.length > 5) alertError("RT dan RW hanya dapat menyimpan 5 angka");
+  else valid = true;
 
-  if (valid === false) {
-    return false;
-  } else {
-    return true;
+  if (!valid) return false;
+  else {
+    let confirmMsg = "Pastikan TIDAK ada data yang keliru. Cek data sekali lagi?";
+    if (confirm(confirmMsg) === true) {
+      alertP.style.display = "none";
+      scrollToTop();
+      return false;
+    } else return true;
   }
 }
 // validasi form daftar ends
+
+// membatasi tanggal ruang poly starts
+const registerDateInput = document.getElementById("registerDate");
+
+function addDays(date, days) {
+  let result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+if (registerDateInput) {
+  let maxDate = addDays(new Date(), 7).toISOString().split("T")[0];
+  registerDate.setAttribute("min", new Date().toISOString().split("T")[0]);
+  registerDate.setAttribute("max", maxDate);
+}
+
+function getLiburNasional() {
+  alertP.style.display = "none";
+  try {
+    let dateValue = registerDateInput.value;
+    let dayRegisterUser = new Date(dateValue);
+    let selectedDate = dayRegisterUser.getDate();
+    let selectedMonth = dayRegisterUser.getMonth() + 1;
+    let url = `https://api-harilibur.vercel.app/api?month=${selectedMonth}`;
+
+    return new Promise((resolve, reject) => {
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          let holidayName;
+          data.forEach((value) => {
+            let holiday = new Date(value.holiday_date);
+            let holidayDate = holiday.getDate();
+            if (selectedDate === holidayDate) holidayName = value.holiday_name;
+          });
+          resolve(holidayName); // Mengembalikan nilai valid ke dalam Promise
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(error); // Menolak Promise jika terjadi kesalahan
+        });
+    });
+  } catch (error) {
+    console.log(error);
+    return Promise.reject(error); // Menolak Promise jika terjadi kesalahan pada blok try-catch
+  }
+}
+
+const formSelectDate = document.getElementById("selectDate");
+formSelectDate.addEventListener("submit", function (event) {
+  event.preventDefault(); // Mencegah pengiriman form secara otomatis
+
+  getLiburNasional()
+    .then((holidayName) => {
+      let dateValue = registerDateInput.value;
+      let dayRegisterUser = new Date(dateValue);
+      let selectedDay = dayRegisterUser.getDay();
+      let dayRegister = new Date();
+      let currentDay = dayRegister.getDay();
+      let currentTime = dayRegister.getTime();
+
+      if (currentDay >= 1 && currentDay <= 4) limitTIme = dayRegister.setHours(11, 30, 0);
+      else if (currentDay == 5 || currentDay == 6) limitTIme = dayRegister.setHours(9, 30, 0);
+
+      if (holidayName) alertError(`Puskesmas tidak melayani apapun karena memperingati ${holidayName}. Silakan pilih hari lain`);
+      else if (selectedDay === 0) alertError(`Puskesmas tidak melayani apapun pada hari Minggu`);
+      else if (currentDay === selectedDay) {
+        if (currentTime >= limitTIme) alertError("Pendaftaran tidak dapat dilakukan karena jam pelayanan! Silakan pilih hari lain");
+      } else formSelectDate.submit();
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Terjadi kesalahan. Silakan coba lagi nanti.");
+    });
+});
+// membatasi tanggal ruang poly ends
 
 // dinamis form data keluarga starts SCRIPT DIBAWAH SEMENTARA
 // const readData = document.getElementById("read");

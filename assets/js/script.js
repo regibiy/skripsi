@@ -34,35 +34,22 @@ function dinamisTopInfo() {
           time += data[i].holiday_name;
           break;
         } else if (dayOfWeek >= 1 && dayOfWeek <= 4) {
-          if (hours < 7 || (hours == 7 && minutes < 15) || hours >= 12) {
-            time = "Tutup";
-          } else {
-            time = "07:15 - 12:00";
-          }
+          if (hours < 7 || (hours == 7 && minutes < 15) || hours >= 12) time = "Tutup";
+          else time = "07:15 - 12:00";
         } else if (dayOfWeek == 5 || dayOfWeek == 6) {
-          if (hours < 7 || (hours == 7 && minutes < 15) || hours >= 10) {
-            time = "Tutup";
-          } else {
-            time = "07:15 - 10:00";
-          }
-        } else if (dayOfWeek == 0) {
-          time = "Tutup";
-        }
+          if (hours < 7 || (hours == 7 && minutes < 15) || hours >= 10) time = "Tutup";
+          else time = "07:15 - 10:00";
+        } else if (dayOfWeek == 0) time = "Tutup";
       }
       timeP.innerHTML = time;
     });
   // akhir jam operasional
 
   // awal greeting
-  if (hours >= 6 && hours <= 9 && minutes <= 59) {
-    greetingH1.innerHTML = "Selamat Pagi...";
-  } else if (hours >= 10 && hours <= 14 && minutes <= 59) {
-    greetingH1.innerHTML = "Selamat Siang...";
-  } else if (hours >= 15 && hours <= 18 && minutes <= 59) {
-    greetingH1.innerHTML = "Selamat Sore...";
-  } else {
-    greetingH1.innerHTML = "Selamat Malam...";
-  }
+  if (hours >= 6 && hours <= 9 && minutes <= 59) greetingH1.innerHTML = "Selamat pagi...";
+  else if (hours >= 10 && hours <= 14 && minutes <= 59) greetingH1.innerHTML = "Selamat siang...";
+  else if (hours >= 15 && hours <= 18 && minutes <= 59) greetingH1.innerHTML = "Selamat sore...";
+  else greetingH1.innerHTML = "Selamat malam...";
   // akhir greeting
 }
 
