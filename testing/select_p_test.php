@@ -27,7 +27,7 @@
 
         selectElement.addEventListener("change", function() {
             var selectedValue = selectElement.value;
-            // resultElement.innerHTML = "Nilai yang dipilih: " + selectedValue;
+            resultElement.innerHTML = "Nilai yang dipilih: " + selectedValue;
             resultElement.value = selectedValue;
         });
 

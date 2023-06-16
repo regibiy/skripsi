@@ -29,6 +29,7 @@ if (isset($_POST['login'])) {
                     $_SESSION['status_login_pasien'] = "login_pasien";
                     $_SESSION['no_berobat'] = $row['no_indeks'];
                     $_SESSION['nama_pasien'] = $row['nama_depan'];
+                    $_SESSION['no_kk'] = $row['no_kk'];
                     header("Location: index.php");
                 } else {
                     $_SESSION['error_msg'] = "No berobat atau kata sandi salah";
@@ -139,6 +140,7 @@ if (isset($_POST['forgot-account'])) {
 
 if (isset($_POST['pilih_tanggal'])) {
     $selected_date = $_POST['register_date'];
+    $register_date = $_POST['register_date'];
     $timestamp = strtotime($selected_date);
     $month = date('n', $timestamp);
     $selected_date = date("Y-m-j", $timestamp);
@@ -151,5 +153,17 @@ if (isset($_POST['pilih_tanggal'])) {
             header("Location: poly-rooms.php");
         }
     }
-    $sql = "SELECT * FROM ";
+    header("Location: poly-rooms.php?registerdate=" . $register_date);
+    // $sql = "SELECT ruang_poli.nama_ruang_poli, COUNT(id_pendaftaran) AS jumlah_pendaftar FROM ruang_poli LEFT JOIN pendaftaran ON ruang_poli.id_ruang_poli = pendaftaran.id_ruang_poli WHERE tanggal_daftar = CURRENT_DATE GROUP BY ruang_poli.id_ruang_poli";
+}
+
+if (isset($_POST['simpan_pendaftaran'])) {
+    $pendaftaran = new Pendaftaran();
+    $pendaftaran->set_data_pendaftaran($_POST['tanggal_daftar'], $_POST['nomor_antrian'], $_POST['no_rekam_medis'], $_POST['ruang_poli'], $_POST['tanggal_berobat']);
+    $test = $_POST['no_rekam_medis'];
+    var_dump($test);
+    die;
+    $pendaftaran->set_daftar_data_kontak($_POST['no_hp'], "");
+    $pendaftaran->set_daftar_data_domisili($_POST['alamat'], $_POST['rt'], $_POST['rw'], $_POST['kel_desa'], $_POST['kecamatan']);
+    die;
 }

@@ -2,7 +2,7 @@
 class Pasien
 {
     // properties
-    private $no_berobat, $no_kk, $nik, $nama_depan, $nama_belakang, $tempat_lahir, $tanggal_lahir,
+    protected $no_berobat, $no_kk, $nik, $nama_depan, $nama_belakang, $tempat_lahir, $tanggal_lahir,
         $jenis_kelamin, $agama, $pekerjaan, $no_hp, $email, $alamat, $rt, $rw, $kel_desa, $kecamatan, $ktp_kk, $kk, $password;
     // method
     function set_login_data($no_berobat, $password)
@@ -127,6 +127,39 @@ class Pasien
     function get_kk()
     {
         return $this->kk;
+    }
+}
+
+class Pendaftaran extends Pasien
+{
+    private $tanggal_daftar, $nomor_antrian, $nomor_rekam_medis, $tujuan_ruang, $tanggal_berobat;
+    function set_data_pendaftaran($tanggal_daftar, $nomor_antrian, $nomor_rekam_medis, $tujuan_ruang, $tanggal_berobat)
+    {
+        $this->tanggal_daftar = $tanggal_daftar;
+        $this->nomor_antrian = $nomor_antrian;
+        $this->nomor_rekam_medis = $nomor_rekam_medis;
+        $this->tujuan_ruang = $tujuan_ruang;
+        $this->tanggal_berobat = $tanggal_berobat;
+    }
+    function get_tanggal_daftar()
+    {
+        return $this->tanggal_daftar;
+    }
+    function get_nomor_antrian()
+    {
+        return $this->nomor_antrian;
+    }
+    function get_nomor_rekam_medis()
+    {
+        return $this->nomor_rekam_medis;
+    }
+    function get_tujuan_ruang()
+    {
+        return $this->tujuan_ruang;
+    }
+    function get_tanggal_berobat()
+    {
+        return $this->tanggal_berobat;
     }
 }
 

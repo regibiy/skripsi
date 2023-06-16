@@ -97,3 +97,27 @@ function get_data($table_name)
     $result = $conn->query($sql);
     return $result;
 }
+
+function generate_queue_number($treatment_date)
+{
+    global $conn;
+    $sql = "SELECT MAX(nomor_antrian) as nomor_antrian FROM pendaftaran WHERE tanggal_berobat = '$treatment_date'";
+    $result = $conn->query($sql);
+    $data = $result->fetch_assoc();
+    if ($data['nomor_antrian'] === NULL) {
+        $number = 1;
+        if ($number < 10) $leading_zero = "000";
+        elseif ($number > 9) $leading_zero = "00";
+        elseif ($number > 99) $leading_zero = "0";
+        $queue_number = "O" . $leading_zero . $number;
+    } else {
+        $queue_number = $data['nomor_antrian'];
+        $number = substr($queue_number, 1, 4);
+        $number = $number + 1;
+        if ($number < 10) $leading_zero = "000";
+        elseif ($number > 9) $leading_zero = "00";
+        elseif ($number > 99) $leading_zero = "0";
+        $queue_number = "O" . $leading_zero . $number;
+    }
+    return $queue_number;
+}

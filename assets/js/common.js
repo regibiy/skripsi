@@ -75,8 +75,8 @@ function addDays(date, days) {
 
 if (registerDateInput) {
   let maxDate = addDays(new Date(), 7).toISOString().split("T")[0];
-  registerDate.setAttribute("min", new Date().toISOString().split("T")[0]);
-  registerDate.setAttribute("max", maxDate);
+  registerDateInput.setAttribute("min", new Date().toISOString().split("T")[0]);
+  registerDateInput.setAttribute("max", maxDate);
 }
 
 function validasiTanggalDaftar() {
@@ -97,13 +97,58 @@ function validasiTanggalDaftar() {
   if (dateValue === "") alertError("Silakan pilih tanggal pendaftaran Anda");
   else if (selectedDay === 0) alertError("Puskesmas tidak melayani apapun pada hari Minggu");
   else if (currentDate === selectedDate) {
-    if (currentTime >= limitTime) alertError("Pendaftaran tidak dapat dilakukan karena jam pelayanan! Silakan pilih hari lain");
+    if (currentTime >= limitTime) alertError("Tanggal tidak dapat diterapkan karena jam pelayanan! Silakan pilih hari lain");
+    else valid = true;
   } else valid = true;
 
   if (!valid) return false;
   else return true;
 }
 // membatasi tanggal ruang poly ends
+
+// memilih pasien starts
+const patient = document.getElementById("patient");
+const patientName = document.getElementById("patientName");
+const phoneNumberInput = document.getElementById("no_hp");
+const noRekMedInput = document.getElementById("noRekMed");
+if (patient && patientName && phoneNumberInput && noRekMedInput) {
+  patient.addEventListener("change", () => {
+    let selectedPatient = patient.value;
+    let splitValue = selectedPatient.split(" ");
+    function checkPhoneNumber(PhoneNumber) {
+      if (PhoneNumber.substring(0, 3) === "628") return PhoneNumber;
+    }
+    phoneNumberInput.value = splitValue.find(checkPhoneNumber);
+
+    let showFullName = splitValue.slice(1, -1).join(" ");
+    patientName.innerHTML = showFullName;
+
+    let noRekMed = splitValue.slice(0, 1);
+    noRekMedInput.value = noRekMed;
+  });
+}
+// memilih pasien ends
+
+// validasi form pendaftaran starts
+if (patient) {
+  let valid = false;
+  function validasiPendaftaran() {
+    valuePatient = patient.value;
+    if (valuePatient === "---") alertError("Silakan pilih pasien yang akan berobat");
+    else valid = true;
+
+    if (!valid) return false;
+    else {
+      let confirmMsg = "Pastikan TIDAK ada data yang keliru. Cek data sekali lagi?";
+      if (confirm(confirmMsg) === true) {
+        alertP.style.display = "none";
+        scrollToTop();
+        return false;
+      } else return true;
+    }
+  }
+}
+// validasi form pendaftaran ends
 
 // dinamis form data keluarga starts SCRIPT DIBAWAH SEMENTARA
 // const readData = document.getElementById("read");
