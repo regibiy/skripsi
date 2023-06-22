@@ -1,8 +1,11 @@
-<?php
-$title = "UPT Puskesmas Alianyang";
-include("action.php");
-include("views/header.php");
-?>
+7<?php
+    $title = "UPT Puskesmas Alianyang";
+    include("action.php");
+
+    $hari = array("1" => "Senin", "2" => "Selasa", "3" => "Rabu", "4" => "Kamis", "5" => "Jumat", "6" => "Sabtu", "7" => "Minggu");
+
+    include("views/header.php");
+    ?>
 
 <!-- main starts -->
 <?php
@@ -30,23 +33,17 @@ if (check_status_login_pasien()) {
                     <h1 class="mb-3 text-dark-emphasis fs-6">Masuk</h1>
                     <?php
                     if (isset($_SESSION['error_msg'])) {
-                    ?>
-                        <p class="bg-danger text-white p-1 rounded fs-7"><?= $_SESSION['error_msg'] ?></p>
-                    <?php
+                        echo "<p class='bg-danger text-white p-1 rounded fs-7'>" . $_SESSION['error_msg'] . "</p>";
                         unset($_SESSION['error_msg']);
                     }
                     ?>
                     <div class="form-floating mb-3">
                         <?php
                         if (isset($_SESSION['no_berobat']) && !check_status_login_pasien()) {
-                        ?>
-                            <input type="number" class="form-control form-control-sm" id="floatingInput" name="no_berobat" value="<?= $_SESSION['no_berobat'] ?>">
-                        <?php
+                            echo "<input type='number' class='form-control form-control-sm' id='floatingInput' name='no_berobat' value='" . $_SESSION['no_berobat'] . "'>";
                             unset($_SESSION['no_berobat']);
                         } else {
-                        ?>
-                            <input type="number" class="form-control form-control-sm" id="floatingInput" name="no_berobat" placeholder="123456" autocomplete="off" min="0">
-                        <?php
+                            echo "<input type='number' class='form-control form-control-sm' id='floatingInput' name='no_berobat' placeholder='123456' min='0'>";
                         }
                         ?>
                         <label for="floatingInput" class="form-label form-label-sm fs-7">Nomor Berobat</label>
@@ -83,80 +80,41 @@ if (!check_status_login_pasien()) {
 ?>
 <div class="container information">
     <?php
-    if (!check_status_login_pasien()) {
-    ?>
-        <h2 class="text-center text-dark-emphasis mb-4 fs-5" id="information">Informasi Kegiatan Kami</h2>
-    <?php
-    }
+    if (!check_status_login_pasien()) echo "<h2 class='text-center text-dark-emphasis mb-4 fs-5' id='information'>Informasi Kegiatan Kami</h2>";
     ?>
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-dark-emphasis fs-6">Pemeriksaan Buah Hati</h5>
-                    <p class="card-text text-secondary fs-7">Ibu pintar, yuk konsultasikan tumbuh kembang dan kesehatan si buah hati anda. Kuota terbatas yaa.</p>
-                    <p class="card-text text-secondary fs-7">Hari: Senin, 10 April 2023</p>
-                    <p class="card-text text-secondary fs-7">Jam: 09:00 sampai selesai</p>
-                    <p class="card-text text-secondary fs-7">Dokter: dr. Rosyadi Akbari M.Sc.Sp.A</p>
-                    <a class="text-decoration-none fs-7" href="information.php">Selengkapnya...</a>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-secondary fs-7">05-04-2023</small>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-dark-emphasis fs-6">Pemeriksaan Buah Hati</h5>
-                    <p class="card-text text-secondary fs-7">Ibu pintar, yuk konsultasikan tumbuh kembang dan kesehatan si buah hati anda. Kuota terbatas yaa.</p>
-                    <p class="card-text text-secondary fs-7">Hari: Senin, 10 April 2023</p>
-                    <p class="card-text text-secondary fs-7">Jam: 09:00 sampai selesai</p>
-                    <p class="card-text text-secondary fs-7">Dokter: dr. Rosyadi Akbari M.Sc.Sp.A</p>
-                    <a class="text-decoration-none fs-7" href="information.php">Selengkapnya...</a>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-secondary fs-7">05-04-2023</small>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-dark-emphasis fs-6">Pemeriksaan Buah Hati</h5>
-                    <p class="card-text text-secondary fs-7">Ibu pintar, yuk konsultasikan tumbuh kembang dan kesehatan si buah hati anda. Kuota terbatas yaa.</p>
-                    <p class="card-text text-secondary fs-7">Hari: Senin, 10 April 2023</p>
-                    <p class="card-text text-secondary fs-7">Jam: 09:00 sampai selesai</p>
-                    <p class="card-text text-secondary fs-7">Dokter: dr. Rosyadi Akbari M.Sc.Sp.A</p>
-                    <a class="text-decoration-none fs-7" href="information.php">Selengkapnya...</a>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-secondary fs-7">05-04-2023</small>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-dark-emphasis fs-6">Pemeriksaan Buah Hati</h5>
-                    <p class="card-text text-secondary fs-7">Ibu pintar, yuk konsultasikan tumbuh kembang dan kesehatan si buah hati anda. Kuota terbatas yaa.</p>
-                    <p class="card-text text-secondary fs-7">Hari: Senin, 10 April 2023</p>
-                    <p class="card-text text-secondary fs-7">Jam: 09:00 sampai selesai</p>
-                    <p class="card-text text-secondary fs-7">Dokter: dr. Rosyadi Akbari M.Sc.Sp.A</p>
-                    <a class="text-decoration-none fs-7" href="information.php">Selengkapnya...</a>
-                </div>
-                <div class="card-footer">
-                    <small class="text-body-secondary fs-7">05-04-2023</small>
-                </div>
-            </div>
-        </div>
+        <?php
+        $sql = "SELECT * FROM informasi INNER JOIN petugas ON informasi.username = petugas.username ORDER BY tanggal_unggah";
+        $result = $conn->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            echo "<div class='col'>";
+            echo "<div class='card shadow-sm'>";
+            echo "<div class='card-body'>";
+            echo "<h5 class='card-title text-dark-emphasis fs-6'>" . $row['judul'] . "</h5>";
+            $deskripsi = $row['deskripsi'];
+            $kata = str_word_count($deskripsi, 1); //https://www.php.net/manual/en/function.str-word-count.php
+            $rangkai = implode(' ', array_slice($kata, 0, 20));
+            echo "<p class='card-text text-secondary fs-7'>" . $rangkai . "</p>";
+            $tanggal = date('N', strtotime($row['tanggal']));
+            foreach ($hari as $x => $val) {
+                if ($tanggal == $x) $hari2 = $val;
+            }
+            echo "<p class='card-text text-secondary fs-7'>Hari: " . $hari2 . ", " . format_date($row['tanggal']) . "</p>";
+            echo "<p class='card-text text-secondary fs-7'>Jam: " . $row['jam_mulai'] . " sampai " . $row['jam_selesai'] . "</p>";
+            $enc_id_informasi = encrypt($row['id_informasi']);
+            $url = "information.php?idInformasi=" . urlencode($enc_id_informasi);
+            echo "<a class='text-decoration-none fs-7' href='" . $url . "'>Selengkapnya...</a>";
+            echo "</div>";
+            echo "<div class='card-footer'>";
+            if ($row['tanggal_ubah'] === NULL || $row['tanggal_ubah'] === "") echo "<small class='text-body-secondary fs-7'>Diunggah pada " . date('d-m-Y, H:i', strtotime($row['tanggal_unggah'])) . "</small>";
+            else echo "<small class='text-body-secondary fs-7'>Diedit pada " . date('d-m-Y, H:i', strtotime($row['tanggal_ubah'])) . " oleh " . $row['nama_depan'] . "</small>";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
+        }
+        ?>
     </div>
 </div>
+<!-- body ends -->
 <?php
 include("views/footer.php");
-// $tanggal_lahir = "2001-10-17";
-// $tanggal_sekarang = date('Y-m-d');
-
-// $selisih_tanggal = date_diff(date_create($tanggal_lahir), date_create($tanggal_sekarang));
-// $umur = $selisih_tanggal->y;
-// echo "Umur: " . $umur . " tahun.";

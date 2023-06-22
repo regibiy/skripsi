@@ -4,60 +4,56 @@ include("action.php");
 include("views/header.php");
 ?>
 
-<div class="container my-mtb-body shadow-sm rounded border py-3">
-    <h1 class="text-dark-emphasis fs-6 text-center mb-0">Pendaftaran Saya</h1>
-    <div class="row g-3 align-items-center justify-content-center my-2">
-        <div class="col-auto">
-            <label for="no_rekmed" class="col-form-label col-form-label-sm text-dark-emphasis">Nomor Rekam Medis</label>
+<div class="mx-3 my-mtb-body">
+    <div class="container  shadow-sm rounded border py-3">
+        <h1 class="text-dark-emphasis fs-6 text-center mb-3">Pendaftaran Saya</h1>
+        <div class="table-responsive fs-7 border rounded p-2">
+            <table id="my-registration" class="table table-striped">
+                <thead>
+                    <tr class="fw-medium">
+                        <td>Tanggal Daftar</td>
+                        <td>No. Antrian</td>
+                        <td>Pasien</td>
+                        <td>Tujuan Ruang Poli</td>
+                        <td>Tanggal Berobat</td>
+                        <td>Status Pendaftaran</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $no_kk = $_SESSION['no_kk'];
+                    $sql = "SELECT * FROM pendaftaran INNER JOIN rekam_medis ON pendaftaran.no_rekam_medis = rekam_medis.no_rekam_medis INNER JOIN pasien ON rekam_medis.nik = pasien.nik
+                        INNER JOIN ruang_poli ON pendaftaran.id_ruang_poli = ruang_poli.id_ruang_poli WHERE pasien.no_kk = '$no_kk' ORDER BY tanggal_daftar DESC, tanggal_berobat DESC, nomor_antrian DESC";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        $enc_nik = encrypt($row['nik']);
+                        $id_daftar = $row['id_pendaftaran'];
+                        echo "<tr>";
+                        echo "<td>" . format_date($row['tanggal_daftar']) . "</td>";
+                        echo "<td>" . $row['nomor_antrian'] . "</td>";
+                        echo "<td>" . $row['no_rekam_medis'] . " | " . $row['nama_depan'] . " " . $row['nama_belakang'] .  "</td>";
+                        echo "<td>" . $row['nama_ruang_poli'] . "</td>";
+                        echo "<td>" . format_date($row['tanggal_berobat']) . "</td>";
+                        echo "<td>" . $row['status_pendaftaran'] . "</td>";
+                        if ($row['status_pendaftaran'] === "Dibatalkan" || $row['status_pendaftaran'] === "Diproses" || $row['status_pendaftaran'] === "Selesai" || $row['status_pendaftaran'] === "Sukses" || $row['status_pendaftaran'] === "Gagal") {
+                            echo "<td>
+                            <a href='print-registration.php?nik=" . urlencode($enc_nik) . "&iddaftar=" . $id_daftar . "' class='btn btn-sm btn-success'>Cetak</a>
+                            </td>";
+                        } elseif ($row['status_pendaftaran'] === "Menunggu" || $row['status_pendaftaran'] === "Ditunda" || $row['status_pendaftaran'] === "Invalid") {
+                            echo "<td>
+                            <a href='print-registration.php?nik=" . urlencode($enc_nik) . "&iddaftar=" . $id_daftar . "' class='btn btn-sm btn-success'>Cetak</a>";
+                    ?>
+                            <a href="cancel-registration.php?iddaftar=<?= $id_daftar ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Batalkan pendaftaran <?= $row['nama_ruang_poli'] ?> dengan nomor antrian <?= $row['nomor_antrian'] ?>?')">Batal</a>
+                    <?php
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
-        <div class="col-auto">
-            <select class="form-select form-select-sm fs-7 text-dark-emphasis" name="no_rekmed" id="no_rekmed" required>
-                <option value="" selected>---</option>
-                <option value="00945678">00945678 | Fachri Andika Permana</option>
-                <option value="10945678">10945678 | Dewi Sari Pramudita</option>
-            </select>
-        </div>
-        <div class="col-auto">
-            <button type="submit" class="btn btn-success btn-sm">Terapkan</button>
-        </div>
-    </div>
-    <div class="table-responsive fs-7 border rounded p-2">
-        <table id="my-registration" class="table table-striped">
-            <thead>
-                <tr class="fw-medium">
-                    <td>Tanggal Daftar</td>
-                    <td>No. Antrian</td>
-                    <td>Tujuan Ruang Poli</td>
-                    <td>Tanggal Berobat</td>
-                    <td>Status Pendaftaran</td>
-                    <td></td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>19-10-2023</td>
-                    <td>O0001</td>
-                    <td>Ruang Pemeriksaan Umum</td>
-                    <td>20-10-2023</td>
-                    <td>Menunggu</td>
-                    <td>
-                        <button class="btn btn-sm btn-success">Cetak</button>
-                        <button class="btn btn-sm btn-outline-danger">Batal</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>19-10-2023</td>
-                    <td>O0002</td>
-                    <td>Ruang Kesehatan Gigi Mulut</td>
-                    <td>20-10-2023</td>
-                    <td>Menunggu</td>
-                    <td>
-                        <a href="print-registration.php" class="btn btn-sm btn-success">Cetak</a>
-                        <button class="btn btn-sm btn-outline-danger">Batal</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </div>
 <?php

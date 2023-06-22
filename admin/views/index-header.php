@@ -60,7 +60,7 @@
                             <a href="activity-registration.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">local_activity</span>Kegiatan</a>
                             <a href="report-registration.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">summarize</span>Laporan</a>
                         ';
-                    } elseif ($currentPath == "/skripsi/admin/activity-registration.php" || $currentPath == "/skripsi/admin/add-activity-registration.php" || $currentPath == "/skripsi/admin/edit-activity-registration.php") {
+                    } elseif ($currentPath == "/skripsi/admin/activity-registration.php" || $currentPath == "/skripsi/admin/add-activity-registration.php" || $currentPath == "/skripsi/admin/edit-activity-registration.php" || $currentPath == "/skripsi/admin/edit-doctor-registration.php") {
                         echo '
                             <a href="index-registration.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">health_metrics</span>Dashboard</a>
                             <a href="all-registration.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">browse_activity</span>Pendaftaran</a>

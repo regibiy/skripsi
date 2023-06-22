@@ -62,6 +62,7 @@ include("views/index-header.php");
                                 <button type="button" class="btn btn-sm btn-outline-secondary d-block" data-bs-toggle="modal" data-bs-target="#<?= $gambar_ruang ?>">
                                     <img src="assets/images/<?= $gambar_ruang ?>" alt="gambar ruang" class="img-fluid" width="50">
                                 </button>
+                                <!-- modal starts -->
                                 <div class="modal fade" id="<?= $gambar_ruang ?>" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -75,6 +76,7 @@ include("views/index-header.php");
                                         </div>
                                     </div>
                                 </div>
+                                <!-- modal ends -->
                             </td>
                         </tr>
                         <tr>

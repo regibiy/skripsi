@@ -1,6 +1,7 @@
 const passwordInput = document.getElementById("floatingPassword");
 const passwordInputPetugas = document.getElementById("password");
 const alertP = document.getElementById("alert");
+const alertModalP = document.getElementById("alertModal");
 
 // show password starts
 function showPassword() {
@@ -19,6 +20,12 @@ function scrollToTop() {
 function alertError($message) {
   alertP.innerHTML = $message;
   alertP.style.display = "block";
+  scrollToTop();
+}
+
+function alertErrorModal($message) {
+  alertModalP.innerHTML = $message;
+  alertModalP.style.display = "block";
   scrollToTop();
 }
 
@@ -61,7 +68,6 @@ function validasiFormTambahPetugas() {
 // enabled dan disabled kuota starts
 const kuotaBtn = document.getElementById("kuotaBtn");
 const kuotaBtnSimpan = document.getElementById("kuotaBtnSimpan");
-
 function toggleReadonly() {
   const kuotaInput = document.getElementById("kuotaInput");
   if (kuotaInput.readOnly) {
@@ -99,3 +105,89 @@ function validasiFormTambahRuang() {
   }
 }
 // validasi form tambah dan edit ruang poli ends
+
+// validasi form tambah dan edit data dokter starts
+const nama = document.getElementById("nama");
+const spesialisasi = document.getElementById("spesialisasi");
+const noHP = document.getElementById("noHp");
+const alamat = document.getElementById("alamat");
+const judul = document.getElementById("judul");
+const deskripsi = document.getElementById("deskripsi");
+function validasiFormDokter() {
+  let valid = false;
+  if (nama.value.trim().length === 0) alertErrorModal("Silakan isi nama dokter");
+  else if (spesialisasi.value.trim().length === 0) alertErrorModal("Silakan isi spesialisasi dokter");
+  else if (noHP.value.length === 0) alertErrorModal("Silakan isi nomor hp dokter");
+  else if (alamat.value.trim().length === 0) alertErrorModal("Silakan isi alamat dokter");
+  else valid = true;
+
+  if (!valid) return false;
+  else {
+    let confirmMsg = "Pastikan TIDAK ada data yang keliru. Cek data sekali lagi?";
+    if (confirm(confirmMsg) === true) {
+      alertP.style.display = "none";
+      scrollToTop();
+      return false;
+    } else {
+      if (judul.value.trim().length > 0) localStorage.setItem("judul", judul.value);
+      if (deskripsi.value.trim().length > 0) localStorage.setItem("deskripsi", deskripsi.value);
+      return true;
+    }
+  }
+}
+
+if (localStorage.getItem("judul") !== null) judul.value = localStorage.getItem("judul");
+if (localStorage.getItem("deskripsi") !== null) deskripsi.value = localStorage.getItem("deskripsi");
+localStorage.clear();
+
+function restartTambahDokter() {
+  alertModalP.style.display = "none";
+  nama.value = "";
+  spesialisasi.value = "";
+  noHP.value = "";
+  alamat.value = "";
+}
+// validasi form tambah dan edit data dokter ends
+
+// validasi form tambah informasi starts
+const idDokterSelect = document.getElementById("dokter");
+const jamSelesaiNot = document.getElementById("jamSelesaiNotknown");
+const jamSelesai = document.getElementById("jamSelesai");
+function disabledJamSelesai() {
+  if (jamSelesaiNot.checked === true) {
+    jamSelesai.disabled = true;
+    jamSelesai.value = "";
+  } else jamSelesai.disabled = false;
+}
+
+function validasiFormInformasi() {
+  let valid = false;
+  let dokter = idDokterSelect.value;
+  if (dokter === "---" || dokter === "") alertError("Silakan pilih dokter");
+  else if (jamSelesaiNot.checked === false && (jamSelesai.value === null || jamSelesai.value === "")) alertError("Silakan tentukan jam selesai kegiatan");
+  else valid = true;
+
+  if (!valid) return false;
+  else {
+    let confirmMsg = "Pastikan TIDAK ada data yang keliru. Cek data sekali lagi?";
+    if (confirm(confirmMsg) === true) {
+      alertP.style.display = "none";
+      scrollToTop();
+      return false;
+    } else return true;
+  }
+}
+// validai form tambah informasi ends
+
+// href edit dokter starts
+const idDokterA = document.getElementById("idDokterEdit");
+const idDokterHidden = document.getElementById("idDokter");
+console.log(idDokterHidden);
+idDokterSelect.addEventListener("change", () => {
+  let idDokter, splitDokter;
+  idDokter = idDokterSelect.value;
+  splitDokter = idDokter.split(" ");
+  idDokterA.href = `edit-doctor-registration.php?idDokter=${splitDokter[0]}`;
+  idDokterHidden.value = splitDokter[1];
+});
+// href edit dokter ends

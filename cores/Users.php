@@ -230,3 +230,70 @@ class Ruang_Poli
         return $this->status_ruang;
     }
 }
+
+class Informasi_Kegiatan
+{
+    private $judul, $deskripsi, $dokter, $tanggal, $jam_mulai, $jam_selesai;
+    function set_data_informasi($judul, $deskripsi, $dokter, $tanggal, $jam_mulai, $jam_selesai)
+    {
+        $this->judul = $judul;
+        $this->deskripsi = $deskripsi;
+        $this->dokter = $dokter;
+        $this->tanggal = $tanggal;
+        $this->jam_mulai = $jam_mulai;
+        $this->jam_selesai = $jam_selesai;
+    }
+
+    function get_judul()
+    {
+        return $this->judul;
+    }
+    function get_deskripsi()
+    {
+        return $this->deskripsi;
+    }
+    function get_dokter()
+    {
+        return $this->dokter;
+    }
+    function get_tanggal()
+    {
+        return $this->tanggal;
+    }
+    function get_jam_mulai()
+    {
+        return $this->jam_mulai;
+    }
+    function get_jam_selesai()
+    {
+        return $this->jam_selesai;
+    }
+}
+
+class Dokter
+{
+    private $nama, $spesialisasi, $no_hp, $alamat;
+    function set_data_dokter($nama, $spesialisasi, $no_hp, $alamat)
+    {
+        $this->nama = $nama;
+        $this->spesialisasi = $spesialisasi;
+        $this->no_hp = $no_hp;
+        $this->alamat = $alamat;
+    }
+    function get_nama()
+    {
+        return $this->nama;
+    }
+    function get_spesialisasi()
+    {
+        return $this->spesialisasi;
+    }
+    function get_no_hp()
+    {
+        return $this->no_hp;
+    }
+    function get_alamat()
+    {
+        return $this->alamat;
+    }
+}

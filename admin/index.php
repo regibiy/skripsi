@@ -34,12 +34,12 @@ include("views/login-header.php");
                     <?php
                     if (isset($_SESSION['username']) && !check_status_login_admin()) {
                     ?>
-                        <input type="text" class="form-control form-control-sm" id="floatingInput" placeholder="regi123" name="username" value="<?= $_SESSION['username'] ?>">
+                        <input type="text" class="form-control form-control-sm" id="floatingInput" placeholder="regi123" name="username" value="<?= $_SESSION['username'] ?>" autocomplete="off">
                     <?php
                         unset($_SESSION['username']);
                     } else {
                     ?>
-                        <input type="text" class="form-control form-control-sm" id="floatingInput" placeholder="regi123" name="username">
+                        <input type="text" class="form-control form-control-sm" id="floatingInput" placeholder="regi123" name="username" autocomplete="off">
                     <?php
                     }
                     ?>

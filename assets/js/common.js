@@ -1,5 +1,7 @@
 $(document).ready(function () {
-  $("#my-registration").DataTable();
+  $("#my-registration").DataTable({
+    ordering: false,
+  });
 });
 
 // show password starts
@@ -23,7 +25,6 @@ const inputRw = document.getElementById("rw");
 function scrollToTop() {
   window.scrollTo({
     top: 0,
-    behavior: "smooth",
   });
 }
 
@@ -34,8 +35,8 @@ function alertError($message) {
 }
 
 function validasiFormDaftar() {
-  let noKk, nik, valid;
-  valid = false;
+  let noKk, nik;
+  let valid = false;
   noKk = inputKk.value;
   nik = inputNik.value;
   noHp = inputNoHp.value;
@@ -65,23 +66,26 @@ function validasiFormDaftar() {
 // validasi form daftar ends
 
 // membatasi tanggal ruang poly starts
-const registerDateInput = document.getElementById("registerDate");
-
-function addDays(date, days) {
-  let result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result;
-}
-
+const registerDateInput = document.getElementById("treatmentDate");
 if (registerDateInput) {
-  let maxDate = addDays(new Date(), 7).toISOString().split("T")[0];
-  registerDateInput.setAttribute("min", new Date().toISOString().split("T")[0]);
-  registerDateInput.setAttribute("max", maxDate);
+  let dateLimiter = new Date();
+  let yearLimiter = dateLimiter.getFullYear();
+  let monthLimiter = dateLimiter.getMonth() + 1;
+  let dayLimiter = dateLimiter.getDate();
+
+  if (monthLimiter < 10) monthLimiter = "0" + monthLimiter;
+  if (dayLimiter < 10) dayLimiter = "0" + dateLimiter;
+  let minDate = `${yearLimiter}-${monthLimiter}-${dayLimiter}`;
+
+  registerDateInput.min = minDate;
+
+  let maxDayLimiter = dateLimiter.getDate() + 7;
+  let maxDate = `${yearLimiter}-${monthLimiter}-${maxDayLimiter}`;
+  registerDateInput.max = maxDate;
 }
 
 function validasiTanggalDaftar() {
-  let valid;
-  valid = false;
+  let valid = false;
   let dateValue = registerDateInput.value;
   let dayRegisterUser = new Date(dateValue);
   let selectedDay = dayRegisterUser.getDay();
@@ -150,26 +154,100 @@ if (patient) {
 }
 // validasi form pendaftaran ends
 
-// dinamis form data keluarga starts SCRIPT DIBAWAH SEMENTARA
-// const readData = document.getElementById("read");
-// const editData = document.getElementById("edit");
-// const addData = document.getElementById("add");
-// const btnaddData = document.getElementById("addFamilyMember");
-// const btnEditData = document.querySelectorAll(".editFamilyMember");
+// validasi form pendaftaran saya starts
+const myNoRekmedInput = document.getElementById("noRekmed");
+if (myNoRekmedInput) {
+  function validasiFormRekmed() {
+    let valid = false;
+    let noRekMed = myNoRekmedInput.value;
+    if (noRekMed === "---") alertError("Silakan pilih nomor rekam medis");
+    else valid = true;
 
-// addData.style.display = "none";
-// editData.style.display = "none";
+    if (!valid) return false;
+    else return true;
+  }
+}
+// validasi form pendaftaran saya ends
 
-// btnaddData.addEventListener("click", () => {
-//   addData.style.display = "block";
-//   readData.style.display = "none";
-// });
+// validasi nik tambah anggota keluarga starts
+const cekNikInput = document.getElementById("nikCheckDua");
+function validasiNIK() {
+  let valid = false;
+  let nik = cekNikInput.value;
+  if ((nik.length >= 1 && nik.length < 16) || nik.length > 16) alertError("Sesuaikan NIK Anda! NIK memiliki panjang 16 angka");
+  else valid = true;
 
-// btnEditData.forEach((button) => {
-//   button.addEventListener("click", () => {
-//     editData.style.display = "block";
-//     readData.style.display = "none";
-//     scrollToTop();
-//   });
-// });
-// dinamis form data keluarga ends
+  if (!valid) return false;
+  else return true;
+}
+
+function restartNIK() {
+  if (alertP.style.display === "block") {
+    cekNikInput.value = "";
+    alertP.style.display = "none";
+  }
+}
+
+const editEmail = document.getElementById("email");
+const hiddenEmail = document.getElementById("hiddenEmail");
+function restartEmail() {
+  if (alertP.style.display === "block") {
+    let email = hiddenEmail.value;
+    editEmail.value = email;
+  }
+}
+
+const editAlamat = document.getElementById("alamat");
+const hiddenAlamat = document.getElementById("hiddenAlamat");
+const editRT = document.getElementById("rt");
+const hiddenRT = document.getElementById("hiddenRT");
+const editRW = document.getElementById("rw");
+const hiddenRW = document.getElementById("hiddenRW");
+const editKelDesa = document.getElementById("kel_desa");
+const hiddenKelDesa = document.getElementById("hiddenKelDesa");
+const editKecamatan = document.getElementById("kecamatan");
+const hiddenKecamatan = document.getElementById("hiddenKecamatan");
+function restartDomisili() {
+  editAlamat.value = hiddenAlamat.value;
+  editRT.value = hiddenRT.value;
+  editRW.value = hiddenRW.value;
+  editKelDesa.value = hiddenKelDesa.value;
+  editKecamatan.value = hiddenKecamatan.value;
+}
+// validasi nik tambah anggota keluarga ends
+
+// validasi tambah anggota starts
+const statusHubunganInput = document.getElementById("statusHubungan");
+const jenisKelaminInput = document.getElementById("jenisKelamin");
+const agamaInput = document.getElementById("agama");
+function validasiTambahAnggota() {
+  let valid = false;
+  let statusHubungan = statusHubunganInput.value;
+  let jenisKelamin = jenisKelaminInput.value;
+  let agama = agamaInput.value;
+  if (jenisKelamin === "---") alertError("Silakan pilih jenis kelamin");
+  else if (agama === "---") alertError("Silakan pilih agama");
+  else if (statusHubungan === "---") alertError("Silakan pilih status hubungan pasien");
+  else valid = true;
+
+  if (!valid) return false;
+  else {
+    let confirmMsg = "Pastikan TIDAK ada data yang keliru. Cek data sekali lagi?";
+    if (confirm(confirmMsg) === true) {
+      alertP.style.display = "none";
+      scrollToTop();
+      return false;
+    } else return true;
+  }
+}
+// validasi tambah anggota ends
+
+// validasi edit anggota starts
+function validasiEditAnggota() {
+  let confirmMsg = "pastikan Tidak ada data yang keliru. Cek data sekali lagi?";
+  if (confirm(confirmMsg) === true) {
+    scrollToTop();
+    return false;
+  } else return true;
+}
+// validasi edit anggota ends

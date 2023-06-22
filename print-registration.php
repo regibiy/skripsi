@@ -1,11 +1,36 @@
 <?php
+include("action.php");
+
+if (isset($_GET['nik']) && isset($_GET['iddaftar'])) {
+    $enc_nik = $_GET['nik'];
+    $dec_nik = decrypt($enc_nik);
+    $id_daftar = $_GET['iddaftar'];
+} else header("Location: index.php");
+
+$sql = "SELECT * FROM pendaftaran INNER JOIN rekam_medis ON pendaftaran.no_rekam_medis = rekam_medis.no_rekam_medis INNER JOIN pasien ON rekam_medis.nik = pasien.nik 
+    INNER JOIN akun ON pasien.no_kk = akun.no_kk INNER JOIN ruang_poli ON pendaftaran.id_ruang_poli = ruang_poli.id_ruang_poli WHERE pendaftaran.id_pendaftaran = '$id_daftar'";
+$result = $conn->query($sql);
+while ($row = $result->fetch_assoc()) {
+    $nomor_antrian = $row['nomor_antrian'];
+    $no_rekmed = $row['no_rekam_medis'];
+    $nama_lengkap = $row['nama_depan'] . $row['nama_belakang'];
+    $tanggal_lahir = $row['tanggal_lahir'];
+    $tanggal_berobat = $row['tanggal_berobat'];
+    $selisih = date_diff(date_create($tanggal_lahir), date_create($tanggal_berobat));
+    $umur = $selisih->y;
+    $alamat = $row['alamat'];
+    $no_hp = $row['no_hp'];
+    $tanggal_daftar = format_date($row['tanggal_daftar']);
+    $ruang_poli = $row['nama_ruang_poli'];
+    $tanggal_berobat = format_date($row['tanggal_berobat']);
+}
+
 // Require composer autoload
 require_once __DIR__ . '/vendor/autoload.php';
 // Create an instance of the class:
 $mpdf = new \Mpdf\Mpdf(['format' => 'A4']);
 date_default_timezone_set("Asia/Jakarta");
 
-// Write some HTML code:
 $html = '
 <style media="print">
     header, section {
@@ -58,27 +83,31 @@ $html = '
         <table>
             <tr>
                 <td width="200">Nomor Antrian</td>
-                <td>x-5-x</td>
+                <td>' . $nomor_antrian . '</td>
+            </tr>
+            <tr>
+                <td width="200">Nomor Rekam Medis</td>
+                <td>' . $no_rekmed . '</td>
             </tr>
             <tr>
                 <td width="200">Nama</td>
-                <td>x-60-x</td>
+                <td>' . $nama_lengkap . '</td>
             </tr>
             <tr>
                 <td width="200">Umur</td>
-                <td>99 Tahun</td>
+                <td>' . $umur . ' Tahun</td>
             </tr>
             <tr>
                 <td width="200">Alamat</td>
-                <td>x-150-x</td>
+                <td>' . $alamat . '</td>
             </tr>
             <tr>
                 <td width="200">Nomor HP</td>
-                <td>x-15-x</td>
+                <td>' . $no_hp . '</td>
             </tr>
             <tr>
                 <td width="200">Tanggal Daftar</td>
-                <td>dd-mm-yyyy</td>
+                <td>' . $tanggal_daftar . '</td>
             </tr>
         </table>
     </section>
@@ -90,11 +119,11 @@ $html = '
             </tr>
             <tr>
                 <td width="200">Tujuan Ruang Poli</td>
-                <td>x-30-x</td>
+                <td>' . $ruang_poli . '</td>
             </tr>
             <tr>
                 <td width="200">Tanggal Berobat</td>
-                <td>dd-mm-yyyy</td>
+                <td>' . $tanggal_berobat . '</td>
             </tr>
         </table>
     </section>
@@ -108,4 +137,5 @@ $html = '
 $mpdf->WriteHTML($html);
 
 // Output a PDF file directly to the browser
-$mpdf->Output('filename.pdf', \Mpdf\Output\Destination::INLINE);
+$filename = $no_rekmed . ' ' .  $ruang_poli . '.pdf';
+$mpdf->Output($filename, \Mpdf\Output\Destination::DOWNLOAD);
