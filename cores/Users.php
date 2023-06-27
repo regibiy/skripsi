@@ -130,6 +130,25 @@ class Pasien
     }
 }
 
+class Akun extends Pasien
+{
+    protected $no_kk, $no_indeks, $kata_sandi;
+    function set_data_akun($no_kk, $no_indeks, $kata_sandi)
+    {
+        $this->no_kk = $no_kk;
+        $this->no_indeks = $no_indeks;
+        $this->kata_sandi = $kata_sandi;
+    }
+    function get_no_indeks()
+    {
+        return $this->no_indeks;
+    }
+    function get_kata_sandi()
+    {
+        return $this->kata_sandi;
+    }
+}
+
 class Pendaftaran extends Pasien
 {
     private $tanggal_daftar, $nomor_antrian, $nomor_rekam_medis, $tujuan_ruang, $tanggal_berobat;

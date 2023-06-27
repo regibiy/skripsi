@@ -26,7 +26,6 @@ function alertError($message) {
 function alertErrorModal($message) {
   alertModalP.innerHTML = $message;
   alertModalP.style.display = "block";
-  scrollToTop();
 }
 
 // validasi form tambah dan edit petugas starts
@@ -182,12 +181,40 @@ function validasiFormInformasi() {
 // href edit dokter starts
 const idDokterA = document.getElementById("idDokterEdit");
 const idDokterHidden = document.getElementById("idDokter");
-console.log(idDokterHidden);
-idDokterSelect.addEventListener("change", () => {
-  let idDokter, splitDokter;
-  idDokter = idDokterSelect.value;
-  splitDokter = idDokter.split(" ");
-  idDokterA.href = `edit-doctor-registration.php?idDokter=${splitDokter[0]}`;
-  idDokterHidden.value = splitDokter[1];
-});
+if (idDokterSelect) {
+  idDokterSelect.addEventListener("change", () => {
+    let idDokter, splitDokter;
+    idDokter = idDokterSelect.value;
+    splitDokter = idDokter.split(" ");
+    idDokterA.href = `edit-doctor-registration.php?idDokter=${splitDokter[0]}`;
+    idDokterHidden.value = splitDokter[1];
+  });
+}
 // href edit dokter ends
+
+// validasi ubah status starts
+const editProses = document.querySelectorAll(".edit-proses");
+const editTunda = document.querySelectorAll(".edit-tunda");
+function validasiStatus() {
+  // Memeriksa apakah semua elemen dengan kelas "edit-proses" memiliki properti checked sebagai false
+  const isAllEditProsesUnchecked = Array.from(editProses).every((element) => !element.checked);
+  const isAllEditTundaUnchecked = Array.from(editTunda).every((element) => !element.checked);
+  if (isAllEditProsesUnchecked && isAllEditTundaUnchecked) {
+    alert("Silakan pilih salah satu status pendaftaran");
+    return false;
+  } else return true;
+}
+// validasi ubah status ends
+
+// validasi tanggal starts
+const tanggalAwalInput = document.getElementById("tanggalAwal");
+const tanggalAkhirInput = document.getElementById("tanggalAkhir");
+function validasiSetTanggal() {
+  let valid = false;
+  if (tanggalAkhirInput.value < tanggalAwalInput.value) alertError("Tanggal awal harus lebih kecil dari tanggal akhir");
+  else valid = true;
+
+  if (!valid) return false;
+  else return true;
+}
+// validasi tanggal ends

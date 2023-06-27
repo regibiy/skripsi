@@ -34,7 +34,6 @@ if (isset($_GET['noKk'])) {
 $sql = "SELECT * FROM akun INNER JOIN pasien ON akun.no_kk = pasien.no_kk LEFT JOIN rekam_medis on pasien.nik = rekam_medis.nik WHERE akun.no_kk = '$dec_no_kk'";
 $result = $conn->query($sql);
 $data = $result->fetch_assoc();
-if (is_null($data)) header("Location: ../error-page.php"); //jika data no kk telah diubah dan tidak dapat get no kk sebelumnya
 include("views/index-header.php");
 ?>
 
@@ -55,9 +54,8 @@ include("views/index-header.php");
                             <td class="col-4"><label for="noKk" class="form-label form-label-sm">Nomor KK</label></td>
                             <td>
                                 <div class="col-lg-8 col-12">
-                                    <p class="fs-7 m-0"><?= $data['no_kk'] ?></p>
-                                    <input type="number" class="form-control form-control-sm edit-kk-rekmed" name="no_kk" id="noKk" placeholder="7383091434760008" value="<?= $data['no_kk'] ?>" required readonly>
-                                    <input type="hidden" name="no_kk_prev" value="<?= $data['no_kk'] ?>">
+                                    <p class="fs-7 m-0 fw-medium"><?= $data['no_kk'] ?></p>
+                                    <input type="hidden" name="no_kk" value="<?= $data['no_kk'] ?>">
                                 </div>
                             </td>
                         </tr>
@@ -65,7 +63,13 @@ include("views/index-header.php");
                             <td class="col-4"><label for="noIndeks" class="form-label form-label-sm">Nomor Indeks</label></td>
                             <td>
                                 <div class="col-lg-8 col-12">
-                                    <input type="number" class="form-control form-control-sm edit-kk-rekmed" name="no_indeks" id="noIndeks" placeholder="912345" value="<?= $data['no_indeks'] ?>" required readonly>
+                                    <?php
+                                    if ($data['no_indeks'] === NULL || $data['no_indeks'] === "") echo "<input type='number' class='form-control form-control-sm edit-kk-rekmed' name='no_indeks' id='noIndeks' required readonly>";
+                                    else {
+                                        echo "<p class='fs-7 m-0 fw-medium'>" . $data['no_indeks'] . "</p>";
+                                        echo "<input type='hidden' name='no_indeks' value='" . $data['no_indeks'] . "'>";
+                                    }
+                                    ?>
                                 </div>
                             </td>
                         </tr>
@@ -78,7 +82,13 @@ include("views/index-header.php");
                             <td class="col-4"><label for="password" class="form-label form-label-sm">Kata Sandi</label></td>
                             <td>
                                 <div class="col-lg-8 col-12">
-                                    <input type="number" class="form-control form-control-sm edit-kk-rekmed" name="password" id="password" placeholder="200112345" value="<?= $data['kata_sandi'] ?>" required readonly>
+                                    <?php
+                                    if (strlen($data['kata_sandi']) === 4) echo "<input type='number' class='form-control form-control-sm edit-kk-rekmed' name='password' id='password' value='" . $data['kata_sandi'] . "' required readonly>";
+                                    else {
+                                        echo "<p class='fs-7 m-0 fw-medium'>" . $data['kata_sandi'] . "</p>";
+                                        echo "<input type='hidden' name='password' value='" . $data['kata_sandi'] . "'>";
+                                    }
+                                    ?>
                                 </div>
                             </td>
                         </tr>

@@ -55,7 +55,7 @@ function validasiFormDaftar() {
 
   if (!valid) return false;
   else {
-    let confirmMsg = "Pastikan TIDAK ada data yang keliru. Cek data sekali lagi?";
+    let confirmMsg = "Pastikan TIDAK ada data yang keliru. Nomor KK dan NIK TIDAK dapat diubah ketika data telah tersimpan ke dalam sistem. Cek data sekali lagi?";
     if (confirm(confirmMsg) === true) {
       alertP.style.display = "none";
       scrollToTop();
@@ -67,20 +67,28 @@ function validasiFormDaftar() {
 
 // membatasi tanggal ruang poly starts
 const registerDateInput = document.getElementById("treatmentDate");
+const minggu = document.getElementById("minggu");
+const listPoly = document.getElementById("listPoly");
 if (registerDateInput) {
-  let dateLimiter = new Date();
-  let yearLimiter = dateLimiter.getFullYear();
-  let monthLimiter = dateLimiter.getMonth() + 1;
-  let dayLimiter = dateLimiter.getDate();
+  let dateLimit = new Date();
+  let minYear = dateLimit.getFullYear();
+  let minMonth = dateLimit.getMonth() + 1;
+  let minDay = dateLimit.getDate();
 
-  if (monthLimiter < 10) monthLimiter = "0" + monthLimiter;
-  if (dayLimiter < 10) dayLimiter = "0" + dateLimiter;
-  let minDate = `${yearLimiter}-${monthLimiter}-${dayLimiter}`;
+  if (minMonth < 10) minMonth = "0" + minMonth;
+  if (minDay < 10) minDay = "0" + minDay;
 
+  dateLimit.setDate(dateLimit.getDate() + 7);
+  let maxYear = dateLimit.getFullYear();
+  let maxMonth = dateLimit.getMonth() + 1;
+  let maxDay = dateLimit.getDate();
+
+  if (maxMonth < 10) maxMonth = "0" + maxMonth;
+  if (maxDay < 10) maxDay = "0" + maxDay;
+
+  let minDate = `${minYear}-${minMonth}-${minDay}`;
   registerDateInput.min = minDate;
-
-  let maxDayLimiter = dateLimiter.getDate() + 7;
-  let maxDate = `${yearLimiter}-${monthLimiter}-${maxDayLimiter}`;
+  let maxDate = `${maxYear}-${maxMonth}-${maxDay}`;
   registerDateInput.max = maxDate;
 }
 
@@ -99,8 +107,12 @@ function validasiTanggalDaftar() {
   else if (currentDay == 5 || currentDay == 6) limitTime = dayRegister.setHours(9, 30, 0);
 
   if (dateValue === "") alertError("Silakan pilih tanggal pendaftaran Anda");
-  else if (selectedDay === 0) alertError("Puskesmas tidak melayani apapun pada hari Minggu");
-  else if (currentDate === selectedDate) {
+  else if (selectedDay === 0) {
+    alertP.style.display = "none";
+    minggu.classList.remove("d-none");
+    minggu.classList.add("d-block");
+    listPoly.classList.add("d-none");
+  } else if (currentDate === selectedDate) {
     if (currentTime >= limitTime) alertError("Tanggal tidak dapat diterapkan karena jam pelayanan! Silakan pilih hari lain");
     else valid = true;
   } else valid = true;

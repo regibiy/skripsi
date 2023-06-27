@@ -2,8 +2,8 @@
 
 use Mpdf\Barcode\Postnet;
 
-include("../cores/function.php");
 include("../cores/connection.php");
+include("../cores/function.php");
 include("../cores/Users.php");
 include("../crypt.php");
 session_start();
@@ -244,9 +244,10 @@ if (isset($_POST['edit_dokter'])) {
 }
 
 if (isset($_POST['edit_status'])) {
+    $waktu_daftar_ulang = date('Y-m-d H:i:s');
     $status = $_POST['status'];
     $id_pendaftaran = $_POST['id_pendaftaran'];
-    $sql = "UPDATE pendaftaran SET status_pendaftaran = '$status' WHERE id_pendaftaran = '$id_pendaftaran'";
+    $sql = "UPDATE pendaftaran SET status_pendaftaran = '$status', tanggal_ubah = '$waktu_daftar_ulang' WHERE id_pendaftaran = '$id_pendaftaran'";
     $result = $conn->query($sql);
     if ($result) header("Location: index-registration.php");
 }
@@ -283,6 +284,14 @@ if (isset($_POST['cetak_laporan'])) {
     header("Location: print-indirect-contact-registration.php?tanggalAwal=" . urlencode($enc_tanggal_awal) . "&tanggalAkhir=" . urlencode($enc_tanggal_akhir));
 }
 
+if (isset($_POST['cetak_laporan_rekmed'])) {
+    $tanggal_awal = $_POST['tanggal_awal'];
+    $tanggal_akhir = $_POST['tanggal_akhir'];
+    $enc_tanggal_awal = encrypt($tanggal_awal);
+    $enc_tanggal_akhir = encrypt($tanggal_akhir);
+    header("Location: print-indirect-contact-medical-record.php?tanggalAwal=" . urlencode($enc_tanggal_awal) . "&tanggalAkhir=" . urlencode($enc_tanggal_akhir));
+}
+
 if (isset($_POST['selesai_daftar'])) {
     $id_daftar = $_POST['id_daftar'];
     $sql = "UPDATE pendaftaran SET status_pendaftaran = 'Selesai' WHERE id_pendaftaran = '$id_daftar'";
@@ -307,19 +316,14 @@ if (isset($_POST['edit_data_kk_rekmed'])) {
     $rw = $akun->get_rw();
     $kel_desa = $akun->get_kel_desa();
     $kecamatan = $akun->get_kecamatan();
-    $no_kk_prev = $_POST['no_kk_prev'];
     $email = $_POST['email'];
-
-    if ($no_kk === $no_kk_prev) $url_kk = $no_kk_prev;
-    else $url_kk = $no_kk;
-    $enc_no_kk = encrypt($url_kk);
-
-    $sql = "UPDATE akun SET no_kk = '$no_kk', no_indeks = '$no_indeks', kata_sandi = '$password', 
-    alamat = '$alamat', rt = '$rt', rw = '$rw', kelurahan_desa = '$kel_desa', kecamatan = '$kecamatan' WHERE no_kk = '$no_kk_prev'";
+    $enc_no_kk = encrypt($no_kk);
+    $sql = "UPDATE akun SET no_kk = '$no_kk', no_indeks = '$no_indeks', kata_sandi = '$password',
+    alamat = '$alamat', rt = '$rt', rw = '$rw', kelurahan_desa = '$kel_desa', kecamatan = '$kecamatan' WHERE no_kk = '$no_kk'";
     $result = $conn->query($sql);
     if ($result) {
         $sql = "SELECT pasien.nik, nama_depan, nama_belakang, no_rekam_medis, no_kk FROM pasien LEFT JOIN rekam_medis ON pasien.nik = rekam_medis.nik 
-        WHERE no_kk = '$url_kk' AND status_hubungan = 'Kepala Keluarga'"; //get nik, no rekam medis, nama pasien 
+        WHERE no_kk = '$no_kk' AND status_hubungan = 'Kepala Keluarga'"; //get nik, no rekam medis, nama pasien 
         $result = $conn->query($sql);
         $data = $result->fetch_assoc();
         $nik = $data['nik'];
@@ -327,7 +331,7 @@ if (isset($_POST['edit_data_kk_rekmed'])) {
         $nama = $data['nama_depan'] . " " . $data['nama_belakang'];
         // validasi rekam medis
         if ($no_rekam_medis === NULL || $no_rekam_medis === "") {
-            $no_rekam_medis = "01" . $no_indeks;
+            $no_rekam_medis = "00" . $no_indeks;
             $sql = "INSERT INTO rekam_medis (no_rekam_medis, nik) VALUES ('$no_rekam_medis', '$nik')";
             $result = $conn->query($sql);
             if ($result) {
@@ -383,7 +387,6 @@ if (isset($_POST['edit_data_nik_rekmed'])) {
     $pekerjaan = $pasien->get_pekerjaan();
     $status_hubungan = $_POST['status_hubungan'];
     $status_pasien = $_POST['status_pasien'];
-    $nik_prev = $_POST['nik_prev'];
     $status_hubungan_prev = $_POST['status_hubungan_prev'];
     $no_rekmed_prev = $_POST['no_rek_med_prev'];
 
@@ -394,21 +397,27 @@ if (isset($_POST['edit_data_nik_rekmed'])) {
         }
         $no_rekmed = $set_status_hubungan;
         $no_rekmed .= substr($no_rekmed_prev, 2, 6);
-        var_dump($no_rekmed);
-        var_dump($no_rekmed_prev);
         $sql = "SELECT * FROM rekam_medis WHERE no_rekam_medis = '$no_rekmed'"; // mencari data yang sudah ada
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             $_SESSION['error_msg'] = "Status hubungan telah ada dalam data anggota keluarga pasien";
-            $enc_nik = encrypt($nik_prev);
+            $enc_nik = encrypt($nik);
             header("Location: edit-patient-medical-record.php?nik=" . urlencode($enc_nik));
         } else {
             $sql = "UPDATE rekam_medis SET no_rekam_medis = '$no_rekmed' WHERE no_rekam_medis = '$no_rekmed_prev'";
             $result = $conn->query($sql);
+            $sql = "UPDATE pasien SET nik = '$nik', nama_depan = '$nama_depan', nama_belakang = '$nama_belakang', tempat_lahir = '$tempat_lahir', tanggal_lahir = '$tanggal_lahir', 
+            jenis_kelamin = '$jenis_kelamin', agama = '$agama', pekerjaan = '$pekerjaan', status_hubungan = '$status_hubungan', status_pasien = '$status_pasien' WHERE nik = '$nik'";
+            $result = $conn->query($sql);
+            if ($result) {
+                $_SESSION['success_msg'] = "Data Pasien berhasil diperbarui";
+                $enc_no_kk = encrypt($no_kk);
+                header("Location: detail-patient-medical-record.php?noKk=" . urlencode($enc_no_kk));
+            }
         }
     } else {
         $sql = "UPDATE pasien SET nik = '$nik', nama_depan = '$nama_depan', nama_belakang = '$nama_belakang', tempat_lahir = '$tempat_lahir', tanggal_lahir = '$tanggal_lahir', 
-        jenis_kelamin = '$jenis_kelamin', agama = '$agama', pekerjaan = '$pekerjaan', status_hubungan = '$status_hubungan', status_pasien = '$status_pasien' WHERE nik = '$nik_prev'";
+        jenis_kelamin = '$jenis_kelamin', agama = '$agama', pekerjaan = '$pekerjaan', status_hubungan = '$status_hubungan', status_pasien = '$status_pasien' WHERE nik = '$nik'";
         $result = $conn->query($sql);
         if ($result) {
             $_SESSION['success_msg'] = "Data Pasien berhasil diperbarui";

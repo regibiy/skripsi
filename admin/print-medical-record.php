@@ -1,4 +1,13 @@
 <?php
+include("action-admin.php");
+
+if (isset($_GET['noRekmed']) && isset($_GET['noKk'])) {
+    $enc_no_rekmed = $_GET['noRekmed'];
+    $enc_no_kk = $_GET['noKk'];
+    $dec_no_rekmed = decrypt($enc_no_rekmed);
+    $dec_no_kk = decrypt($enc_no_kk);
+} else header("Location: index.php");
+
 // Require composer autoload
 require_once __DIR__ . '/../vendor/autoload.php';
 // Create an instance of the class:
@@ -104,9 +113,22 @@ $html = '
         <div class="logo-two">
             <img src="../assets/images/logo.png" alt="" width="100" height="90" />
         </div>
-    </header>
+    </header>';
+
+$sql = "SELECT * FROM rekam_medis INNER JOIN pasien ON rekam_medis.nik = pasien.nik WHERE rekam_medis.no_rekam_medis = '$dec_no_rekmed'";
+$result = $conn->query($sql);
+$data = $result->fetch_assoc();
+
+if ($data['riwayat_alergi_obat'] === NULL || $data['riwayat_alergi_obat'] === "") $riwayat = "Tidak ada";
+else $riwayat = $data['riwayat_alergi_obat'];
+
+$sql_kk = "SELECT * FROM pasien INNER JOIN akun ON pasien.no_kk = akun.no_kk WHERE pasien.no_kk = '$dec_no_kk' AND status_hubungan = 'Kepala Keluarga'";
+$result_kk = $conn->query($sql_kk);
+$data_kk = $result_kk->fetch_assoc();
+
+$html .= '
     <section class="second-info">
-        <p style="text-align: right; margin-bottom: 0;">No Rekam Medis : 10912345</p>
+        <p style="text-align: right; margin-bottom: 0;">No Rekam Medis : ' . $data['no_rekam_medis'] . '</p>
         <p style="margin:0;">LEMBAR REKAM MEDIS PASIEN</p>
     </section>
     <section class="patient-info">
@@ -114,7 +136,7 @@ $html = '
             <tr>
                 <td>Nama</td>
                 <td>:</td>
-                <td>Dewi Sari Pramudita</td>
+                <td>' . $data['nama_depan'] . ' ' . $data['nama_belakang'] . '</td>
                 <td>Umum/BPJS</td>
                 <td>:</td>
                 <td width="340">Umum</td>
@@ -122,42 +144,42 @@ $html = '
             <tr>
                 <td>Tanggal Lahir</td>
                 <td>:</td>
-                <td width="230">12-12-2004</td>
+                <td width="230">' . format_date($data['tanggal_lahir']) . '</td>
                 <td>No KTP</td>
                 <td>:</td>
-                <td>7191064312040098</td>
+                <td>' . $data['nik'] . '</td>
             </tr>
             <tr>
                 <td>Jenis Kelamin</td>
                 <td>:</td>
-                <td width="230">Perempuan</td>
+                <td width="230">' . $data['jenis_kelamin'] . '</td>
                 <td>Nama KK</td>
                 <td>:</td>
-                <td>Fachri Andika Permana</td>
+                <td>' . $data_kk['nama_depan'] . ' ' . $data_kk['nama_belakang'] . '</td>
             </tr>
             <tr>
                 <td>Agama</td>
                 <td>:</td>
-                <td width="230">Katolik</td>
+                <td width="230">' . $data['agama'] . '</td>
                 <td>Tanggal Masuk</td>
                 <td>:</td>
-                <td>03-01-2022</td>
+                <td>' . format_date($data['tanggal_masuk']) . '</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">Pekerjaan</td>
                 <td style="vertical-align: top;">:</td>
-                <td width="230" style="vertical-align: top;">Dokter Umum</td>
+                <td width="230" style="vertical-align: top;">' . $data['pekerjaan'] . '</td>
                 <td style="vertical-align: top;">Riwayat Alergi Obat</td>
                 <td style="vertical-align: top;">:</td>
-                <td>Tidak ada</td>
+                <td>' . $riwayat . '</td>
             </tr>
             <tr>
                 <td style="vertical-align: top;">Alamat</td>
                 <td style="vertical-align: top;">:</td>
-                <td width="230">Jalan Pancasila Gang Pancasila IV Nomor 12G</td>
+                <td width="230">' . $data_kk['alamat'] . '</td>
                 <td style="vertical-align: top;">Telp/HP</td>
                 <td style="vertical-align: top;">:</td>
-                <td style="vertical-align: top;">6281345674321</td>
+                <td style="vertical-align: top;">' . $data['no_hp'] . '</td>
             </tr>
         </table>
     </section>

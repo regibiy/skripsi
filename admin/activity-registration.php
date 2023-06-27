@@ -16,7 +16,7 @@ include("views/index-header.php");
 ?>
 
 <div class="container-fluid px-4">
-    <div class="row mt-3 mb-4 px-2 py-3 bg-white rounded">
+    <div class="row mt-3 mb-5 px-2 py-3 bg-white rounded">
         <div class="d-flex justify-content-between px-0 pb-2">
             <p class="fs-6 p-0 mb-2 fw-medium">Daftar Informasi Kegiatan</p>
             <a href="add-activity-registration.php" class="btn btn-sm btn-primary">Tambah</a>

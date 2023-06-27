@@ -2,11 +2,13 @@
 
 use Mpdf\Tag\Tr;
 
-include("cores/function.php");
 include("cores/connection.php");
+include("cores/function.php");
 include("cores/Users.php");
 include("crypt.php");
 session_start();
+
+$kode_rekmed = array("Kepala Keluarga" => "00", "Istri" => "10", "Anak 1" => "01", "Anak 2" => "02", "Anak 3" => "03", "Anak 4" => "04", "Anak 5" => "05", "Anak 6" => "06", "Anak 7" => "07", "Anak 8" => "08", "Anak 9" => "09");
 
 if (isset($_POST['login'])) {
     $pasien = new Pasien();
@@ -66,6 +68,7 @@ if (isset($_POST['daftar_akun_pasien'])) {
     $rw = $pasien->get_rw();
     $kel_desa = $pasien->get_kel_desa();
     $kecamatan = $pasien->get_kecamatan();
+    $nama_lengkap = $nama_depan . " " . $nama_belakang;
     $sql = "SELECT * FROM akun WHERE no_kk = '$no_kk'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -86,8 +89,20 @@ if (isset($_POST['daftar_akun_pasien'])) {
             $sql = "INSERT INTO pasien VALUES ('$nik','$no_kk', '$nama_depan', '$nama_belakang', '$tempat_lahir','$tanggal_lahir', '$jenis_kelamin', '$agama', '$pekerjaan', 'Kepala Keluarga', '$no_hp', '$ktp', 'Dalam KK')";
             $result_pasien = $conn->query($sql);
             if ($result_akun && $result_pasien) {
-                $_SESSION['no_kk'] = $no_kk;
-                include("account-registration-succeed.php");
+                $title = "Pendaftaran Berhasil";
+                $content = "Hai, <b>" . $nama_lengkap . "</b>
+                <br><br><br>
+                Pendaftaran Anda telah diterima dan akan dikonfirmasi oleh petugas kami secepat mungkin. 
+                Petugas kami akan mengirimkan <i>email</i> kembali kepada Anda yang berisi nomor berobat dan kata sandi untuk <i>log in</i>.
+                <br><br>
+                Terima kasih telah melakukan pendaftaran akun pada website kami.
+                <br><br><br>
+                Salam,
+                <br><br>
+                <b>UPT Puskesmas Alianyang</b>
+                <br>
+                Jl. Pangeran Natakusuma, Pontianak Kota";
+                sendMail($email, $nama_lengkap, $title, $content);
                 $_SESSION['success_msg'] = "Pendaftaran berhasil! Silakan cek pesan di email Anda";
                 header("Location: account-registration.php");
             }
@@ -148,13 +163,14 @@ if (isset($_POST['pilih_tanggal'])) {
     $url = "https://api-harilibur.vercel.app/api?month=$month";
     $data = file_get_contents($url);
     $arrayData = json_decode($data, true);
+    $enc_treatment_date = encrypt($treatment_date);
     foreach ($arrayData as $value) {
         if ($selected_date === $value['holiday_date']) {
-            $_SESSION['error_msg'] = "Puskesmas tidak melayani apapun karena memperingati " . $value['holiday_name'];
-            header("Location: poly-rooms.php");
+            $national_holiday = $value['holiday_name'];
+            header("Location: poly-rooms.php?treatmentdate=" . urlencode($enc_treatment_date) . "&nationalholiday=" . $national_holiday);
+            exit;
         }
     }
-    $enc_treatment_date = encrypt($treatment_date);
     header("Location: poly-rooms.php?treatmentdate=" . urlencode($enc_treatment_date));
 }
 
@@ -289,6 +305,8 @@ if (isset($_POST['tambah_anggota'])) {
     $pasien->set_daftar_data_kontak($_POST['no_hp'], "");
     $no_hp = $pasien->get_no_hp();
     $prev_ktp = $_POST['prev_ktp'];
+    $no_berobat = $_SESSION['no_berobat'];
+    $enc_nik = encrypt($nik);
 
     if (($prev_ktp === NULL || $prev_ktp === "") && $ktp = $_FILES['ktp']['error'] === 4) $ktp = NULL;
     elseif (($prev_ktp === NULL || $prev_ktp === "") && $ktp = $_FILES['ktp']['error'] === 0) $ktp = upload_file($_FILES['ktp']['name'], $_FILES['ktp']['size'], $_FILES['ktp']['tmp_name'], 'assets/patient_data/');
@@ -297,15 +315,58 @@ if (isset($_POST['tambah_anggota'])) {
         $ktp = upload_file($_FILES['ktp']['name'], $_FILES['ktp']['size'], $_FILES['ktp']['tmp_name'], 'assets/patient_data/');
     }
 
-    $sql = "UPDATE pasien SET nik = '$nik', no_kk = '$no_kk', nama_depan = '$nama_depan', nama_belakang = '$nama_belakang', tempat_lahir = '$tempat_lahir', tanggal_lahir = '$tanggal_lahir', 
-    jenis_kelamin = '$jenis_kelamin', agama = '$agama', pekerjaan = '$pekerjaan', status_hubungan = '$status_hubungan', 
-    no_hp = '$no_hp', ktp = '$ktp', status_pasien = 'Dalam KK' WHERE nik = '$nik'";
+    $sql = "SELECT * FROM pasien WHERE nik = '$nik'"; //uji apakah pasien sudah terdaftar
     $result = $conn->query($sql);
-    if ($result) {
-        echo "<script>
-        alert('Data anggota keluarga Anda berhasil ditambahkan');
-        window.location = 'family-members.php';
-        </script>";
+    if ($result->num_rows > 0) {
+        foreach ($kode_rekmed as $key => $value) {
+            if ($status_hubungan === $key) $set_status_hubungan = $value;
+        }
+        $no_rekam_medis = $set_status_hubungan . $no_berobat;
+        $sql = "SELECT * FROM rekam_medis WHERE no_rekam_medis = '$no_rekam_medis'"; //uji nomor rekam medis
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $_SESSION['error_msg'] = "Status hubungan yang Anda pilih sudah ada di anggota keluarga Anda";
+            header("Location: add-family-member.php?nik=" . urlencode($enc_nik));
+        } else {
+            $sql = "UPDATE rekam_medis SET no_rekam_medis = '$no_rekam_medis' WHERE nik = '$nik'";
+            $result = $conn->query($sql);
+            if ($result) {
+                $sql = "UPDATE pasien SET nik = '$nik', no_kk = '$no_kk', nama_depan = '$nama_depan', nama_belakang = '$nama_belakang', tempat_lahir = '$tempat_lahir', tanggal_lahir = '$tanggal_lahir', 
+                jenis_kelamin = '$jenis_kelamin', agama = '$agama', pekerjaan = '$pekerjaan', status_hubungan = '$status_hubungan', 
+                no_hp = '$no_hp', ktp = '$ktp', status_pasien = 'Dalam KK' WHERE nik = '$nik'";
+                $result = $conn->query($sql);
+                if ($result) {
+                    echo "<script>
+                    alert('Data anggota keluarga Anda berhasil ditambahkan');
+                    window.location = 'family-members.php';
+                    </script>";
+                }
+            }
+        }
+    } else {
+        foreach ($kode_rekmed as $key => $value) {
+            if ($status_hubungan === $key) $set_status_hubungan = $value;
+        }
+        $no_rekam_medis = $set_status_hubungan . $no_berobat;
+        $sql = "SELECT * FROM rekam_medis WHERE no_rekam_medis = '$no_rekam_medis'"; //uji nomor rekam medis
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $_SESSION['error_msg'] = "Status hubungan yang Anda pilih sudah ada di anggota keluarga Anda";
+            header("Location: add-family-member.php?nik=" . urlencode($enc_nik));
+        } else {
+            $sql = "INSERT INTO pasien VALUES ('$nik', '$no_kk', '$nama_depan', '$nama_belakang', '$tempat_lahir', '$tanggal_lahir', '$jenis_kelamin', '$agama', '$pekerjaan', '$status_hubungan', '$no_hp', '$ktp', 'Dalam KK')";
+            $result = $conn->query($sql);
+            if ($result) {
+                $sql = "INSERT INTO rekam_medis (no_rekam_medis, nik) VALUES ('$no_rekam_medis', '$nik')";
+                $result = $conn->query($sql);
+                if ($result) {
+                    echo "<script>
+                    alert('Data anggota keluarga Anda berhasil ditambahkan');
+                    window.location = 'family-members.php';
+                    </script>";
+                }
+            }
+        }
     }
 }
 
@@ -324,25 +385,54 @@ if (isset($_POST['edit_anggota'])) {
     $pekerjaan = $pasien->get_pekerjaan();
     $pasien->set_daftar_data_kontak($_POST['no_hp'], "");
     $no_hp = $pasien->get_no_hp();
-    $prev_ktp = $_POST['prev_ktp'];
     $status_hubungan = $_POST['status_hubungan'];
+    $status_hubungan_prev = $_POST['status_hubungan_prev'];
     $status_pasien = $_POST['status_pasien'];
+    $no_berobat = $_SESSION['no_berobat'];
+    $enc_nik = encrypt($nik);
+    $prev_ktp = $_POST['prev_ktp'];
 
     if (($prev_ktp === NULL || $prev_ktp === "") && $ktp = $_FILES['ktp']['error'] === 4) $ktp = NULL;
     elseif (($prev_ktp === NULL || $prev_ktp === "") && $ktp = $_FILES['ktp']['error'] === 0) $ktp = upload_file($_FILES['ktp']['name'], $_FILES['ktp']['size'], $_FILES['ktp']['tmp_name'], 'assets/patient_data/');
     elseif (($prev_ktp !== NULL || $prev_ktp !== "") && $ktp = $_FILES['ktp']['error'] === 0) {
         unlink('assets/patient_data/' . $prev_ktp);
         $ktp = upload_file($_FILES['ktp']['name'], $_FILES['ktp']['size'], $_FILES['ktp']['tmp_name'], 'assets/patient_data/');
-    }
+    } else $ktp = $prev_ktp;
 
-    $sql = "UPDATE pasien SET nik = '$nik', no_kk = '$no_kk', nama_depan = '$nama_depan', nama_belakang = '$nama_belakang', tempat_lahir = '$tempat_lahir', tanggal_lahir = '$tanggal_lahir', 
-    jenis_kelamin = '$jenis_kelamin', agama = '$agama', pekerjaan = '$pekerjaan', status_hubungan = '$status_hubungan', 
-    no_hp = '$no_hp', ktp = '$ktp', status_pasien = '$status_pasien' WHERE nik = '$nik'";
-    $result = $conn->query($sql);
-    if ($result) {
-        echo "<script>
-            alert('Data anggota keluarga Anda berhasil diperbarui');
-            window.location = 'family-members.php';
-            </script>";
+    if ($status_hubungan !== $status_hubungan_prev) {
+        foreach ($kode_rekmed as $key => $value) {
+            if ($status_hubungan === $key) $set_status_hubungan = $value;
+        }
+        $no_rekam_medis = $set_status_hubungan . $no_berobat;
+        $sql = "SELECT * FROM rekam_medis WHERE no_rekam_medis = '$no_rekam_medis'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $_SESSION['error_msg'] = "Status hubungan yang Anda pilih sudah ada di anggota keluarga Anda";
+            header("Location: edit-family-member.php?nik=" . urlencode($enc_nik));
+        } else {
+            $sql = "UPDATE rekam_medis SET no_rekam_medis = '$no_rekam_medis' WHERE nik = '$nik'";
+            $result = $conn->query($sql);
+            $sql = "UPDATE pasien SET nik = '$nik', no_kk = '$no_kk', nama_depan = '$nama_depan', nama_belakang = '$nama_belakang', tempat_lahir = '$tempat_lahir', tanggal_lahir = '$tanggal_lahir', 
+            jenis_kelamin = '$jenis_kelamin', agama = '$agama', pekerjaan = '$pekerjaan', status_hubungan = '$status_hubungan', 
+            no_hp = '$no_hp', ktp = '$ktp', status_pasien = '$status_pasien' WHERE nik = '$nik'";
+            $result = $conn->query($sql);
+            if ($result) {
+                echo "<script>
+                        alert('Data anggota keluarga Anda berhasil diperbarui');
+                        window.location = 'family-members.php';
+                    </script>";
+            }
+        }
+    } else {
+        $sql = "UPDATE pasien SET nik = '$nik', no_kk = '$no_kk', nama_depan = '$nama_depan', nama_belakang = '$nama_belakang', tempat_lahir = '$tempat_lahir', tanggal_lahir = '$tanggal_lahir', 
+        jenis_kelamin = '$jenis_kelamin', agama = '$agama', pekerjaan = '$pekerjaan', status_hubungan = '$status_hubungan', 
+        no_hp = '$no_hp', ktp = '$ktp', status_pasien = '$status_pasien' WHERE nik = '$nik'";
+        $result = $conn->query($sql);
+        if ($result) {
+            echo "<script>
+                        alert('Data anggota keluarga Anda berhasil diperbarui');
+                        window.location = 'family-members.php';
+                    </script>";
+        }
     }
 }

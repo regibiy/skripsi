@@ -1,3 +1,10 @@
+<?php
+$sql_notif = "SELECT COUNT(no_kk) as total FROM akun WHERE no_indeks IS NULL";
+$result_notif = $conn->query($sql_notif);
+$data_notif = $result_notif->fetch_assoc();
+if ($data_notif['total'] > 0) $notif = $data_notif['total'];
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -8,7 +15,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?= $title ?></title>
-    <link rel="icon" href="../assets/images/logo-upt.png">
 
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -81,31 +87,31 @@
                     if ($currentPath == "/skripsi/admin/index-medical-record.php") {
                         echo '
                             <a href="index-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text active"><span class="material-symbols-sharp me-2">health_metrics</span>Dashboard</a>
-                            <a href="all-registration-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">browse_activity</span>Pendaftaran</a>
-                            <a href="patient-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">patient_list</span>Pasien <span class="ms-2 bg-danger px-2 rounded text-white">2</span></a>
-                            <a href="report-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">summarize</span>Laporan</a>
-                            ';
+                            <a href="all-registration-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">browse_activity</span>Pendaftaran</a>';
+                        if (isset($notif)) echo '<a href="patient-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">patient_list</span>Pasien <span class="ms-2 bg-danger px-2 rounded text-white">' . $notif . '</span></a>';
+                        else echo '<a href="patient-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">patient_list</span>Pasien</a>';
+                        echo '<a href="report-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">summarize</span>Laporan</a>';
                     } elseif ($currentPath == "/skripsi/admin/all-registration-medical-record.php") {
                         echo '
                             <a href="index-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">health_metrics</span>Dashboard</a>
-                            <a href="all-registration-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text active"><span class="material-symbols-sharp me-2">browse_activity</span>Pendaftaran</a>
-                            <a href="patient-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">patient_list</span>Pasien <span class="ms-2 bg-danger px-2 rounded text-white">2</span></a>
-                            <a href="report-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">summarize</span>Laporan</a>
-                            ';
+                            <a href="all-registration-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text active"><span class="material-symbols-sharp me-2">browse_activity</span>Pendaftaran</a>';
+                        if (isset($notif)) echo '<a href="patient-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">patient_list</span>Pasien <span class="ms-2 bg-danger px-2 rounded text-white">' . $notif . '</span></a>';
+                        else echo '<a href="patient-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">patient_list</span>Pasien</a>';
+                        echo '<a href="report-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">summarize</span>Laporan</a>';
                     } elseif ($currentPath == "/skripsi/admin/patient-medical-record.php" || $currentPath == "/skripsi/admin/detail-patient-medical-record.php" || $currentPath == "/skripsi/admin/edit-patient-medical-record.php") {
                         echo '
                             <a href="index-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">health_metrics</span>Dashboard</a>
-                            <a href="all-registration-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">browse_activity</span>Pendaftaran</a>
-                            <a href="patient-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text active"><span class="material-symbols-sharp me-2">patient_list</span>Pasien <span class="ms-2 bg-danger px-2 rounded text-white">2</span></a>
-                            <a href="report-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">summarize</span>Laporan</a>
-                        ';
+                            <a href="all-registration-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">browse_activity</span>Pendaftaran</a>';
+                        if (isset($notif)) echo '<a href="patient-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text active"><span class="material-symbols-sharp me-2">patient_list</span>Pasien <span class="ms-2 bg-danger px-2 rounded text-white">' . $notif . '</span></a>';
+                        else echo '<a href="patient-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text active"><span class="material-symbols-sharp me-2">patient_list</span>Pasien</a>';
+                        echo '<a href="report-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">summarize</span>Laporan</a>';
                     } elseif ($currentPath == "/skripsi/admin/report-medical-record.php") {
                         echo '
                             <a href="index-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">health_metrics</span>Dashboard</a>
-                            <a href="all-registration-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">browse_activity</span>Pendaftaran</a>
-                            <a href="patient-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">patient_list</span>Pasien <span class="ms-2 bg-danger px-2 rounded text-white">2</span></a>
-                            <a href="report-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text active"><span class="material-symbols-sharp me-2">summarize</span>Laporan</a>
-                        ';
+                            <a href="all-registration-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">browse_activity</span>Pendaftaran</a>';
+                        if (isset($notif)) echo '<a href="patient-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">patient_list</span>Pasien <span class="ms-2 bg-danger px-2 rounded text-white">' . $notif . '</span></a>';
+                        else echo '<a href="patient-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text"><span class="material-symbols-sharp me-2">patient_list</span>Pasien</a>';
+                        echo '<a href="report-medical-record.php" class="list-group-item my-list-group-item-action bg-transparent second-text active"><span class="material-symbols-sharp me-2">summarize</span>Laporan</a>';
                     }
                 } elseif ($_SESSION['role'] == "kapus") {
                     if ($currentPath == "/skripsi/admin/index-head.php") {
@@ -144,13 +150,9 @@
                     <div class="text-dark-emphasis text-end">
                         <p class="mb-0">Hai, <span class="fw-medium"><?= $_SESSION['name'] ?></span></p>
                         <?php
-                        if ($_SESSION['role'] == "daftar") {
-                            $role = "Pendaftaran";
-                        } elseif ($_SESSION['role'] == "rekmed") {
-                            $role = "Rekam Medis";
-                        } elseif ($_SESSION['role'] == "kapus") {
-                            $role = "Kepala Puskesmas";
-                        }
+                        if ($_SESSION['role'] == "daftar") $role = "Pendaftaran";
+                        elseif ($_SESSION['role'] == "rekmed") $role = "Rekam Medis";
+                        elseif ($_SESSION['role'] == "kapus") $role = "Kepala Puskesmas";
                         ?>
                         <p class="mb-0 fs-7">Petugas <?= $role ?></p>
                     </div>

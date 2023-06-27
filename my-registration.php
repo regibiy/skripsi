@@ -1,6 +1,12 @@
 <?php
 $title = "Pendaftaran Saya";
 include("action.php");
+
+if (!isset($_SESSION['status_login_pasien'])) {
+    $_SESSION['error_msg'] = "Silakan masuk terlebih dahulu";
+    header("Location: index.php");
+}
+
 include("views/header.php");
 ?>
 
@@ -17,7 +23,7 @@ include("views/header.php");
                         <td>Tujuan Ruang Poli</td>
                         <td>Tanggal Berobat</td>
                         <td>Status Pendaftaran</td>
-                        <td></td>
+                        <td>Aksi</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,11 +42,11 @@ include("views/header.php");
                         echo "<td>" . $row['nama_ruang_poli'] . "</td>";
                         echo "<td>" . format_date($row['tanggal_berobat']) . "</td>";
                         echo "<td>" . $row['status_pendaftaran'] . "</td>";
-                        if ($row['status_pendaftaran'] === "Dibatalkan" || $row['status_pendaftaran'] === "Diproses" || $row['status_pendaftaran'] === "Selesai" || $row['status_pendaftaran'] === "Sukses" || $row['status_pendaftaran'] === "Gagal") {
+                        if ($row['status_pendaftaran'] === "Diproses" || $row['status_pendaftaran'] === "Selesai" || $row['status_pendaftaran'] === "Sukses") {
                             echo "<td>
                             <a href='print-registration.php?nik=" . urlencode($enc_nik) . "&iddaftar=" . $id_daftar . "' class='btn btn-sm btn-success'>Cetak</a>
                             </td>";
-                        } elseif ($row['status_pendaftaran'] === "Menunggu" || $row['status_pendaftaran'] === "Ditunda" || $row['status_pendaftaran'] === "Invalid") {
+                        } elseif ($row['status_pendaftaran'] === "Menunggu" || $row['status_pendaftaran'] === "Ditunda") {
                             echo "<td>
                             <a href='print-registration.php?nik=" . urlencode($enc_nik) . "&iddaftar=" . $id_daftar . "' class='btn btn-sm btn-success'>Cetak</a>";
                     ?>
@@ -48,7 +54,7 @@ include("views/header.php");
                     <?php
                             echo "</td>";
                             echo "</tr>";
-                        }
+                        } else echo "<td></td>";
                     }
                     ?>
                 </tbody>

@@ -27,6 +27,12 @@ include("views/header.php");
     <div class="container shadow-sm rounded border py-3">
         <h1 class="text-dark-emphasis fs-6 text-center mb-5">Tambah Anggota Keluarga</h1>
         <p id="alert" class="bg-danger px-2 py-1 text-white fs-7 rounded" style="display: none;">Pesan keberhasilan dan kegagalan</p>
+        <?php
+        if (isset($_SESSION['error_msg'])) {
+            echo "<p class='bg-danger px-2 py-1 text-white fs-7 rounded'>" . $_SESSION['error_msg'] . "</p>";
+            unset($_SESSION['error_msg']);
+        }
+        ?>
         <form action="action.php" method="post" enctype="multipart/form-data" onsubmit="return validasiTambahAnggota()">
             <div class="d-flex justify-content-between col-12 flex-wrap">
                 <div class="d-flex flex-column align-items-start col-lg-3 col-12 gap-3 mb-4">
@@ -39,23 +45,23 @@ include("views/header.php");
                     <div class="col-12">
                         <label for="namaDepan" class="form-label form-label-sm fs-7">Nama Depan <span class="text-danger">*</span></label>
                         <?php
-                        if (isset($data)) echo "<input type='text' class='form-control form-control-sm fs-7' name='nama_depan' id='namaDepan' value='" . $data['nama_depan'] . "' required>";
-                        else echo "<input type='text' class='form-control form-control-sm fs-7' name='nama_depan' id='namaDepan' placeholder='Dewi Sari' required>";
+                        if (isset($data)) echo "<input type='text' class='form-control form-control-sm fs-7' name='nama_depan' id='namaDepan' value='" . $data['nama_depan'] . "' required autocomplete='off'>";
+                        else echo "<input type='text' class='form-control form-control-sm fs-7' name='nama_depan' id='namaDepan' placeholder='Dewi Sari' required autocomplete='off'>";
                         ?>
                     </div>
                     <div class="col-12">
                         <label for="namaBelakang" class="form-label form-label-sm fs-7">Nama Belakang</label>
                         <?php
-                        if (isset($data)) echo "<input type='text' class='form-control form-control-sm fs-7' name='nama_belakang' id='namaBelakang' value='" . $data['nama_belakang'] . "'>";
-                        else echo "<input type='text' class='form-control form-control-sm fs-7' name='nama_belakang' id='namaBelakang' placeholder='Pramudita'>";
+                        if (isset($data)) echo "<input type='text' class='form-control form-control-sm fs-7' name='nama_belakang' id='namaBelakang' value='" . $data['nama_belakang'] . "' autocomplete='off'>";
+                        else echo "<input type='text' class='form-control form-control-sm fs-7' name='nama_belakang' id='namaBelakang' placeholder='Pramudita' autocomplete='off'>";
                         ?>
 
                     </div>
                     <div class="col-12">
                         <label for="tempatLahir" class="form-label form-label-sm fs-7">Tempat Lahir <span class="text-danger">*</span></label>
                         <?php
-                        if (isset($data)) echo "<input type='text' class='form-control form-control-sm fs-7' name='tempat_lahir' id='tempatLahir' value='" . $data['tempat_lahir'] . "' required>";
-                        else echo "<input type='text' class='form-control form-control-sm fs-7' name='tempat_lahir' id='tempatLahir' placeholder='Pontianak' required>";
+                        if (isset($data)) echo "<input type='text' class='form-control form-control-sm fs-7' name='tempat_lahir' id='tempatLahir' value='" . $data['tempat_lahir'] . "' required autocomplete='off'>";
+                        else echo "<input type='text' class='form-control form-control-sm fs-7' name='tempat_lahir' id='tempatLahir' placeholder='Pontianak' required autocomplete='off'>";
                         ?>
                     </div>
                     <div class="col-12">
@@ -92,13 +98,13 @@ include("views/header.php");
                             if (isset($data)) {
                                 echo "<option value='" . $data['agama'] . "' hidden>" . $data['agama'] . "</option>";
                                 foreach ($agama as $value) {
-                                    if ($value === "---") echo "<option value=" . $value . " hidden>Silakan pilih agama</option>";
-                                    else echo "<option value=" . $value . ">" . $value . "</option>";
+                                    if ($value === "---") echo "<option value='" . $value . "' hidden>Silakan pilih agama</option>";
+                                    else echo "<option value='" . $value . "'>" . $value . "</option>";
                                 }
                             } else {
                                 foreach ($agama as $value) {
-                                    if ($value === "---") echo "<option value=" . $value . " hidden>Silakan pilih agama</option>";
-                                    else echo "<option value=" . $value . ">" . $value . "</option>";
+                                    if ($value === "---") echo "<option value='" . $value . "' hidden>Silakan pilih agama</option>";
+                                    else echo "<option value='" . $value . "'>" . $value . "</option>";
                                 }
                             }
                             ?>
@@ -107,8 +113,8 @@ include("views/header.php");
                     <div class="col-12">
                         <label for="pekerjaan" class="form-label form-label-sm fs-7">Pekerjaan <span class="text-danger">*</span></label>
                         <?php
-                        if (isset($data)) echo "<input type='text' class='form-control form-control-sm fs-7' name='pekerjaan' id='pekerjaan' value='" . $data['pekerjaan'] . "' required>";
-                        else echo "<input type='text' class='form-control form-control-sm fs-7' name='pekerjaan' id='pekerjaan' placeholder='Dokter Umum' required>";
+                        if (isset($data)) echo "<input type='text' class='form-control form-control-sm fs-7' name='pekerjaan' id='pekerjaan' value='" . $data['pekerjaan'] . "' required autocomplete='off'>";
+                        else echo "<input type='text' class='form-control form-control-sm fs-7' name='pekerjaan' id='pekerjaan' placeholder='Dokter Umum' required autocomplete='off'>";
                         ?>
                     </div>
                     <div class="col-12">
@@ -116,8 +122,8 @@ include("views/header.php");
                         <select class="form-select form-select-sm fs-7" name="status_hubungan" id="statusHubungan" required>
                             <?php
                             foreach ($status_hubungan as $value) {
-                                if ($value === "---") echo "<option value=" . $value . " hidden>Silakan pilih status hubungan</option>";
-                                else echo "<option value=" . $value . ">" . $value . "</option>";
+                                if ($value === "---") echo "<option value='" . $value . "' hidden>Silakan pilih status hubungan</option>";
+                                else echo "<option value='" . $value . "'>" . $value . "</option>";
                             }
                             ?>
                         </select>
@@ -129,7 +135,7 @@ include("views/header.php");
                     <div class="col-12">
                         <label for="noHp" class="form-label form-label-sm fs-7">No. HP</label>
                         <?php
-                        if (isset($data)) echo "<input type='number' class='form-control form-control-sm fs-7' name='no_hp' id='noHp' value='" . $data['no_hp'] . "' required autocomplete='off'>";
+                        if (isset($data)) echo "<input type='number' class='form-control form-control-sm fs-7' name='no_hp' id='noHp' value='" . $data['no_hp'] . "' autocomplete='off'>";
                         else echo "<input type='number' class='form-control form-control-sm fs-7' name='no_hp' id='noHp' placeholder='6285312987634' autocomplete='off'>";
                         ?>
                     </div>

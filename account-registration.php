@@ -26,23 +26,23 @@ $status_hubungan = array("---", "Kepala Keluarga", "Istri", "Anak 1", "Anak 2", 
                     <h2 class="text-dark-emphasis fs-7 m-0">Data Identitas Kepala Keluarga</h2>
                     <div class="col-12 fs-7">
                         <label for="noKk" class="form-label form-label-sm text-dark-emphasis">Nomor KK <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control form-control-sm text-dark-emphasis" name="no_kk" id="noKk" placeholder="7383091434760008" required>
+                        <input type="number" class="form-control form-control-sm text-dark-emphasis" name="no_kk" id="noKk" placeholder="7383091434760008" required autocomplete="off">
                     </div>
                     <div class="col-12 fs-7">
                         <label for="nik" class="form-label form-label-sm text-dark-emphasis">NIK <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control form-control-sm text-dark-emphasis" name="nik" id="nik" placeholder="2151331605010002" required>
+                        <input type="number" class="form-control form-control-sm text-dark-emphasis" name="nik" id="nik" placeholder="2151331605010002" required autocomplete="off">
                     </div>
                     <div class="col-12 fs-7">
                         <label for="namaDepan" class="form-label form-label-sm text-dark-emphasis">Nama Depan <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm text-dark-emphasis" name="nama_depan" id="namaDepan" placeholder="Fachri Andika" maxlength="30" required>
+                        <input type="text" class="form-control form-control-sm text-dark-emphasis" name="nama_depan" id="namaDepan" placeholder="Fachri Andika" maxlength="30" required autocomplete="off">
                     </div>
                     <div class="col-12 fs-7">
                         <label for="namaBelakang" class="form-label form-label-sm text-dark-emphasis">Nama Belakang</label>
-                        <input type="text" class="form-control form-control-sm text-dark-emphasis" name="nama_belakang" id="namaBelakang" placeholder="Permana" maxlength="30">
+                        <input type="text" class="form-control form-control-sm text-dark-emphasis" name="nama_belakang" id="namaBelakang" placeholder="Permana" maxlength="30" autocomplete="off">
                     </div>
                     <div class="col-12 fs-7">
                         <label for="tempatLahir" class="form-label form-label-sm text-dark-emphasis">Tempat Lahir <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm text-dark-emphasis" name="tempat_lahir" id="tempatLahir" placeholder="Pontianak" maxlength="30" required>
+                        <input type="text" class="form-control form-control-sm text-dark-emphasis" name="tempat_lahir" id="tempatLahir" placeholder="Pontianak" maxlength="30" required autocomplete="off">
                     </div>
                     <div class="col-12 fs-7">
                         <label for="tanggalLahir" class="form-label form-label-sm text-dark-emphasis">Tanggal Lahir <span class="text-danger">*</span></label>
@@ -72,16 +72,16 @@ $status_hubungan = array("---", "Kepala Keluarga", "Istri", "Anak 1", "Anak 2", 
                     </div>
                     <div class="col-12 fs-7">
                         <label for="pekerjaan" class="form-label form-label-sm text-dark-emphasis">Pekerjaan <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm text-dark-emphasis" name="pekerjaan" id="pekerjaan" placeholder="PNS Guru" maxlength="25" required>
+                        <input type="text" class="form-control form-control-sm text-dark-emphasis" name="pekerjaan" id="pekerjaan" placeholder="PNS Guru" maxlength="25" required autocomplete="off">
                     </div>
                     <h2 class="text-dark-emphasis fs-7 mt-2 mb-0">Data Kontak Kepala Keluarga</h2>
                     <div class="col-12 fs-7">
                         <label for="noHp" class="form-label form-label-sm text-dark-emphasis">No. HP <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control form-control-sm text-dark-emphasis" name="no_hp" id="noHp" placeholder="6281365300180" required>
+                        <input type="number" class="form-control form-control-sm text-dark-emphasis" name="no_hp" id="noHp" placeholder="6281365300180" required autocomplete="off">
                     </div>
                     <div class="col-12 fs-7">
                         <label for="email" class="form-label form-label-sm text-dark-emphasis">Email <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control form-control-sm text-dark-emphasis" name="email" id="email" placeholder="fachriandikap@gmail.com" required>
+                        <input type="email" class="form-control form-control-sm text-dark-emphasis" name="email" id="email" placeholder="fachriandikap@gmail.com" required autocomplete="off">
                     </div>
                 </div>
 
@@ -93,19 +93,19 @@ $status_hubungan = array("---", "Kepala Keluarga", "Istri", "Anak 1", "Anak 2", 
                     </div>
                     <div class="col-12 fs-7">
                         <label for="rt" class="form-label form-label-sm text-dark-emphasis">RT <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control form-control-sm text-dark-emphasis" name="rt" id="rt" placeholder="004" required>
+                        <input type="number" class="form-control form-control-sm text-dark-emphasis" name="rt" id="rt" placeholder="004" required autocomplete="off">
                     </div>
                     <div class="col-12 fs-7">
                         <label for="rw" class="form-label form-label-sm text-dark-emphasis">RW <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control form-control-sm text-dark-emphasis" name="rw" id="rw" placeholder="023" required>
+                        <input type="number" class="form-control form-control-sm text-dark-emphasis" name="rw" id="rw" placeholder="023" required autocomplete="off">
                     </div>
                     <div class="col-12 fs-7">
                         <label for="kelDesa" class="form-label form-label-sm text-dark-emphasis">Kelurahan / Desa <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm text-dark-emphasis" name="kel_desa" id="kelDesa" placeholder="Sungai Bangkong" maxlength="30" required>
+                        <input type="text" class="form-control form-control-sm text-dark-emphasis" name="kel_desa" id="kelDesa" placeholder="Sungai Bangkong" maxlength="30" required autocomplete="off">
                     </div>
                     <div class="col-12 fs-7">
                         <label for="kecamatan" class="form-label form-label-sm text-dark-emphasis">Kecamatan <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm text-dark-emphasis" name="kecamatan" id="kecamatan" placeholder="Pontianak Kota" maxlength="40" required>
+                        <input type="text" class="form-control form-control-sm text-dark-emphasis" name="kecamatan" id="kecamatan" placeholder="Pontianak Kota" maxlength="40" required autocomplete="off">
                     </div>
 
                     <h2 class="text-dark-emphasis fs-7 mt-2 mb-0">Data Pendukung</h2>

@@ -13,6 +13,8 @@ if ($_SESSION['role'] != "daftar") {
     </script>";
 }
 
+$hari = array("1" => "Senin", "2" => "Selasa", "3" => "Rabu", "4" => "Kamis", "5" => "Jumat", "6" => "Sabtu", "7" => "Minggu");
+
 include("views/index-header.php");
 ?>
 
@@ -24,7 +26,14 @@ include("views/index-header.php");
                     <span class="material-symbols-sharp fs-1">how_to_reg</span>
                 </div>
                 <div>
-                    <p class="fs-6 fw-semibold mb-0">3</p>
+                    <?php
+                    $first_date = date('Y-m-01', strtotime(date('Y-m')));
+                    $last_date = date('Y-m-t', strtotime(date('Y-m')));
+                    $sql = "SELECT COUNT(id_pendaftaran) as total FROM pendaftaran WHERE tanggal_berobat BETWEEN '$first_date' AND '$last_date'";
+                    $result = $conn->query($sql);
+                    $data = $result->fetch_assoc();
+                    ?>
+                    <p class="fs-6 fw-semibold mb-0"><?= $data['total'] ?></p>
                     <p class="fs-6 m-0 text-secondary">Pendaftaran</p>
                 </div>
             </div>
@@ -36,7 +45,10 @@ include("views/index-header.php");
                     <span class="material-symbols-sharp fs-1">personal_injury</span>
                 </div>
                 <div>
-                    <p class="fs-6 fw-semibold mb-0">15</p>
+                    <?php
+                    $data = get_total("nik", "pasien");
+                    ?>
+                    <p class="fs-6 fw-semibold mb-0"><?= $data['total'] ?></p>
                     <p class="fs-6 m-0 text-secondary">Pasien Umum</p>
                 </div>
             </div>
@@ -48,7 +60,10 @@ include("views/index-header.php");
                     <span class="material-symbols-sharp fs-1">medication</span>
                 </div>
                 <div>
-                    <p class="fs-6 fw-semibold mb-0">10</p>
+                    <?php
+                    $data = get_total("id_ruang_poli", "ruang_poli");
+                    ?>
+                    <p class="fs-6 fw-semibold mb-0"><?= $data['total'] ?></p>
                     <p class="fs-6 m-0 text-secondary">Ruang Poli</p>
                 </div>
             </div>
@@ -60,7 +75,10 @@ include("views/index-header.php");
                     <span class="material-symbols-sharp fs-1">local_activity</span>
                 </div>
                 <div>
-                    <h3 class="fs-6 fw-semibold mb-0">4</h3>
+                    <?php
+                    $data = get_total("id_informasi", "informasi");
+                    ?>
+                    <p class="fs-6 fw-semibold mb-0"><?= $data['total'] ?></p>
                     <p class="fs-6 m-0 text-secondary">Info Kegiatan</p>
                 </div>
             </div>
@@ -68,7 +86,14 @@ include("views/index-header.php");
     </div>
 
     <div class="row my-5 p-2 bg-white rounded text-dark-emphasis">
-        <p class="fs-6 fw-medium px-0 mb-2">Pendaftaran Hari Ini, Selasa, 06-06-2023</p>
+        <?php
+        $tanggal = date('d-m-Y');
+        $hari2 = date('N', strtotime($tanggal));
+        foreach ($hari as $x => $value) {
+            if ($hari2 == $x) $tampil_hari = $value;
+        }
+        ?>
+        <p class="fs-6 fw-medium px-0 mb-2">Pendaftaran Hari Ini, <?= $tampil_hari ?>, <?= $tanggal ?></p>
         <div class="table-responsive border rounded p-2 fs-7 text-dark-emphasis">
             <table id="admin-registration" class="table rounded shadow-sm table-hover border" style="width:100%">
                 <thead class="text-dark-emphasis">
@@ -83,135 +108,77 @@ include("views/index-header.php");
                     </tr>
                 </thead>
                 <tbody class="text-dark-emphasis">
-                    <tr>
-                        <td class="fw-semibold">O0001</td>
-                        <td>04-06-2023</td>
-                        <td>
-                            <p class="mb-0"> <a href="detail-patient-registration.php" class="text-decoration-none">00923456</a> | Fachri Andika | 27 Tahun</p>
-                            <p class="mb-0">6281356300160</p>
-                            <p class="mb-0"> Jalan Pangeran Nata Kusuma No. 76</p>
-                        </td>
-                        <td>Ruang Kesehatan Gigi dan Mulut</td>
-                        <td>06-06-2023</td>
-                        <td><span class="status p-1 rounded">Ditunda</span></td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#O001">Status</button>
-                            <button class="btn btn-sm btn-outline-success">WA</button>
-                            <button class="btn btn-sm btn-outline-danger">Email</button>
-                        </td>
-                        <!-- modal edit contact starts-->
-                        <form action="">
-                            <div class="modal fade" id="O001" data-bs-backdrop="static" tabindex="-1">
-                                <div class="modal-dialog modal-sm modal-dialog-centered">
+                    <?php
+                    //UBAH TANGGAL BEROBAT SQL UNTUK DEMO LENGKAP
+                    $sql = "SELECT * FROM pendaftaran INNER JOIN rekam_medis ON pendaftaran.no_rekam_medis = rekam_medis.no_rekam_medis
+                            INNER JOIN pasien ON rekam_medis.nik = pasien.nik INNER JOIN akun ON pasien.no_kk = akun.no_kk
+                            INNER JOIN ruang_poli ON pendaftaran.id_ruang_poli = ruang_poli.id_ruang_poli
+                            WHERE tanggal_berobat = CURRENT_DATE AND (status_pendaftaran = 'Menunggu' OR status_pendaftaran = 'Ditunda')";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td class='fw-semibold'>" . $row['nomor_antrian'] . "</td>";
+                        echo "<td>" . format_date($row['tanggal_daftar']) . "</td>";
+                        echo "<td>";
+                        $tanggal_lahir = $row['tanggal_lahir'];
+                        $tanggal_berobat = $row['tanggal_berobat'];
+                        $selisih = date_diff(date_create($tanggal_lahir), date_create($tanggal_berobat));
+                        $umur = $selisih->y;
+                        $enc_no_rekam_medis = encrypt($row['no_rekam_medis']);
+                        $url = "detail-patient-registration.php?noRekmed=" . urlencode($enc_no_rekam_medis);
+                        echo "<p class='mb-0'> <a href='" . $url . "' class='text-decoration-none'>" . $row['no_rekam_medis'] . "</a> | " . $row['nama_depan'] . " " . $row['nama_belakang'] . " | " . $umur . " Tahun</p>";
+                        echo "<p class='mb-0'>" . $row['no_hp'] . "</p>";
+                        echo "<p class='mb-0'>" . $row['alamat'] . "</p>";
+                        echo "</td>";
+                        echo "<td>" . $row['nama_ruang_poli'] . "</td>";
+                        echo "<td>" . format_date($row['tanggal_berobat']) . "</td>";
+                        echo "<td><span class='status py-1 px-2 rounded'>" . $row['status_pendaftaran'] . "</span></td>";
+                        echo "<td>";
+                        echo "<button type='button' class='btn btn-sm btn-outline-primary' data-bs-toggle='modal' data-bs-target='#" . $row['nomor_antrian'] . "'>Status</button>";
+                        $enc_nik = encrypt($row['nik']);
+                        $url = "send-wa.php?nik=" . urlencode($enc_nik);
+                        echo "<a href='" . $url . "' class='btn btn-sm btn-outline-success'>WA</a>";
+                        $url = "send-mail.php?nik=" . urlencode($enc_nik);
+                        echo "<a href='" . $url . "' class='btn btn-sm btn-outline-danger'>Email</a>";
+                        echo "</td>";
+                    ?>
+                        <!-- modal edit status starts-->
+                        <div class="modal fade" id="<?= $row['nomor_antrian'] ?>" data-bs-backdrop="static" tabindex="-1">
+                            <form action="action-admin.php" method="post" onsubmit="return validasiStatus()">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-7 text-dark-emphasis fw-medium">Edit Status</h1>
+                                            <h1 class="modal-title fs-7 text-dark-emphasis fw-medium">Edit Status Pendaftaran</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="col-12 fs-7">
-                                                <select class="form-select form-select-sm" required>
-                                                    <option>Menunggu</option>
-                                                    <option>Diproses</option>
-                                                    <option>Ditunda</option>
-                                                </select>
+                                                <p class="m-0">Nomor Antrian: <?= $row['nomor_antrian'] ?></p>
+                                                <p>Tujuan Ruang Poli: <?= $row['nama_ruang_poli'] ?></p>
+                                                <div class="form-check">
+                                                    <input type="hidden" name="id_pendaftaran" value="<?= $row['id_pendaftaran'] ?>">
+                                                    <input class="form-check-input edit-proses" type="radio" name="status" id="proses<?= $row['nomor_antrian'] ?>" value="Diproses">
+                                                    <label class="form-check-label" for="proses<?= $row['nomor_antrian'] ?>">Proses</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input edit-tunda" type="radio" name="status" id="tunda<?= $row['nomor_antrian'] ?>" value="Ditunda">
+                                                    <label class="form-check-label" for="tunda<?= $row['nomor_antrian'] ?>">Tunda</label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-sm btn-outline-success" data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-sm btn-success">Simpan</button>
+                                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-sm btn-primary" name="edit_status">Simpan</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </tr>
-                    <tr>
-                        <td class="fw-semibold">O0002</td>
-                        <td>05-06-2023</td>
-                        <td>
-                            <p class="mb-0"> <a href="detail-patient-registration.php" class="text-decoration-none">10923456</a> | Dewi Sari | 25 Tahun</p>
-                            <p class="mb-0">6281409532109</p>
-                            <p class="mb-0"> Jalan Pangeran Nata Kusuma No. 76</p>
-                        </td>
-                        <td>Ruang Pemeriksaan Umum</td>
-                        <td>06-06-2023</td>
-                        <td><span class="status p-1 rounded">Menunggu</span></td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#O001">Status</button>
-                            <button class="btn btn-sm btn-outline-success">WA</button>
-                            <button class="btn btn-sm btn-outline-danger">Email</button>
-                        </td>
-                        <!-- modal edit contact starts-->
-                        <form action="">
-                            <div class="modal fade" id="O001" data-bs-backdrop="static" tabindex="-1">
-                                <div class="modal-dialog modal-sm modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-7 text-dark-emphasis fw-medium">Edit Status</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="col-12 fs-7">
-                                                <select class="form-select form-select-sm" required>
-                                                    <option>Menunggu</option>
-                                                    <option>Diproses</option>
-                                                    <option>Ditunda</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-sm btn-outline-success" data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-sm btn-success">Simpan</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </tr>
-                    <tr>
-                        <td class="fw-semibold">O0003</td>
-                        <td>06-06-2023</td>
-                        <td>
-                            <p class="mb-0"> <a href="detail-patient-registration.php" class="text-decoration-none">10998763</a> | Dwi Aditya | 22 Tahun</p>
-                            <p class="mb-0">6289987687623</p>
-                            <p class="mb-0"> Jalan Suka Mulia No. 6</p>
-                        </td>
-                        <td>Ruang Pemeriksaan Umum</td>
-                        <td>06-06-2023</td>
-                        <td><span class="status p-1 rounded">Menunggu</span></td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#O001">Status</button>
-                            <button class="btn btn-sm btn-outline-success">WA</button>
-                            <button class="btn btn-sm btn-outline-danger">Email</button>
-                        </td>
-                        <!-- modal edit contact starts-->
-                        <form action="">
-                            <div class="modal fade" id="O001" data-bs-backdrop="static" tabindex="-1">
-                                <div class="modal-dialog modal-sm modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-7 text-dark-emphasis fw-medium">Edit Status</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="col-12 fs-7">
-                                                <select class="form-select form-select-sm" required>
-                                                    <option>Menunggu</option>
-                                                    <option>Diproses</option>
-                                                    <option>Ditunda</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-sm btn-outline-success" data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-sm btn-success">Simpan</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </tr>
+                            </form>
+                        </div>
+                        <!-- modal edit status ends -->
+                        </tr>
+                    <?php
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>

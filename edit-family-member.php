@@ -24,6 +24,12 @@ include("views/header.php");
 <div class="mx-3 my-mtb-body">
     <div class="container shadow-sm rounded border py-3">
         <h1 class="text-dark-emphasis fs-6 text-center mb-5">Edit Anggota Keluarga</h1>
+        <?php
+        if (isset($_SESSION['error_msg'])) {
+            echo "<p class='bg-danger rounded fs-7 text-white px-2 py-1'>" . $_SESSION['error_msg'] . "</p>";
+            unset($_SESSION['error_msg']);
+        }
+        ?>
         <form action="action.php" method="post" enctype="multipart/form-data" onsubmit="return validasiEditAnggota()">
             <div class="d-flex justify-content-between col-12 flex-wrap">
                 <div class="d-flex flex-column align-items-start col-lg-3 col-12 gap-3 mb-4">
@@ -67,7 +73,7 @@ include("views/header.php");
                             <option value="<?= $data['agama'] ?>" hidden><?= $data['agama'] ?></option>;
                             <?php
                             foreach ($agama as $value) {
-                                echo "<option value=" . $value . ">" . $value . "</option>";
+                                echo "<option value='" . $value . "'>" . $value . "</option>";
                             }
                             ?>
                         </select>
@@ -78,11 +84,12 @@ include("views/header.php");
                     </div>
                     <div class="col-12">
                         <label for="status_hubungan" class="form-label form-label-sm fs-7">Status Hubungan <span class="text-danger">*</span></label>
+                        <input type="hidden" name="status_hubungan_prev" value="<?= $data['status_hubungan'] ?>">
                         <select class="form-select form-select-sm fs-7" name="status_hubungan" id="status_hubungan" required>
                             <option value="<?= $data['status_hubungan'] ?>" hidden><?= $data['status_hubungan'] ?></option>;
                             <?php
                             foreach ($status_hubungan as $value) {
-                                echo "<option value=" . $value . ">" . $value . "</option>";
+                                echo "<option value='" . $value . "'>" . $value . "</option>";
                             }
                             ?>
                         </select>
@@ -101,7 +108,7 @@ include("views/header.php");
                     <h2 class="text-dark-emphasis fs-7 m-0">Data Kontak Anggota Keluarga</h2>
                     <div class="col-12">
                         <label for="noHp" class="form-label form-label-sm fs-7">No. HP <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm fs-7" name="no_hp" id="noHp" value="<?= $data['no_hp'] ?>" required autocomplete="off">
+                        <input type="text" class="form-control form-control-sm fs-7" name="no_hp" id="noHp" value="<?= $data['no_hp'] ?>" autocomplete="off">
                     </div>
                     <h2 class="text-dark-emphasis fs-7 mt-2 mb-0">Data Pendukung</h2>
                     <?php

@@ -30,22 +30,20 @@ include("views/index-header.php");
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <a href="detail-patient-medical-record.php" class="text-decoration-none">7383091434760008</a>
-                        </td>
-                        <td>954987</td>
-                        <td>Fachri Andika Permana</td>
-                        <td>fachriandika@gmail.com</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="detail-patient-medical-record.php" class="text-decoration-none">7383079887430008</a>
-                        </td>
-                        <td>912650</td>
-                        <td>Bima Putra Mahendra</td>
-                        <td>bimaputra@gmail.com</td>
-                    </tr>
+                    <?php
+                    $sql = "SELECT * FROM akun INNER JOIN pasien ON akun.no_kk = pasien.no_kk WHERE pasien.status_hubungan = 'Kepala Keluarga'";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        $enc_no_kk = encrypt($row['no_kk']);
+                        $url = "detail-patient-medical-record.php?noKk=" . urlencode($enc_no_kk);
+                        echo "<tr class='row-color'>";
+                        echo "<td><a href='" . $url . "' class='text-decoration-none'>" . $row['no_kk'] . "</a>";
+                        echo "<td class='indeks'>" . $row['no_indeks'] . "</td>";
+                        echo "<td>" . $row['nama_depan'] . " " . $row['nama_belakang'] . "</td>";
+                        echo "<td>" . $row['email'] . "</td>";
+                        echo "</tr>";
+                    };
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -64,33 +62,47 @@ include("views/index-header.php");
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <a href="detail-patient-medical-record.php" class="text-decoration-none">00945678</a>
-                        </td>
-                        <td>2151331605010002</td>
-                        <td>Fachri Andika Permana</td>
-                        <td>16-10-2001</td>
-                        <td>Laki-Laki</td>
-                        <td>6281378300210</td>
-                        <td><button class="btn btn-sm btn-outline-primary">Lihat KTP</button></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="detail-patient-medical-record.php" class="text-decoration-none">10945678</a>
-                        </td>
-                        <td>2151051910010007</td>
-                        <td>Dewi Sari Pramudita</td>
-                        <td>24-12-2004</td>
-                        <td>Perempuan</td>
-                        <td>6281433002103</td>
-                        <td><button class="btn btn-sm btn-outline-primary">Lihat KTP</button></td>
-                    </tr>
+                    <?php
+                    $sql = "SELECT * FROM pasien INNER JOIN rekam_medis ON pasien.nik = rekam_medis.nik"; //yang belum punya no rek med tidak akan ditampilkan
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        $enc_no_rekmed = encrypt($row['no_rekam_medis']);
+                        $url = "detail-patient-medical-record.php?noRekmed=" . urlencode($enc_no_rekmed);
+                        echo "<tr>";
+                        echo "<td><a href='" . $url . "' class='text-decoration-none'>" . $row['no_rekam_medis'] . "</a></td>";
+                        echo "<td>" . $row['nik'] . "</td>";
+                        echo "<td>" . $row['nama_depan'] . " " . $row['nama_belakang'] . "</td>";
+                        echo "<td>" . format_date($row['tanggal_lahir']) . "</td>";
+                        echo "<td>" . $row['jenis_kelamin'] . "</td>";
+                        echo "<td>" . $row['no_hp'] . "</td>";
+                        echo "<td><button class='btn btn-sm btn-outline-secondary' data-bs-toggle='modal' data-bs-target='#" . $row['nik'] . "'>Lihat KTP</button></td>";
+                        echo "</tr>";
+                    ?>
+                        <!-- Modal starts-->
+                        <div class="modal fade" id="<?= $row['nik'] ?>" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-7">KTP <?= $row['nama_depan'] ?></h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <?php
+                                        if ($row['ktp'] === NULL || $row['ktp'] === "") echo "<p>" . $row['nama_depan'] . " belum memiliki KTP</p>";
+                                        else echo "<img src='../assets/patient_data/" . $row['ktp'] . "' class='img-fluid' width='800' alt='KTP " . $row['nama_depan'] . "' />";
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal ends -->
+                    <?php
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
     </div>
-
 </div>
 
 <?php

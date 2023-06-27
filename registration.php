@@ -58,7 +58,7 @@ include("views/header.php");
                         <select class="form-select form-select-sm" name="patient" id="patient" required>
                             <option value="---" selected hidden>Pilih pasien yang akan berobat</option>
                             <?php
-                            $sql = "SELECT * FROM pasien INNER JOIN rekam_medis ON pasien.nik = rekam_medis.nik WHERE no_kk = '$no_kk'";
+                            $sql = "SELECT * FROM pasien INNER JOIN rekam_medis ON pasien.nik = rekam_medis.nik WHERE no_kk = '$no_kk' AND status_pasien = 'Dalam KK'";
                             $result = $conn->query($sql);
                             while ($row = $result->fetch_assoc()) {
                                 echo "<option value='" . $row['no_rekam_medis'] . " " . $row['nama_depan'] . " " . $row['nama_belakang'] . " " . $row['no_hp'] . "'>" . $row['no_rekam_medis'] . "</option>";
@@ -73,7 +73,7 @@ include("views/header.php");
                     </div>
                     <div class="col-12 fs-7">
                         <label for="no_hp" class="form-label form-label-sm">No. HP <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm" name="no_hp" id="no_hp">
+                        <input type="number" class="form-control form-control-sm" name="no_hp" id="no_hp" autocomplete="off">
                     </div>
                 </div>
 

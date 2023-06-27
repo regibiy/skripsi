@@ -34,43 +34,44 @@ include("views/index-header.php");
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <a href="detail-patient-registration.php" class="text-decoration-none">7383091434760008</a>
-                        </td>
-                        <td>00945678</td>
-                        <td>Fachri Andika Permana</td>
-                        <td>16-10-2001</td>
-                        <td>Laki-Laki</td>
-                        <td>Islam</td>
-                        <td>6281378300210</td>
-                        <td class="text-secondary"><button type="button" class="btn btn-sm btn-outline-primary fs-7" data-bs-toggle="modal" data-bs-target="#ktpSuami">Lihat KTP</button></td>
+                    <?php
+                    $sql = "SELECT * FROM pasien INNER JOIN akun ON pasien.no_kk = akun.no_kk INNER JOIN rekam_medis ON pasien.nik = rekam_medis.nik";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        $enc_no_kk = encrypt($row['no_kk']);
+                        $url = "detail-patient-registration.php?noKk=" . urlencode($enc_no_kk);
+                        echo "<td><a href='" . $url . "' class='text-decoration-none'>" . $row['no_kk'] . "</a></td>";
+                        echo "<td>" . $row['no_rekam_medis'] . "</td>";
+                        echo "<td>" . $row['nama_depan'] . " " . $row['nama_belakang'] . "</td>";
+                        echo "<td>" . format_date($row['tanggal_lahir']) . "</td>";
+                        echo "<td>" . $row['jenis_kelamin'] . "</td>";
+                        echo "<td>" . $row['agama'] . "</td>";
+                        echo "<td>" . $row['no_hp'] . "</td>";
+                        echo "<td class='text-secondary'><button type='button' class='btn btn-sm btn-outline-secondary fs-7' data-bs-toggle='modal' data-bs-target='#ktp" . $row['no_rekam_medis'] . "'>Lihat KTP</button></td>";
+                        echo "</tr>";
+                    ?>
                         <!-- Modal starts-->
-                        <div class="modal fade" id="ktpSuami" tabindex="-1">
+                        <div class="modal fade" id="ktp<?= $row['no_rekam_medis'] ?>" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-7" id="exampleModalLabel">KTP x-6-x</h1>
+                                        <h1 class="modal-title fs-7" id="exampleModalLabel">KTP <?= $row['nama_depan'] . " " . $row['nama_belakang'] ?></h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body text-center"><img src="assets/patient_data/KTP.jpg" class="img-fluid" width="400" alt="ktp" /></div>
+                                    <div class="modal-body text-center">
+                                        <?php
+                                        if ($row['ktp'] === NULL || $row['ktp'] === "") echo "<p class='fs-7 m-0'>" . $row['nama_depan'] . " belum memiliki KTP</p>";
+                                        else echo "<img src='../assets/patient_data/" . $row['ktp'] . "' class='img-fluid' width='400' alt='KTP' />";
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <!-- Modal ends -->
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="detail-patient-registration.php" class="text-decoration-none">7383091434760008</a>
-                        </td>
-                        <td>10945678</td>
-                        <td>Dewi Sari Pramudita</td>
-                        <td>24-12-2002</td>
-                        <td>Perempuan</td>
-                        <td>Islam</td>
-                        <td>6281433002103</td>
-                        <td><button class="btn btn-sm btn-outline-primary">Lihat KTP</button></td>
-                    </tr>
+                    <?php
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>

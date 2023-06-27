@@ -3,13 +3,9 @@ $title = "Masuk";
 include("action-admin.php");
 
 if (check_status_login_admin()) {
-    if ($_SESSION['role'] == "daftar") {
-        header("Location: index-registration.php");
-    } elseif ($_SESSION['role'] == "rekmed") {
-        header("Location: index-medical-record.php");
-    } elseif ($_SESSION['role'] == "kapus") {
-        header("Location: index-head.php");
-    }
+    if ($_SESSION['role'] == "daftar") header("Location: index-registration.php");
+    elseif ($_SESSION['role'] == "rekmed") header("Location: index-medical-record.php");
+    elseif ($_SESSION['role'] == "kapus") header("Location: index-head.php");
 }
 
 include("views/login-header.php");
@@ -24,24 +20,16 @@ include("views/login-header.php");
                 <h1 class="fs-6">Masuk</h1>
                 <?php
                 if (isset($_SESSION['error_msg'])) {
-                ?>
-                    <p class="mb-0 bg-danger rounded text-white fs-7 py-1"><?= $_SESSION['error_msg'] ?></p>
-                <?php
+                    echo "<p class='mb-0 bg-danger rounded text-white fs-7 py-1 px-2'>" . $_SESSION['error_msg'] . "</p>";
                     unset($_SESSION['error_msg']);
                 }
                 ?>
                 <div class="form-floating fs-7">
                     <?php
                     if (isset($_SESSION['username']) && !check_status_login_admin()) {
-                    ?>
-                        <input type="text" class="form-control form-control-sm" id="floatingInput" placeholder="regi123" name="username" value="<?= $_SESSION['username'] ?>" autocomplete="off">
-                    <?php
+                        echo "<input type='text' class='form-control form-control-sm' id='floatingInput' placeholder='regi123' name='username' value='" . $_SESSION['username'] . "' autocomplete='off'>";
                         unset($_SESSION['username']);
-                    } else {
-                    ?>
-                        <input type="text" class="form-control form-control-sm" id="floatingInput" placeholder="regi123" name="username" autocomplete="off">
-                    <?php
-                    }
+                    } else echo "<input type='text' class='form-control form-control-sm' id='floatingInput' placeholder='regi123' name='username' autocomplete='off'>";
                     ?>
                     <label for="floatingInput">Username</label>
                 </div>

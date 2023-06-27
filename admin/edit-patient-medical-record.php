@@ -26,7 +26,6 @@ if (isset($_GET['nik'])) {
 $sql = "SELECT * FROM pasien INNER JOIN rekam_medis ON pasien.nik = rekam_medis.nik WHERE pasien.nik = '$dec_nik'";
 $result = $conn->query($sql);
 $data = $result->fetch_assoc();
-if (is_null($data)) header("Location: ../error-page.php"); //jika data nik telah diubah dan tidak dapat get nik sebelumnya
 
 $agama = array("Budha", "Islam", "Hindu", "Katolik", "Konghucu", "Kristen");
 $status_hubungan = array("Kepala Keluarga", "Istri", "Anak 1", "Anak 2", "Anak 3", "Anak 4", "Anak 5", "Anak 6", "Anak 7", "Anak 8", "Anak 9");
@@ -51,9 +50,9 @@ include("views/index-header.php");
                             <td class="col-4"><label for="nik" class="form-label form-label-sm">NIK</label></td>
                             <td>
                                 <div class="col-lg-8 col-12">
-                                    <input type="number" class="form-control form-control-sm edit-nik-rekmed" name="nik" id="nik" placeholder="2151331605010002" disabled required autocomplete="off" value="<?= $data['nik'] ?>">
+                                    <p class="fs-7 m-0 fw-medium"><?= $data['nik'] ?></p>
                                     <input type="hidden" name="no_kk" value="<?= $data['no_kk'] ?>">
-                                    <input type="hidden" name="nik_prev" value="<?= $data['nik'] ?>">
+                                    <input type="hidden" name="nik" value="<?= $data['nik'] ?>">
                                     <input type="hidden" name="no_rek_med_prev" value="<?= $data['no_rekam_medis'] ?>">
                                 </div>
                             </td>

@@ -1,3 +1,29 @@
+<?php
+$nama = "Regi";
+$petugas = "Ridho";
+$bagian = "Rekam Medis";
+$no_indeks = 123456789;
+$password = 12345678;
+
+$content = "Hai, <b>" . $nama . "</b>
+            <br><br><br>
+            Terima kasih telah sabar menunggu.<br>
+            Berikut adalah informasi akun Anda:
+            <br><br>
+                Nomor Berobat : <b>" . $no_indeks . "</b><br> 
+                Kata Sandi : <b>" . $password . " </b><br><br>
+                Dengan masuk menggunakan akun di atas, Anda dapat melakukan pendaftaran rawat jalan secara online dan mengatur data anggota keluarga Anda.<br><br>
+                Jangan khawatir jika Anda lupa dengan nomor berobat dan kata sandi Anda, Anda dapat meminta sistem untuk mengirimkannya melalui <i>email</i> yang Anda gunakan
+                untuk mendaftar sebagai pasien baru di puskesmasalianyangpnk.my.id. <br><br<br>
+                Terima kasih.<br><br>
+                Salam, <br>
+                " . $petugas . ", Petugas " . $bagian . " <b>UPT Puskesmas Alianyang</b><br>
+                Jalan Pangeran Natakusuma, Pontianak Kota<br><br><br>
+                <i>*pesan dikirim oleh sistem, harap TIDAK membalas.</i>";
+echo $content;
+die;
+?>
+
 <table id="my-registration" class="table table-striped">
     <thead>
         <tr class="fw-medium">

@@ -39,10 +39,15 @@ include("views/index-header.php");
                     <div class="col-12 fs-7">
                         <label for="judul" class="form-label form-label-sm">Judul <span class="text-danger">*</span></label>
                         <input type="text" class="form-control form-control-sm" id="judul" name="judul" maxlength="50" value="<?= $data['judul'] ?>" required>
+                        <input type="hidden" name="id_informasi" value="<?= $data['id_informasi'] ?>">
                     </div>
                     <div class="col-12 fs-7">
                         <label for="deskripsi" class="form-label form-label-sm">Deskripsi <span class="text-danger">*</span></label>
-                        <textarea class="form-control form-control-sm" name="deskripsi" id="deskripsi" cols="30" rows="3" maxlength="255" required><?= $data['deskripsi'] ?></textarea>
+                        <?php
+                        $deskripsi2 = $data['deskripsi'];
+                        $deskripsi_br = strip_tags($deskripsi2, '<br />'); //fungsi menghapus string dari variabel
+                        ?>
+                        <textarea class="form-control form-control-sm" name="deskripsi" id="deskripsi" cols="30" rows="3" maxlength="255" required><?= $deskripsi_br ?></textarea>
                     </div>
                     <div class="col-12 fs-7">
                         <label for="gambarPrev" class="form-label form-label-sm">Gambar Saat Ini</label>

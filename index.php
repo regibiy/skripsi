@@ -1,11 +1,8 @@
-7<?php
-    $title = "UPT Puskesmas Alianyang";
-    include("action.php");
-
-    $hari = array("1" => "Senin", "2" => "Selasa", "3" => "Rabu", "4" => "Kamis", "5" => "Jumat", "6" => "Sabtu", "7" => "Minggu");
-
-    include("views/header.php");
-    ?>
+<?php
+$title = "UPT Puskesmas Alianyang";
+include("action.php");
+include("views/header.php");
+?>
 
 <!-- main starts -->
 <?php
@@ -82,10 +79,12 @@ if (!check_status_login_pasien()) {
     <?php
     if (!check_status_login_pasien()) echo "<h2 class='text-center text-dark-emphasis mb-4 fs-5' id='information'>Informasi Kegiatan Kami</h2>";
     ?>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <?php
-        $sql = "SELECT * FROM informasi INNER JOIN petugas ON informasi.username = petugas.username ORDER BY tanggal_unggah";
-        $result = $conn->query($sql);
+    <?php
+    $hari = array("1" => "Senin", "2" => "Selasa", "3" => "Rabu", "4" => "Kamis", "5" => "Jumat", "6" => "Sabtu", "7" => "Minggu");
+    $sql = "SELECT * FROM informasi INNER JOIN petugas ON informasi.username = petugas.username ORDER BY tanggal_unggah DESC";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        echo "<div class='row row-cols-1 row-cols-md-3 g-4'>";
         while ($row = $result->fetch_assoc()) {
             echo "<div class='col'>";
             echo "<div class='card shadow-sm'>";
@@ -93,7 +92,10 @@ if (!check_status_login_pasien()) {
             echo "<h5 class='card-title text-dark-emphasis fs-6'>" . $row['judul'] . "</h5>";
             $deskripsi = $row['deskripsi'];
             $kata = str_word_count($deskripsi, 1); //https://www.php.net/manual/en/function.str-word-count.php
-            $rangkai = implode(' ', array_slice($kata, 0, 20));
+            $kataFiltered = array_filter($kata, function ($kata2) {
+                return $kata2 !== "br";
+            });
+            $rangkai = implode(' ', array_slice($kataFiltered, 0, 20));
             echo "<p class='card-text text-secondary fs-7'>" . $rangkai . "</p>";
             $tanggal = date('N', strtotime($row['tanggal']));
             foreach ($hari as $x => $val) {
@@ -106,14 +108,24 @@ if (!check_status_login_pasien()) {
             echo "<a class='text-decoration-none fs-7' href='" . $url . "'>Selengkapnya...</a>";
             echo "</div>";
             echo "<div class='card-footer'>";
-            if ($row['tanggal_ubah'] === NULL || $row['tanggal_ubah'] === "") echo "<small class='text-body-secondary fs-7'>Diunggah pada " . date('d-m-Y, H:i', strtotime($row['tanggal_unggah'])) . "</small>";
+            if ($row['tanggal_ubah'] === NULL || $row['tanggal_ubah'] === "") echo "<small class='text-body-secondary fs-7'>Diunggah pada " . date('d-m-Y, H:i', strtotime($row['tanggal_unggah'])) . " oleh " . $row['nama_depan'] . "</small>";
             else echo "<small class='text-body-secondary fs-7'>Diedit pada " . date('d-m-Y, H:i', strtotime($row['tanggal_ubah'])) . " oleh " . $row['nama_depan'] . "</small>";
             echo "</div>";
             echo "</div>";
             echo "</div>";
         }
-        ?>
-    </div>
+        echo "</div>";
+    } else {
+    ?>
+        <div class="container d-flex flex-column justify-content-center align-items-center">
+            <img src="assets/images/no_data.jpg" alt="Belum ada informasi" class="img-fluid" width="500">
+            <p class="fs-4">Upss...</p>
+            <p class="fs-7 m-0">Belum ada informasi kegiatan yang dibagikan oleh petugas kami.</p>
+            <p class="fs-7">Jangan khawatir. ketika ada informasi kegiatan yang akan dilaksanakan, petugas kami akan segera membagikannya disini.</p>
+        </div>
+    <?php
+    }
+    ?>
 </div>
 <!-- body ends -->
 <?php
