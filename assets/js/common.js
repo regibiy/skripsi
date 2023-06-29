@@ -15,7 +15,6 @@ function showPassword() {
 // validasi form daftar starts
 const alertP = document.getElementById("alert");
 const inputKk = document.getElementById("noKk");
-const inputNik = document.getElementById("nik");
 const inputJK = document.getElementById("jenisKelamin");
 const inputAgama = document.getElementById("agama");
 const inputNoHp = document.getElementById("noHp");
@@ -46,7 +45,6 @@ function validasiFormDaftar() {
   agama = inputAgama.value;
 
   if ((noKk.length >= 1 && noKk.length < 16) || noKk.length > 16) alertError("Sesuaikan Nomor KK Anda! Nomor KK memiliki panjang 16 angka");
-  else if ((nik.length >= 1 && nik.length < 16) || nik.length > 16) alertError("Sesuaikan NIK Anda! NIK memiliki panjang 16 angka");
   else if (jk === "---") alertError("Silakan pilih jenis kelamin Anda");
   else if (agama === "---") alertError("Silakan pilih agama Anda");
   else if (noHp.length > 15) alertError("Nomor HP hanya dapat menyimpan 15 angka");

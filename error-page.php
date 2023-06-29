@@ -1,7 +1,7 @@
 <?php
 $title = "Upss...";
+session_start();
 include("views/header-error.php");
-session_start()
 ?>
 
 <div class="container">

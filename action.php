@@ -70,41 +70,43 @@ if (isset($_POST['daftar_akun_pasien'])) {
     $kecamatan = $pasien->get_kecamatan();
     $nama_lengkap = $nama_depan . " " . $nama_belakang;
     $sql = "SELECT * FROM akun WHERE no_kk = '$no_kk'";
+    $enc_nik = encrypt($nik);
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $_SESSION['error_msg'] = "Nomor KK sudah terdaftar! Silakan ke <a href='forgot-account.php' class='text-decoration-none text-white fw-semibold'>halaman lupa akun</a> untuk dikirimkan nomor berobat dan kata sandi";
-        header("Location: account-registration.php");
+        header("Location: account-registration.php?nik=" . $enc_nik);
     } else {
-        $sql = "SELECT * FROM pasien WHERE nik = '$nik' AND status_pasien = 'Dalam KK'";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            $_SESSION['error_msg'] = "NIK Anda terikat dengan KK lain! Silakan ubah Status Pasien pada akun terikat terlebih dahulu";
-            header("Location: account-registration.php");
+        $ktp = upload_file($_FILES['ktp']['name'], $_FILES['ktp']['size'], $_FILES['ktp']['tmp_name'], 'assets/patient_data/');
+        $kk = upload_file($_FILES['kk']['name'], $_FILES['kk']['size'], $_FILES['kk']['tmp_name'], 'assets/patient_data/');
+        if (!$ktp || !$kk) {
+            $_SESSION['error_msg'] = "Silakan masukkan gambar dengan ekstensi .jpg, .jpeg, atau .png dengan ukuran kurang dari 3MB";
+            header("Location: account-registration.php?nik=" . $enc_nik);
         } else {
-            $ktp = upload_file($_FILES['ktp']['name'], $_FILES['ktp']['size'], $_FILES['ktp']['tmp_name'], 'assets/patient_data/');
-            $kk = upload_file($_FILES['kk']['name'], $_FILES['kk']['size'], $_FILES['kk']['tmp_name'], 'assets/patient_data/');
-            if (!$ktp || !$kk) {
-                $_SESSION['error_msg'] = "Silakan masukkan gambar dengan ekstensi .jpg, .jpeg, atau .png dengan ukuran kurang dari 3MB";
-                header("Location: account-registration.php");
+            $temp_password = substr($tanggal_lahir, 0, 4);
+            $sql = "INSERT INTO akun VALUES ('$no_kk', NULL, '$email', '$temp_password', '$alamat', '$rt', '$rw', '$kel_desa', '$kecamatan', '$kk')";
+            $result_akun = $conn->query($sql);
+
+            $sql = "SELECT * FROM pasien WHERE nik = '$nik'";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                $sql = "UPDATE pasien SET no_kk = '$no_kk', nama_depan = '$nama_depan', nama_belakang = '$nama_belakang', tempat_lahir = '$tempat_lahir', tanggal_lahir = '$tanggal_lahir',
+                jenis_kelamin = '$jenis_kelamin', agama = '$agama', pekerjaan = '$pekerjaan', status_hubungan = 'Kepala Keluarga', no_hp = '$no_hp', ktp = '$ktp', status_pasien = 'Dalam KK' WHERE nik = '$nik'";
             } else {
-                $temp_password = substr($tanggal_lahir, 0, 4);
-                $sql = "INSERT INTO akun VALUES ('$no_kk', NULL, '$email', '$temp_password', '$alamat', '$rt', '$rw', '$kel_desa', '$kecamatan', '$kk')";
-                $result_akun = $conn->query($sql);
-                $sql = "INSERT INTO pasien VALUES ('$nik','$no_kk', '$nama_depan', '$nama_belakang', '$tempat_lahir','$tanggal_lahir', '$jenis_kelamin', '$agama', '$pekerjaan', 'Kepala Keluarga', '$no_hp', '$ktp', 'Dalam KK')";
-                $result_pasien = $conn->query($sql);
-                if ($result_akun && $result_pasien) {
-                    $title = "Pendaftaran Berhasil";
-                    $content = "Hai, <b>" . $nama_lengkap . "</b><br><br><br>
+                $sql = "INSERT INTO pasien VALUES ('$nik', '$no_kk', '$nama_depan', '$nama_belakang', '$tempat_lahir', '$tanggal_lahir', '$jenis_kelamin', '$agama', '$pekerjaan', 'Kepala Keluarga', '$no_hp', '$ktp', 'Dalam KK')";
+            }
+            $result_pasien = $conn->query($sql);
+            if ($result_akun && $result_pasien) {
+                $title = "Pendaftaran Berhasil";
+                $content = "Hai, <b>" . $nama_lengkap . "</b><br><br><br>
                     Pendaftaran Anda telah diterima dan akan dikonfirmasi oleh petugas kami secepat mungkin. 
                     Petugas kami akan mengirimkan <i>email</i> kembali kepada Anda yang berisi nomor berobat dan kata sandi untuk <i>log in</i>.<br><br>
                     Terima kasih telah melakukan pendaftaran akun pada website kami.<br><br><br>
                     Salam,<br><br>
                     <b>UPT Puskesmas Alianyang</b><br>
                     Jl. Pangeran Natakusuma, Pontianak Kota";
-                    sendMail($email, $nama_lengkap, $title, $content);
-                    $_SESSION['success_msg'] = "Pendaftaran berhasil! Silakan cek pesan di email Anda";
-                    header("Location: account-registration.php");
-                }
+                sendMail($email, $nama_lengkap, $title, $content);
+                $_SESSION['success_msg'] = "Pendaftaran berhasil! Silakan cek pesan di email Anda";
+                header("Location: account-registration.php");
             }
         }
     }
@@ -290,6 +292,26 @@ if (isset($_POST['cek_nik'])) {
             $enc_nik = encrypt($nik);
             header("Location:add-family-member.php?nik=" . urlencode($enc_nik));
         }
+    }
+}
+
+if (isset($_POST['cek_nik_daftar'])) {
+    $nik = $_POST['nik_check'];
+    $sql = "SELECT * FROM pasien WHERE nik = '$nik'";
+    $result = $conn->query($sql);
+    $enc_nik = encrypt($nik);
+    if ($result->num_rows > 0) {
+        $data = $result->fetch_assoc();
+        if ($data['status_pasien'] === "Luar KK") {
+            $_SESSION['success_msg'] = "Silakan periksa kembali dan lengkapi data kepala keluarga sebelum disimpan";
+            header("Location: account-registration.php?nik=" . urlencode($enc_nik));
+        } else {
+            $_SESSION['error_msg'] = "NIK " . $nik . " terikat dengan KK lain! Silakan ubah status pasien pada akun yang terikat terlebih dahulu";
+            header("Location: account-registration.php");
+        }
+    } else {
+        $_SESSION['success_msg'] = "Silakan lengkapi data kepala keluarga";
+        header("Location: account-registration.php?nik=" . urlencode($enc_nik));
     }
 }
 

@@ -8,14 +8,19 @@ if (!check_status_login_pasien()) {
     if (isset($_GET['treatmentdate'])) {
         $enc_treatment_date = $_GET['treatmentdate'];
         $treatment_date = decrypt($enc_treatment_date);
-    } else $treatment_date = date('Y-m-d');
+    } else {
+        $treatment_date = date('Y-m-d');
+        $get_national_holiday = cek_libur_nasional($treatment_date);
+    }
 }
 
 if (isset($_GET['nationalholiday'])) $national_holiday = $_GET['nationalholiday'];
+if (isset($get_national_holiday)) $national_holiday = $get_national_holiday;
 
 $queue_number = generate_queue_number($treatment_date);
 
 include("views/header.php");
+
 ?>
 
 <div class="text-center my-mtb-body">

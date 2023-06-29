@@ -193,3 +193,20 @@ function send_wa($target, $pesan)
     curl_close($curl);
     return $response;
 }
+
+function cek_libur_nasional($tanggal)
+{
+    $timestamp = strtotime($tanggal);
+    $month = date('n', $timestamp); //ambil bulan tanpa leading zero
+    $default_date = date("Y-m-j", $timestamp); //ambil hari tanpa leading zero
+    $url = "https://api-harilibur.vercel.app/api?month=$month";
+    $data = file_get_contents($url);
+    $arrayData = json_decode($data, true);
+    foreach ($arrayData as $value) {
+        if ($default_date === $value['holiday_date']) {
+            $national_holiday = $value['holiday_name'];
+            return $national_holiday;
+            exit;
+        }
+    }
+}

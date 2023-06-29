@@ -21,7 +21,7 @@ include("views/header.php");
                 <h2 class="text-dark-emphasis fs-7 mb-0">
                     Daftar Anggota Keluarga
                     <button type="button" class="btn btn-sm btn-outline-success fs-7" data-bs-toggle="modal" data-bs-target="#nikCheck">Tambah</button>
-                    <!-- modal edit contact starts-->
+                    <!-- modal cek nik starts-->
                     <form action="action.php" method="post" onsubmit="return validasiNIK()">
                         <div class="modal fade" id="nikCheck" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
@@ -45,7 +45,7 @@ include("views/header.php");
                             </div>
                         </div>
                     </form>
-                    <!-- modal edit contact ends -->
+                    <!-- modal cek nik ends -->
                 </h2>
                 <div class="accordion col-12" id="accordionPanelsStayOpenExample">
                     <?php
