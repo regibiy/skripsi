@@ -94,7 +94,6 @@ function editRekMedReadonly() {
 // readonly toogle edit nik starts
 const editNikRekmed = document.querySelectorAll(".edit-nik-rekmed");
 const simpanEditNik = document.getElementById("simpanEditNik");
-console.log(simpanEditNik);
 function editNikDisabled() {
   editNikRekmed.forEach((value) => {
     if (value.disabled === true) value.disabled = false;

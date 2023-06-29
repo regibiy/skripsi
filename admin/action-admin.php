@@ -113,6 +113,7 @@ if (isset($_POST['tambah_ruang'])) {
     $gambar_ruang = upload_file($_FILES['gambar']['name'], $_FILES['gambar']['size'], $_FILES['gambar']['tmp_name'], 'assets/images/');
     if (!$gambar_ruang) {
         $_SESSION['nama_ruang'] = $nama_ruang;
+        $_SESSION['error_msg'] = "Silakan masukkan gambar dengan ekstensi .jpg, .jpeg, atau .png dengan ukuran kurang dari 3MB";
         header("Location: add-poly-room-head.php");
     } else {
         $sql = "INSERT INTO ruang_poli (nama_ruang_poli, gambar_ruang_poli, status_ruang_poli) VALUES ('$nama_ruang', '$gambar_ruang', '$status_ruang')";
@@ -133,20 +134,24 @@ if (isset($_POST['edit_ruang'])) {
     $status_ruang = $ruang_poli->get_status_ruang();
     $id_ruang = $_POST['id_ruang'];
     $prev_image = $_POST['prev_image'];
+    $enc_id_ruang = encrypt($id_ruang);
 
     if ($gambar_ruang = $_FILES['gambar']['error'] === 4) $gambar_edit = $prev_image;
-    else {
-        unlink('assets/images/' . $prev_image);
-        $gambar_edit = upload_file($_FILES['gambar']['name'], $_FILES['gambar']['size'], $_FILES['gambar']['tmp_name'], 'assets/images/');
-    }
+    else $gambar_edit = upload_file($_FILES['gambar']['name'], $_FILES['gambar']['size'], $_FILES['gambar']['tmp_name'], 'assets/images/');
 
-    $sql = "UPDATE ruang_poli SET nama_ruang_poli = '$nama_ruang', gambar_ruang_poli = '$gambar_edit', status_ruang_poli = '$status_ruang' WHERE id_ruang_poli = '$id_ruang'";
-    $result = $conn->query($sql);
-    if ($result) {
-        echo "<script>
-            alert('Data ruang poli berhasil diperbarui!');
-            window.location = 'poly-room-head.php';
-            </script>";
+    if (!$gambar_edit) {
+        $_SESSION['error_msg'] = "Silakan masukkan gambar dengan ekstensi .jpg, .jpeg, atau .png dengan ukuran kurang dari 3MB";
+        header("Location: edit-poly-room-head.php?idruang=" . urlencode($enc_id_ruang));
+    } else {
+        unlink('assets/images/' . $prev_image);
+        $sql = "UPDATE ruang_poli SET nama_ruang_poli = '$nama_ruang', gambar_ruang_poli = '$gambar_edit', status_ruang_poli = '$status_ruang' WHERE id_ruang_poli = '$id_ruang'";
+        $result = $conn->query($sql);
+        if ($result) {
+            echo "<script>
+                alert('Data ruang poli berhasil diperbarui!');
+                window.location = 'poly-room-head.php';
+                </script>";
+        }
     }
 }
 
@@ -164,15 +169,19 @@ if (isset($_POST['tambah_informasi'])) {
     $enc_id_dokter = $_POST['id_dokter'];
     $dec_id_dokter = decrypt($enc_id_dokter);
     $gambar = upload_file($_FILES['gambar']['name'], $_FILES['gambar']['size'], $_FILES['gambar']['tmp_name'], 'assets/images/');
-
-    $sql = "INSERT INTO informasi (judul, tanggal_unggah, username, deskripsi, gambar, tanggal, jam_mulai, jam_selesai, id_dokter)
-            VALUES ('$judul', '$tanggal_unggah', '$username', '$deskripsi', '$gambar', '$tanggal', '$jam_mulai', '$jam_selesai', '$dec_id_dokter')";
-    $result = $conn->query($sql);
-    if ($result) {
-        echo "<script>
-        alert('Data informasi kegiatan berhasil ditambahkan!');
-        window.location = 'activity-registration.php';
-        </script>";
+    if (!$gambar) {
+        $_SESSION['error_msg'] = "Silakan masukkan gambar dengan ekstensi .jpg, .jpeg, atau .png dengan ukuran kurang dari 3MB";
+        header("Location: add-activity-registration.php");
+    } else {
+        $sql = "INSERT INTO informasi (judul, tanggal_unggah, username, deskripsi, gambar, tanggal, jam_mulai, jam_selesai, id_dokter)
+        VALUES ('$judul', '$tanggal_unggah', '$username', '$deskripsi', '$gambar', '$tanggal', '$jam_mulai', '$jam_selesai', '$dec_id_dokter')";
+        $result = $conn->query($sql);
+        if ($result) {
+            echo "<script>
+            alert('Data informasi kegiatan berhasil ditambahkan!');
+            window.location = 'activity-registration.php';
+            </script>";
+        }
     }
 }
 
@@ -188,21 +197,25 @@ if (isset($_POST['edit_informasi'])) {
     $jam_mulai = $informasi->get_jam_mulai();
     $jam_selesai = $informasi->get_jam_selesai();
     $id_dokter = $informasi->get_dokter();
+    $enc_id_informasi = encrypt($id_informasi);
 
     if ($gambar = $_FILES['gambar']['error'] === 4) $gambar_edit = $prev_gambar;
-    else {
-        unlink('assets/images/' . $prev_gambar);
-        $gambar_edit = upload_file($_FILES['gambar']['name'], $_FILES['gambar']['size'], $_FILES['gambar']['tmp_name'], 'assets/images/');
-    }
+    else $gambar_edit = upload_file($_FILES['gambar']['name'], $_FILES['gambar']['size'], $_FILES['gambar']['tmp_name'], 'assets/images/');
 
-    $sql = "UPDATE informasi SET judul = '$judul', tanggal_ubah = '$tanggal_ubah', deskripsi = '$deskripsi', gambar = '$gambar_edit', tanggal = '$tanggal', jam_mulai = '$jam_mulai', 
-    jam_selesai = '$jam_selesai', id_dokter = '$id_dokter' WHERE id_informasi = '$id_informasi'";
-    $result = $conn->query($sql);
-    if ($result) {
-        echo "<script>
-        alert('Data informasi kegiatan berhasil diperbarui!');
-        window.location = 'activity-registration.php';
-        </script>";
+    if (!$gambar_edit) {
+        $_SESSION['error_msg'] = "Silakan masukkan gambar dengan ekstensi .jpg, .jpeg, atau .png dengan ukuran kurang dari 3MB";
+        header("Location: edit-activity-registration.php?idInformasi=" . $enc_id_informasi);
+    } else {
+        unlink('assets/images/' . $prev_gambar);
+        $sql = "UPDATE informasi SET judul = '$judul', tanggal_ubah = '$tanggal_ubah', deskripsi = '$deskripsi', gambar = '$gambar_edit', tanggal = '$tanggal', jam_mulai = '$jam_mulai', 
+        jam_selesai = '$jam_selesai', id_dokter = '$id_dokter' WHERE id_informasi = '$id_informasi'";
+        $result = $conn->query($sql);
+        if ($result) {
+            echo "<script>
+            alert('Data informasi kegiatan berhasil diperbarui!');
+            window.location = 'activity-registration.php';
+            </script>";
+        }
     }
 }
 

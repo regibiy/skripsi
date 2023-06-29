@@ -88,14 +88,10 @@ function upload_file($file_name, $file_size, $temp_location, $target_location)
 {
     $valid_ext = ['jpg', 'jpeg', 'png'];
     $ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-    if (!in_array($ext, $valid_ext)) {
-        $_SESSION['error_msg'] = "Silakan masukkan gambar dengan ekstensi .jpg, .jpeg, atau .png";
-        return false;
-    } else {
-        if ($file_size > 3000000) {
-            $_SESSION['error_msg'] = "Ukuran file harus kurang dari 3MB";
-            return false;
-        } else {
+    if (!in_array($ext, $valid_ext)) return false;
+    else {
+        if ($file_size > 3000000) return false;
+        else {
             $new_file_name = uniqid() . "." . $ext;
             move_uploaded_file($temp_location, $target_location . $new_file_name);
             return $new_file_name;

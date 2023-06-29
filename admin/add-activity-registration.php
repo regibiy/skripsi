@@ -20,6 +20,12 @@ include("views/index-header.php");
     <div class="row mt-3 mb-4 px-2 py-3 bg-white rounded text-dark-emphasis">
         <p class="fs-6 p-0 mb-2 fw-medium">Tambah Informasi Kegiatan</p>
         <form action="action-admin.php" method="post" enctype="multipart/form-data" onsubmit="return validasiFormInformasi()">
+            <?php
+            if (isset($_SESSION['error_msg'])) {
+                echo "<p class='bg-danger text-white fs-7 py-1 px-2 rounded'>" . $_SESSION['error_msg'] . "</p>";
+                unset($_SESSION['error_msg']);
+            }
+            ?>
             <p id="alert" class="bg-danger text-white fs-7 py-1 px-2 rounded" style="display: none;"></p>
             <div class="d-flex justify-content-between align-items-start col-12 px-0 flex-wrap">
                 <div class="d-flex flex-column fs-7 col-lg-5 col-12 border p-2 mb-3 gap-3 text-dark-emphasis rounded">
