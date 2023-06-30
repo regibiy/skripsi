@@ -96,6 +96,7 @@ include("views/header.php");
                     </div>
                     <div class="col-12">
                         <label for="statusPasien" class="form-label form-label-sm fs-7">Status Pasien <span class="text-danger">*</span></label>
+                        <input type="hidden" name="status_pasien_prev" value="<?= $data['status_pasien'] ?>">
                         <select class="form-select form-select-sm fs-7" name="status_pasien" id="statusPasien" required>
                             <option value="<?= $data['status_pasien'] ?>" hidden><?= $data['status_pasien'] ?></option>
                             <option value="Dalam KK">Dalam KK</option>
@@ -108,7 +109,7 @@ include("views/header.php");
                     <h2 class="text-dark-emphasis fs-7 m-0">Data Kontak Anggota Keluarga</h2>
                     <div class="col-12">
                         <label for="noHp" class="form-label form-label-sm fs-7">No. HP <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm fs-7" name="no_hp" id="noHp" value="<?= $data['no_hp'] ?>" autocomplete="off">
+                        <input type="number" class="form-control form-control-sm fs-7" name="no_hp" id="noHp" value="<?= $data['no_hp'] ?>" autocomplete="off">
                     </div>
                     <h2 class="text-dark-emphasis fs-7 mt-2 mb-0">Data Pendukung</h2>
                     <?php

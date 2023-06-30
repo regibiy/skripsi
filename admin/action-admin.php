@@ -345,7 +345,7 @@ if (isset($_POST['edit_data_kk_rekmed'])) {
         // validasi rekam medis
         if ($no_rekam_medis === NULL || $no_rekam_medis === "") {
             $no_rekam_medis = "00" . $no_indeks;
-            $sql = "INSERT INTO rekam_medis (no_rekam_medis, nik) VALUES ('$no_rekam_medis', '$nik')";
+            $sql = "UPDATE rekam_medis SET no_rekam_medis = '$no_rekam_medis' WHERE nik = '$nik'";
             $result = $conn->query($sql);
             if ($result) {
                 $petugas = $_SESSION['name'];

@@ -211,46 +211,49 @@ include("views/index-header.php");
                 $result = $conn->query($sql);
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>";
-                    echo "<td>";
+                    if ($row['no_rekam_medis'] === NULL) echo "<td>Tidak ada</td>";
+                    else {
+                        echo "<td>";
                 ?>
-                    <button type="button" class="btn btn-sm btn-outline-secondary fs-7" data-bs-toggle="modal" data-bs-target="#<?= $row['no_rekam_medis'] ?>"><?= $row['no_rekam_medis'] ?></button>
-                    <!-- Modal starts-->
-                    <form action="action-admin.php" method="post">
-                        <div class="modal fade" id="<?= $row['no_rekam_medis'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-7">Detail Nomor Rekam Medis <?= $row['no_rekam_medis'] ?></h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body fs-7">
-                                        <div class="d-flex flex-column gap-3">
-                                            <div class="fs-7">
-                                                <label for="nik" class="form-label form-label-sm text-dark-emphasis">NIK</label>
-                                                <p class="text-secondary mb-0"><?= $row['nik'] ?></p>
-                                                <input type="hidden" name="no_rekam_medis" value="<?= $row['no_rekam_medis'] ?>">
-                                            </div>
-                                            <div class="fs-7">
-                                                <label for="tanggalMasuk" class="form-label form-label-sm text-dark-emphasis">Tanggal Masuk</label>
-                                                <input type="date" class="form-control form-control-sm text-secondary edit-rekam-medis" name="tanggal_masuk" value="<?= $row['tanggal_masuk'] ?>" required readonly>
-                                            </div>
-                                            <div class="fs-7">
-                                                <label for="riwayatAlergiObat" class="form-label form-label-sm text-dark-emphasis">Riwayat Alergi Obat</label>
-                                                <textarea class="form-control form-control-sm edit-rekam-medis" name="riwayat_alergi_obat" id="riwayatAlergiObat" rows="3" readonly><?= $row['riwayat_alergi_obat'] ?></textarea>
-                                            </div>
-                                            <div class="fs-7">
-                                                <button type="button" class="btn btn-sm btn-primary" onclick="editRekMedReadonly()">Edit</button>
-                                                <button type="submit" class="btn btn-sm btn-outline-primary simpan-edit-rekmed" name="edit_rekam_medis" disabled>Simpan</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary fs-7" data-bs-toggle="modal" data-bs-target="#<?= $row['no_rekam_medis'] ?>"><?= $row['no_rekam_medis'] ?></button>
+                        <!-- Modal starts-->
+                        <form action="action-admin.php" method="post">
+                            <div class="modal fade" id="<?= $row['no_rekam_medis'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-7">Detail Nomor Rekam Medis <?= $row['no_rekam_medis'] ?></h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body fs-7">
+                                            <div class="d-flex flex-column gap-3">
+                                                <div class="fs-7">
+                                                    <label for="nik" class="form-label form-label-sm text-dark-emphasis">NIK</label>
+                                                    <p class="text-secondary mb-0"><?= $row['nik'] ?></p>
+                                                    <input type="hidden" name="no_rekam_medis" value="<?= $row['no_rekam_medis'] ?>">
+                                                </div>
+                                                <div class="fs-7">
+                                                    <label for="tanggalMasuk" class="form-label form-label-sm text-dark-emphasis">Tanggal Masuk</label>
+                                                    <input type="date" class="form-control form-control-sm text-secondary edit-rekam-medis" name="tanggal_masuk" value="<?= $row['tanggal_masuk'] ?>" required readonly>
+                                                </div>
+                                                <div class="fs-7">
+                                                    <label for="riwayatAlergiObat" class="form-label form-label-sm text-dark-emphasis">Riwayat Alergi Obat</label>
+                                                    <textarea class="form-control form-control-sm edit-rekam-medis" name="riwayat_alergi_obat" id="riwayatAlergiObat" rows="3" readonly><?= $row['riwayat_alergi_obat'] ?></textarea>
+                                                </div>
+                                                <div class="fs-7">
+                                                    <button type="button" class="btn btn-sm btn-primary" onclick="editRekMedReadonly()">Edit</button>
+                                                    <button type="submit" class="btn btn-sm btn-outline-primary simpan-edit-rekmed" name="edit_rekam_medis" disabled>Simpan</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                    <!-- Modal ends -->
+                        </form>
+                        <!-- Modal ends -->
                     <?php
-                    echo "</td>";
+                        echo "</td>";
+                    }
                     $enc_nik = encrypt($row['nik']);
                     $url = "edit-patient-medical-record.php?nik=" . urlencode($enc_nik);
                     echo "<td><a href='" . $url . "' class='text-decoration-none'>" . $row['nik'] . "</a></td>";

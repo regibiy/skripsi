@@ -63,13 +63,16 @@ include("views/index-header.php");
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT * FROM pasien INNER JOIN rekam_medis ON pasien.nik = rekam_medis.nik"; //yang belum punya no rek med tidak akan ditampilkan
+                    $sql = "SELECT * FROM pasien INNER JOIN rekam_medis ON pasien.nik = rekam_medis.nik WHERE no_rekam_medis IS NOT NULL OR status_pasien = 'Luar KK'"; //yang belum punya no rek med dan dalam kk tidak akan ditampilkan
                     $result = $conn->query($sql);
                     while ($row = $result->fetch_assoc()) {
-                        $enc_no_rekmed = encrypt($row['no_rekam_medis']);
-                        $url = "detail-patient-medical-record.php?noRekmed=" . urlencode($enc_no_rekmed);
                         echo "<tr>";
-                        echo "<td><a href='" . $url . "' class='text-decoration-none'>" . $row['no_rekam_medis'] . "</a></td>";
+                        if ($row['no_rekam_medis'] === NULL) echo "<td>Tidak dapat ditampilkan</td>";
+                        else {
+                            $enc_no_rekmed = encrypt($row['no_rekam_medis']);
+                            $url = "detail-patient-medical-record.php?noRekmed=" . urlencode($enc_no_rekmed);
+                            echo "<td><a href='" . $url . "' class='text-decoration-none'>" . $row['no_rekam_medis'] . "</a></td>";
+                        }
                         echo "<td>" . $row['nik'] . "</td>";
                         echo "<td>" . $row['nama_depan'] . " " . $row['nama_belakang'] . "</td>";
                         echo "<td>" . format_date($row['tanggal_lahir']) . "</td>";

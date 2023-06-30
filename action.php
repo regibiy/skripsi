@@ -267,31 +267,22 @@ if (isset($_POST['edit_domisili'])) {
 }
 
 if (isset($_POST['cek_nik'])) {
-    $no_kk = $_SESSION['no_kk'];
     $nik = $_POST['nik_check'];
-    $sql = "SELECT * FROM pasien WHERE no_kk <> '$no_kk' AND nik = '$nik'"; //mencari nik yang tidak sama dengan session login saat ini
+    $sql = "SELECT * FROM pasien WHERE nik = '$nik'"; //mencari nik yang tidak sama dengan session login saat ini
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $status_pasien = $row['status_pasien'];
-            if ($status_pasien === "Dalam KK") {
-                $_SESSION['error_msg'] = "NIK " . $nik . " terikat dengan KK lain! Silakan ubah status pasien pada akun yang terikat terlebih dahulu";
-                header("Location: family-members.php");
-            } else {
-                $enc_nik = encrypt($nik);
-                header("Location:add-family-member.php?nik=" . urlencode($enc_nik));
-            }
-        }
-    } else {
-        $sql = "SELECT * FROM pasien WHERE no_kk = '$no_kk' AND nik = '$nik'";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            $_SESSION['error_msg'] = "NIK " . $nik . " sudah berada dalam daftar anggota keluarga Anda";
+        $row = $result->fetch_assoc();
+        $status_pasien = $row['status_pasien'];
+        if ($status_pasien === "Dalam KK") {
+            $_SESSION['error_msg'] = "NIK " . $nik . " terikat dengan KK lain! Silakan ubah status pasien pada akun yang terikat terlebih dahulu";
             header("Location: family-members.php");
         } else {
             $enc_nik = encrypt($nik);
-            header("Location:add-family-member.php?nik=" . urlencode($enc_nik));
+            header("Location: add-family-member.php?nik=" . urlencode($enc_nik));
         }
+    } else {
+        $enc_nik = encrypt($nik);
+        header("Location: add-family-member.php?nik=" . urlencode($enc_nik));
     }
 }
 
@@ -353,7 +344,7 @@ if (isset($_POST['tambah_anggota'])) {
                 if ($status_hubungan === $key) $set_status_hubungan = $value;
             }
             $no_rekam_medis = $set_status_hubungan . $no_berobat;
-            $sql = "SELECT * FROM rekam_medis WHERE no_rekam_medis = '$no_rekam_medis'"; //uji nomor rekam medis
+            $sql = "SELECT * FROM rekam_medis WHERE no_rekam_medis = '$no_rekam_medis'"; //uji status hubungan
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 $_SESSION['error_msg'] = "Status hubungan yang Anda pilih sudah ada di anggota keluarga Anda";
@@ -379,7 +370,7 @@ if (isset($_POST['tambah_anggota'])) {
                 if ($status_hubungan === $key) $set_status_hubungan = $value;
             }
             $no_rekam_medis = $set_status_hubungan . $no_berobat;
-            $sql = "SELECT * FROM rekam_medis WHERE no_rekam_medis = '$no_rekam_medis'"; //uji nomor rekam medis
+            $sql = "SELECT * FROM rekam_medis WHERE no_rekam_medis = '$no_rekam_medis'"; //uji status hubungan
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 $_SESSION['error_msg'] = "Status hubungan yang Anda pilih sudah ada di anggota keluarga Anda";
@@ -423,6 +414,7 @@ if (isset($_POST['edit_anggota'])) {
     $no_berobat = $_SESSION['no_berobat'];
     $enc_nik = encrypt($nik);
     $prev_ktp = $_POST['prev_ktp'];
+    $status_pasien_prev = $_POST['status_pasien_prev'];
 
     if (($prev_ktp === NULL || $prev_ktp === "") && $ktp = $_FILES['ktp']['error'] === 4) $ktp = NULL;
     elseif (($prev_ktp === NULL || $prev_ktp === "") && $ktp = $_FILES['ktp']['error'] === 0) $ktp = upload_file($_FILES['ktp']['name'], $_FILES['ktp']['size'], $_FILES['ktp']['tmp_name'], 'assets/patient_data/');
@@ -435,6 +427,10 @@ if (isset($_POST['edit_anggota'])) {
         $_SESSION['error_msg'] = "Silakan masukkan gambar dengan ekstensi .jpg, .jpeg, atau .png dengan ukuran kurang dari 3MB";
         header("Location: edit-family-member.php?nik=" . urlencode($enc_nik));
     } else {
+        if ($status_pasien !== $status_pasien_prev) {
+            $sql = "UPDATE rekam_medis SET no_rekam_medis = NULL WHERE nik = '$nik'";
+            $result = $conn->query($sql);
+        }
         if ($status_hubungan !== $status_hubungan_prev) {
             foreach ($kode_rekmed as $key => $value) {
                 if ($status_hubungan === $key) $set_status_hubungan = $value;
@@ -454,9 +450,9 @@ if (isset($_POST['edit_anggota'])) {
                 $result = $conn->query($sql);
                 if ($result) {
                     echo "<script>
-                                alert('Data anggota keluarga Anda berhasil diperbarui');
-                                window.location = 'family-members.php';
-                            </script>";
+                    alert('Data anggota keluarga Anda berhasil diperbarui');
+                    window.location = 'family-members.php';
+                    </script>";
                 }
             }
         } else {

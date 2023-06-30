@@ -113,7 +113,7 @@ include("views/index-header.php");
                     $sql = "SELECT * FROM pendaftaran INNER JOIN rekam_medis ON pendaftaran.no_rekam_medis = rekam_medis.no_rekam_medis
                             INNER JOIN pasien ON rekam_medis.nik = pasien.nik INNER JOIN akun ON pasien.no_kk = akun.no_kk
                             INNER JOIN ruang_poli ON pendaftaran.id_ruang_poli = ruang_poli.id_ruang_poli
-                            WHERE tanggal_berobat = CURRENT_DATE AND status_pendaftaran = 'Diproses' ORDER BY tanggal_ubah";
+                            WHERE tanggal_berobat = '2023-06-24' AND status_pendaftaran = 'Diproses' ORDER BY tanggal_ubah"; //TANGGAL UBAH KE CURRENT DATE
                     $result = $conn->query($sql);
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";

@@ -129,7 +129,8 @@ include("views/index-header.php");
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>";
-                        echo "<button type='button' class='btn btn-sm btn-outline-secondary fs-7' data-bs-toggle='modal' data-bs-target='#" . $row['no_rekam_medis'] . "'>" . $row['no_rekam_medis'] . "</button>";
+                        if ($row['no_rekam_medis'] === NULL) echo "Tidak ada";
+                        else echo "<button type='button' class='btn btn-sm btn-outline-secondary fs-7' data-bs-toggle='modal' data-bs-target='#" . $row['no_rekam_medis'] . "'>" . $row['no_rekam_medis'] . "</button>";
                         echo "</td>";
                     ?>
                         <!-- Modal starts-->

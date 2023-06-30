@@ -146,31 +146,34 @@ include("views/header.php");
                             echo "<div class='col-12 gap-3'>";
                             echo "<label for='ktp' class='form-label form-label-sm fs-7'>Kartu Tanda Penduduk Saat Ini</label>";
                             echo "<p class='m-0 fs-7'>" . $data['nama_depan'] .  " belum memiliki KTP</p>";
+                            echo "<input type='hidden' name='prev_ktp' value=''>";
                             echo "</div>";
                         } else {
                             echo "<div class='col-12 gap-3'>";
                             echo "<label for='ktp' class='form-label form-label-sm fs-7'>Kartu Tanda Penduduk Saat Ini</label>";
                             echo "<br /><button type='button' class='btn btn-sm btn-outline-success fs-7' data-bs-toggle='modal' data-bs-target='#ktp'>Lihat KTP</button>";
                             echo "</div>";
-                        }
-                    }
                     ?>
-                    <!-- Modal starts-->
-                    <div class="modal fade" id="ktp" tabindex="-1">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-7">KTP <?= $data['nama_depan'] ?></h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body text-center">
-                                    <img src="assets/patient_data/<?= $data['ktp'] ?>" class="img-fluid" width="800" alt="kk" />
-                                    <input type="hidden" name="prev_ktp" value="<?= $data['ktp'] ?>">
+                            <!-- Modal starts-->
+                            <div class="modal fade" id="ktp" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-7">KTP <?= $data['nama_depan'] ?></h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <img src="assets/patient_data/<?= $data['ktp'] ?>" class="img-fluid" width="800" alt="kk" />
+                                            <input type="hidden" name="prev_ktp" value="<?= $data['ktp'] ?>">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- Modal ends -->
+                            <!-- Modal ends -->
+                    <?php
+                        }
+                    } else echo "<input type='hidden' name='prev_ktp' value=''>";
+                    ?>
                     <div class="col-12 mb-4">
                         <label for="ktp" class="form-label form-label-sm fs-7">Kartu Tanda Penduduk</label>
                         <input type="file" class="form-control form-control-sm fs-7" name="ktp" id="ktp">
