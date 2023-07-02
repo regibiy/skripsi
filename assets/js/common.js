@@ -14,6 +14,7 @@ function showPassword() {
 
 // validasi form daftar starts
 const alertP = document.getElementById("alert");
+const alertModalP = document.getElementById("alertModal");
 const inputKk = document.getElementById("noKk");
 const inputJK = document.getElementById("jenisKelamin");
 const inputAgama = document.getElementById("agama");
@@ -27,6 +28,11 @@ function scrollToTop() {
   });
 }
 
+function alertErrorModal($message) {
+  alertModalP.innerHTML = $message;
+  alertModalP.style.display = "block";
+}
+
 function alertError($message) {
   alertP.innerHTML = $message;
   alertP.style.display = "block";
@@ -34,10 +40,9 @@ function alertError($message) {
 }
 
 function validasiFormDaftar() {
-  let noKk, nik;
+  let noKk;
   let valid = false;
   noKk = inputKk.value;
-  nik = inputNik.value;
   noHp = inputNoHp.value;
   rt = inputRt.value;
   rw = inputRw.value;
@@ -184,7 +189,7 @@ const cekNikInput = document.getElementById("nikCheckDua");
 function validasiNIK() {
   let valid = false;
   let nik = cekNikInput.value;
-  if ((nik.length >= 1 && nik.length < 16) || nik.length > 16) alertError("Sesuaikan NIK Anda! NIK memiliki panjang 16 angka");
+  if ((nik.length >= 1 && nik.length < 16) || nik.length > 16) alertErrorModal("Sesuaikan NIK Anda! NIK memiliki panjang 16 angka");
   else valid = true;
 
   if (!valid) return false;
@@ -201,10 +206,8 @@ function restartNIK() {
 const editEmail = document.getElementById("email");
 const hiddenEmail = document.getElementById("hiddenEmail");
 function restartEmail() {
-  if (alertP.style.display === "block") {
-    let email = hiddenEmail.value;
-    editEmail.value = email;
-  }
+  let email = hiddenEmail.value;
+  editEmail.value = email;
 }
 
 const editAlamat = document.getElementById("alamat");

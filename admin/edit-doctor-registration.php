@@ -14,10 +14,8 @@ if ($_SESSION['role'] != "daftar") {
 }
 
 if (!isset($_GET['idDokter'])) {
-    echo "<script>
-    alert('Silakan pilih dokter untuk diedit terlebih dahulu!');
-    window.location='add-activity-registration.php';
-    </script>";
+    $_SESSION['toaster'] = "Silakan pilih dokter untuk diedit terlebih dahulu";
+    header("Location: add-activity-registration.php");
 } else {
     $enc_id_dokter = $_GET['idDokter'];
     $dec_id_dokter = decrypt($enc_id_dokter);

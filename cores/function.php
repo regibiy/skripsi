@@ -210,3 +210,14 @@ function cek_libur_nasional($tanggal)
         }
     }
 }
+
+function toaster_message()
+{
+    echo '<script>';
+    echo 'document.addEventListener("DOMContentLoaded", () => {';
+    echo 'let toast = new bootstrap.Toast(document.getElementById("liveToast"));'; // Inisialisasi toast
+    echo 'toast.show();'; // Tampilkan toast
+    echo '});';
+    echo '</script>';
+    unset($_SESSION['toaster']);
+}

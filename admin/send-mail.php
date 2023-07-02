@@ -42,8 +42,6 @@ $konten = "Hai <b>" . $pasien . "</b>
         <i>*pesan dikirim oleh sistem, harap Tidak membalas.</i>";
 
 if (sendMail($target, $pasien, $judul, $konten)) {
-    echo "<script>
-    alert('Email pemberitahuan berhasil dikirimkan');
-    window.location='index.php';
-    </script>";
+    $_SESSION['toaster'] = "Email pemberitahuan berhasil dikirimkan";
+    header("Location: index-registration.php");
 }

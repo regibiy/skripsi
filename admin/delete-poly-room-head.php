@@ -11,9 +11,6 @@ while ($row = $result->fetch_assoc()) {
 $sql = "DELETE FROM ruang_poli WHERE id_ruang_poli = '$dec_id_ruang'";
 $result = $conn->query($sql);
 if ($result) {
-    echo "
-    <script>
-        alert('Data ruang poli berhasil dihapus!');
-        window.location='poly-room-head.php';
-    </script>";
+    $_SESSION['toaster'] = "Data ruang poli berhasil dihapus";
+    header("location: poly-room-head.php");
 }

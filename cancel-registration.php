@@ -7,8 +7,6 @@ else header("Location: index.php");
 $sql = "UPDATE pendaftaran SET status_pendaftaran = 'Dibatalkan' WHERE id_pendaftaran = '$id_daftar'";
 $result = $conn->query($sql);
 if ($result) {
-    echo "<script>
-    alert('Pendaftaran berhasil dibatalkan!');
-    window.location='my-registration.php';
-    </script>";
+    $_SESSION['toaster'] = "Pendaftaran berhasil dibatalkan";
+    header("Location: my-registration.php");
 }

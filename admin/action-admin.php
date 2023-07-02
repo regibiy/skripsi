@@ -75,10 +75,8 @@ if (isset($_POST['tambah_petugas'])) {
         $sql = "INSERT INTO petugas VALUES ('$username', '$nama_depan', '$nama_belakang', '$password', '$role', '$status')";
         $result = $conn->query($sql);
         if ($result) {
-            echo "<script>
-            alert('Data petugas berhasil ditambahkan!');
-            window.location='officer.php';
-            </script>";
+            $_SESSION['toaster'] = "Data Petugas berhasil ditambahkan";
+            header("location: officer.php");
         }
     }
 }
@@ -98,10 +96,8 @@ if (isset($_POST['edit_petugas'])) {
     password = '$password', role = '$role', status_petugas = '$status' WHERE username = '$username'";
     $result = $conn->query($sql);
     if ($result) {
-        echo "<script>
-        alert('Data petugas berhasil diperbarui!');
-        window.location='officer.php';
-        </script>";
+        $_SESSION['toaster'] = "Data Petugas berhasil diperbarui";
+        header("location: officer.php");
     }
 }
 
@@ -119,10 +115,8 @@ if (isset($_POST['tambah_ruang'])) {
         $sql = "INSERT INTO ruang_poli (nama_ruang_poli, gambar_ruang_poli, status_ruang_poli) VALUES ('$nama_ruang', '$gambar_ruang', '$status_ruang')";
         $result = $conn->query($sql);
         if ($result) {
-            echo "<script>
-            alert('Data ruang poli berhasil ditambahkan!');
-            window.location='poly-room-head.php';
-            </script>";
+            $_SESSION['toaster'] = "Data ruang poli berhasil ditambahkan";
+            header("location: poly-room-head.php");
         }
     }
 }
@@ -147,10 +141,8 @@ if (isset($_POST['edit_ruang'])) {
         $sql = "UPDATE ruang_poli SET nama_ruang_poli = '$nama_ruang', gambar_ruang_poli = '$gambar_edit', status_ruang_poli = '$status_ruang' WHERE id_ruang_poli = '$id_ruang'";
         $result = $conn->query($sql);
         if ($result) {
-            echo "<script>
-                alert('Data ruang poli berhasil diperbarui!');
-                window.location = 'poly-room-head.php';
-                </script>";
+            $_SESSION['toaster'] = "Data ruang poli berhasil diperbarui";
+            header("location: poly-room-head.php");
         }
     }
 }
@@ -177,10 +169,8 @@ if (isset($_POST['tambah_informasi'])) {
         VALUES ('$judul', '$tanggal_unggah', '$username', '$deskripsi', '$gambar', '$tanggal', '$jam_mulai', '$jam_selesai', '$dec_id_dokter')";
         $result = $conn->query($sql);
         if ($result) {
-            echo "<script>
-            alert('Data informasi kegiatan berhasil ditambahkan!');
-            window.location = 'activity-registration.php';
-            </script>";
+            $_SESSION['toaster'] = "Data informasi kegiatan berhasil ditambahkan";
+            header("location: activity-registration.php");
         }
     }
 }
@@ -211,10 +201,8 @@ if (isset($_POST['edit_informasi'])) {
         jam_selesai = '$jam_selesai', id_dokter = '$id_dokter' WHERE id_informasi = '$id_informasi'";
         $result = $conn->query($sql);
         if ($result) {
-            echo "<script>
-            alert('Data informasi kegiatan berhasil diperbarui!');
-            window.location = 'activity-registration.php';
-            </script>";
+            $_SESSION['toaster'] = "Data informasi kegiatan berhasil diperbarui";
+            header("location: activity-registration.php");
         }
     }
 }
@@ -230,10 +218,8 @@ if (isset($_POST['tambah_dokter'])) {
     $sql = "INSERT INTO dokter (nama_dokter, spesialisasi, no_hp, alamat) VALUES ('$nama', '$spesialisasi', '$no_hp', '$alamat')";
     $result = $conn->query($sql);
     if ($result) {
-        echo "<script>
-        alert('Data dokter berhasil ditambah!');
-        window.location = 'add-activity-registration.php';
-        </script>";
+        $_SESSION['toaster'] = "Data dokter berhasil ditambahkan";
+        header("location: add-activity-registration.php");
     }
 }
 
@@ -249,10 +235,8 @@ if (isset($_POST['edit_dokter'])) {
     $sql = "UPDATE dokter SET nama_dokter = '$nama', spesialisasi = '$spesialisasi', no_hp = '$no_hp', alamat = '$alamat' WHERE id_dokter = '$id_dokter'";
     $result = $conn->query($sql);
     if ($result) {
-        echo "<script>
-        alert('Data dokter berhasil diperbarui!');
-        window.location = 'add-activity-registration.php';
-        </script>";
+        $_SESSION['toaster'] = "Data dokter berhasil diperbarui";
+        header("location: add-activity-registration.php");
     }
 }
 
@@ -310,10 +294,8 @@ if (isset($_POST['selesai_daftar'])) {
     $sql = "UPDATE pendaftaran SET status_pendaftaran = 'Selesai' WHERE id_pendaftaran = '$id_daftar'";
     $result = $conn->query($sql);
     if ($result) {
-        echo "<script>
-        alert('Pendaftaran berhasil diselesaikan! Kontrol semua data pendaftaran pasien pada menu Pendaftaran');
-        window.location = 'index-medical-record.php';
-        </script>";
+        $_SESSION['toaster'] = "Pendaftaran berhasil diselesaikan! Kontrol semua data pendaftaran pasien pada menu Pendaftaran";
+        header("location: index-medical-record.php");
     }
 }
 
@@ -335,8 +317,8 @@ if (isset($_POST['edit_data_kk_rekmed'])) {
     alamat = '$alamat', rt = '$rt', rw = '$rw', kelurahan_desa = '$kel_desa', kecamatan = '$kecamatan' WHERE no_kk = '$no_kk'";
     $result = $conn->query($sql);
     if ($result) {
-        $sql = "SELECT pasien.nik, nama_depan, nama_belakang, no_rekam_medis, no_kk FROM pasien LEFT JOIN rekam_medis ON pasien.nik = rekam_medis.nik 
-        WHERE no_kk = '$no_kk' AND status_hubungan = 'Kepala Keluarga'"; //get nik, no rekam medis, nama pasien 
+        $sql = "SELECT pasien.nik, nama_depan, nama_belakang, no_rekam_medis, no_kk FROM pasien INNER JOIN rekam_medis ON pasien.nik = rekam_medis.nik 
+        WHERE no_kk = '$no_kk' AND status_hubungan = 'Kepala Keluarga'"; //get nik, no rekam medis, nama pasien
         $result = $conn->query($sql);
         $data = $result->fetch_assoc();
         $nik = $data['nik'];

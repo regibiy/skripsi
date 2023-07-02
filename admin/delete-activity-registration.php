@@ -19,8 +19,6 @@ unlink('assets/images/' . $data['gambar']);
 $sql = "DELETE FROM informasi WHERE id_informasi = '$dec_id_informasi'";
 $result = $conn->query($sql);
 if ($result) {
-    echo "<script>
-    alert('Data informasi kegiatan berhasil dihapus');
-    window.location='activity-registration.php';
-    </script>";
+    $_SESSION['toaster'] = "Data informasi kegiatan berhasil dihapus";
+    header("location: activity-registration.php");
 }

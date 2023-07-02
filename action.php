@@ -85,16 +85,18 @@ if (isset($_POST['daftar_akun_pasien'])) {
             $temp_password = substr($tanggal_lahir, 0, 4);
             $sql = "INSERT INTO akun VALUES ('$no_kk', NULL, '$email', '$temp_password', '$alamat', '$rt', '$rw', '$kel_desa', '$kecamatan', '$kk')";
             $result_akun = $conn->query($sql);
-
             $sql = "SELECT * FROM pasien WHERE nik = '$nik'";
             $result = $conn->query($sql);
             if ($result->num_rows > 0) {
                 $sql = "UPDATE pasien SET no_kk = '$no_kk', nama_depan = '$nama_depan', nama_belakang = '$nama_belakang', tempat_lahir = '$tempat_lahir', tanggal_lahir = '$tanggal_lahir',
                 jenis_kelamin = '$jenis_kelamin', agama = '$agama', pekerjaan = '$pekerjaan', status_hubungan = 'Kepala Keluarga', no_hp = '$no_hp', ktp = '$ktp', status_pasien = 'Dalam KK' WHERE nik = '$nik'";
+                $result_pasien = $conn->query($sql);
             } else {
                 $sql = "INSERT INTO pasien VALUES ('$nik', '$no_kk', '$nama_depan', '$nama_belakang', '$tempat_lahir', '$tanggal_lahir', '$jenis_kelamin', '$agama', '$pekerjaan', 'Kepala Keluarga', '$no_hp', '$ktp', 'Dalam KK')";
+                $result_pasien = $conn->query($sql);
+                $sql = "INSERT INTO rekam_medis VALUES (NULL, '$nik', NULL, NULL)";
+                $result = $conn->query($sql);
             }
-            $result_pasien = $conn->query($sql);
             if ($result_akun && $result_pasien) {
                 $title = "Pendaftaran Berhasil";
                 $content = "Hai, <b>" . $nama_lengkap . "</b><br><br><br>
@@ -206,10 +208,8 @@ if (isset($_POST['simpan_pendaftaran'])) {
         $sql = "UPDATE akun SET alamat = '$alamat', rt = '$rt', rw = '$rw', kelurahan_desa = '$kel_desa', kecamatan = '$kecamatan' WHERE no_kk = '$no_kk'";
         $result_domisili = $conn->query($sql);
         if ($result_no_hp && $result_domisili) {
-            echo "<script>
-            alert('Pendaftaran Anda berhasil dilakukan!');
-            window.location = 'my-registration.php';
-            </script>";
+            $_SESSION['toaster'] = "Pendaftaran Anda berhasil dibuat";
+            header("Location: my-registration.php");
         }
     }
 }
@@ -220,10 +220,8 @@ if (isset($_POST['edit_kontak'])) {
     $sql = "UPDATE akun SET email = '$email' WHERE no_kk = '$no_kk'";
     $result = $conn->query($sql);
     if ($result) {
-        echo "<script>
-        alert('Data kontak Anda berhasil diperbarui');
-        window.location = 'family-members.php';
-        </script>";
+        $_SESSION['toaster'] = "Data kontak Anda berhasil diperbarui";
+        header("Location: family-members.php");
     }
 }
 
@@ -239,10 +237,8 @@ if (isset($_POST['edit_support'])) {
         $sql = "UPDATE akun SET kk = '$kk' WHERE no_kk = '$no_kk'";
         $result = $conn->query($sql);
         if ($result) {
-            echo "<script>
-            alert('Data Pendukung Anda berhasil diperbarui');
-            window.location = 'family-members.php';
-            </script>";
+            $_SESSION['toaster'] = "Data Pendukung Anda berhasil diperbarui";
+            header("Location: family-members.php");
         }
     }
 }
@@ -259,10 +255,8 @@ if (isset($_POST['edit_domisili'])) {
     $sql = "UPDATE akun SET alamat = '$alamat', rt = '$rt', rw = '$rw', kelurahan_desa = '$kel_desa', kecamatan = '$kecamatan' WHERE no_kk = '$no_kk'";
     $result = $conn->query($sql);
     if ($result) {
-        echo "<script>
-        alert('Data domisili Anda berhasil diperbarui');
-        window.location = 'family-members.php';
-        </script>";
+        $_SESSION['toaster'] = "Data domisili Anda berhasil diperbarui";
+        header("Location: family-members.php");
     }
 }
 
@@ -358,10 +352,8 @@ if (isset($_POST['tambah_anggota'])) {
                     no_hp = '$no_hp', ktp = '$ktp', status_pasien = 'Dalam KK' WHERE nik = '$nik'";
                     $result = $conn->query($sql);
                     if ($result) {
-                        echo "<script>
-                        alert('Data anggota keluarga Anda berhasil ditambahkan');
-                        window.location = 'family-members.php';
-                        </script>";
+                        $_SESSION['toaster'] = "Data anggota keluarga Anda berhasil ditambahkan";
+                        header("Location: family-members.php");
                     }
                 }
             }
@@ -382,10 +374,8 @@ if (isset($_POST['tambah_anggota'])) {
                     $sql = "INSERT INTO rekam_medis (no_rekam_medis, nik) VALUES ('$no_rekam_medis', '$nik')";
                     $result = $conn->query($sql);
                     if ($result) {
-                        echo "<script>
-                        alert('Data anggota keluarga Anda berhasil ditambahkan');
-                        window.location = 'family-members.php';
-                        </script>";
+                        $_SESSION['toaster'] = "Data anggota keluarga Anda berhasil ditambahkan";
+                        header("Location: family-members.php");
                     }
                 }
             }
@@ -449,10 +439,8 @@ if (isset($_POST['edit_anggota'])) {
                     no_hp = '$no_hp', ktp = '$ktp', status_pasien = '$status_pasien' WHERE nik = '$nik'";
                 $result = $conn->query($sql);
                 if ($result) {
-                    echo "<script>
-                    alert('Data anggota keluarga Anda berhasil diperbarui');
-                    window.location = 'family-members.php';
-                    </script>";
+                    $_SESSION['toaster'] = "Data anggota keluarga Anda berhasil diperbarui";
+                    header("Location: family-members.php");
                 }
             }
         } else {
@@ -461,10 +449,8 @@ if (isset($_POST['edit_anggota'])) {
                 no_hp = '$no_hp', ktp = '$ktp', status_pasien = '$status_pasien' WHERE nik = '$nik'";
             $result = $conn->query($sql);
             if ($result) {
-                echo "<script>
-                alert('Data anggota keluarga Anda berhasil diperbarui');
-                window.location = 'family-members.php';
-                </script>";
+                $_SESSION['toaster'] = "Data anggota keluarga Anda berhasil diperbarui";
+                header("Location: family-members.php");
             }
         }
     }

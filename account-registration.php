@@ -31,7 +31,7 @@ $status_hubungan = array("---", "Kepala Keluarga", "Istri", "Anak 1", "Anak 2", 
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="restartNIK()"></button>
                             </div>
                             <div class="modal-body">
-                                <p id="alert" class="bg-danger text-white fs-7 rounded py-1 px-2" style="display: none;"></p>
+                                <p id="alertModal" class="bg-danger text-white fs-7 rounded py-1 px-2 text-start fw-normal" style="display: none;"></p>
                                 <div class="col-12 fs-7 text-start">
                                     <label for="nikCheckDua" class="form-label form-label-sm">NIK Kepala Keluarga <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control form-control-sm" name="nik_check" id="nikCheckDua" placeholder="2151331605010002" required>
@@ -179,11 +179,27 @@ $status_hubungan = array("---", "Kepala Keluarga", "Istri", "Anak 1", "Anak 2", 
                         } else {
                             echo "<div class='col-12 gap-3'>";
                             echo "<label for='ktp' class='form-label form-label-sm fs-7'>Kartu Tanda Penduduk Saat Ini</label>";
-                            echo "<br /><button type='button' class='btn btn-sm btn-outline-success fs-7' data-bs-toggle='modal' data-bs-target='#ktp'>Lihat KTP</button>";
+                            echo "<br /><button type='button' class='btn btn-sm btn-outline-success fs-7' data-bs-toggle='modal' data-bs-target='#lihatKtp'>Lihat KTP</button>";
                             echo "</div>";
                         }
                     }
                     ?>
+                    <!-- Modal starts-->
+                    <div class="modal fade" id="lihatKtp" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-7">KTP <?= $data['nama_depan'] ?></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <img src="assets/patient_data/<?= $data['ktp'] ?>" class="img-fluid" width="800" alt="kk" />
+                                    <input type="hidden" name="prev_ktp" value="<?= $data['ktp'] ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal ends -->
                     <div class="col-12 fs-7">
                         <label for="ktp" class="form-label form-label-sm text-dark-emphasis">Kartu Tanda Penduduk Kepala Keluarga <span class="text-danger">*</span></label>
                         <input type="file" class="form-control form-control-sm text-dark-emphasis" name="ktp" id="ktp" required>

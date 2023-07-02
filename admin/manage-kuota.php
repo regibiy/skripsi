@@ -12,11 +12,8 @@ if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $kuota = $row['kuota_tersedia'];
         }
-        echo "
-        <script>
-            alert('Kuota pendaftaran berhasil diatur!')
-            window.location = 'poly-room-head.php';
-        </script>";
+        $_SESSION['toaster'] = "Kuota pendaftaran berhasil diatur";
+        header("Location: poly-room-head.php");
     }
 } else {
     $kuota = 0;
@@ -28,11 +25,8 @@ if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $kuota = $row['kuota_tersedia'];
         }
-        echo "
-        <script>
-            alert('Kuota pendaftaran berhasil diatur!')
-            window.location = 'poly-room-head.php';
-        </script>";
+        $_SESSION['toaster'] = "Kuota pendaftaran berhasil diatur";
+        header("Location: poly-room-head.php");
     }
 }
 ?>
