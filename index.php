@@ -108,7 +108,7 @@ if (check_status_login_pasien()) {
         echo "</div>";
     } else {
     ?>
-        <div class="d-flex flex-wrap justify-content-center align-items-center">
+        <div class="row justify-content-center align-items-center overflow-hidden">
             <div class="col-xl-6 col-12 text-end" data-aos="fade-right">
                 <img src="assets/images/no_data.jpg" alt="Belum ada informasi" class="img-fluid" width="500">
             </div>
