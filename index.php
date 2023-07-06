@@ -21,7 +21,7 @@ if (check_status_login_pasien()) {
 ?>
     <div class="text-center my-pt-main">
         <div class="container d-flex flex-wrap justify-content-center align-items-center">
-            <div class="main p-2 col-lg-9 col-sm-12 col-md-12">
+            <div class="main p-2 col-lg-9 col-sm-12 col-md-12" data-aos="zoom-in">
                 <h1 class="fs-5 text-light mb-4">Ujung Tombak Pembangunan Kesehatan</h1>
                 <p class="text-light mb-0 fs-6">Selamat datang di web Puskesmas Alianyang! Melalui web ini, Anda dapat mendaftarkan diri dan keluarga Anda untuk mendapatkan akses ke berbagai layanan kesehatan yang tersedia di Puskesmas kami.</p>
             </div>
@@ -66,18 +66,9 @@ if (check_status_login_pasien()) {
 <!-- main ends -->
 
 <!-- body starts  -->
-<?php
-if (!check_status_login_pasien()) {
-?>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150" id="information">
-        <path fill="#2cc185" fill-opacity="1" d="M0,64L80,80C160,96,320,128,480,117.3C640,107,800,53,960,42.7C1120,32,1280,64,1360,80L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
-    </svg>
-<?php
-}
-?>
 <div class="container information">
     <?php
-    if (!check_status_login_pasien()) echo "<h2 class='text-center text-dark-emphasis mb-4 fs-5' id='information'>Informasi Kegiatan Kami</h2>";
+    if (!check_status_login_pasien()) echo "<h2 class='text-center text-dark-emphasis my-5 fs-5' id='information'>Informasi Kegiatan Kami</h2>";
     ?>
     <?php
     $hari = array("1" => "Senin", "2" => "Selasa", "3" => "Rabu", "4" => "Kamis", "5" => "Jumat", "6" => "Sabtu", "7" => "Minggu");
@@ -86,7 +77,7 @@ if (!check_status_login_pasien()) {
     if ($result->num_rows > 0) {
         echo "<div class='row row-cols-1 row-cols-md-3 g-4'>";
         while ($row = $result->fetch_assoc()) {
-            echo "<div class='col'>";
+            echo "<div class='col' data-aos='fade-up'>";
             echo "<div class='card shadow-sm'>";
             echo "<div class='card-body'>";
             echo "<h5 class='card-title text-dark-emphasis fs-6'>" . $row['judul'] . "</h5>";
@@ -117,11 +108,15 @@ if (!check_status_login_pasien()) {
         echo "</div>";
     } else {
     ?>
-        <div class="container d-flex flex-column justify-content-center align-items-center">
-            <img src="assets/images/no_data.jpg" alt="Belum ada informasi" class="img-fluid" width="500">
-            <p class="fs-4">Upss...</p>
-            <p class="fs-7 m-0">Belum ada informasi kegiatan yang dibagikan oleh petugas kami.</p>
-            <p class="fs-7">Jangan khawatir. ketika ada informasi kegiatan yang akan dilaksanakan, petugas kami akan segera membagikannya disini.</p>
+        <div class="d-flex flex-wrap justify-content-center align-items-center">
+            <div class="col-xl-6 col-12 text-end" data-aos="fade-right">
+                <img src="assets/images/no_data.jpg" alt="Belum ada informasi" class="img-fluid" width="500">
+            </div>
+            <div class="col-xl-6 col-12 text-start" data-aos="fade-left">
+                <h3 class="fs-4">Upss...</h3>
+                <p class="fs-7 m-0">Belum ada informasi kegiatan yang dibagikan oleh petugas kami.</p>
+                <p class="fs-7">Jangan khawatir... Ketika ada informasi kegiatan yang akan dilaksanakan, petugas kami akan segera membagikannya disini.</p>
+            </div>
         </div>
     <?php
     }

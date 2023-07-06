@@ -46,10 +46,12 @@ function dinamisTopInfo() {
   // akhir jam operasional
 
   // awal greeting
-  if (hours >= 6 && hours <= 9 && minutes <= 59) greetingH1.innerHTML = "Selamat pagi...";
-  else if (hours >= 10 && hours <= 14 && minutes <= 59) greetingH1.innerHTML = "Selamat siang...";
-  else if (hours >= 15 && hours <= 18 && minutes <= 59) greetingH1.innerHTML = "Selamat sore...";
-  else greetingH1.innerHTML = "Selamat malam...";
+  if (greetingH1) {
+    if (hours >= 6 && hours <= 9 && minutes <= 59) greetingH1.innerHTML = "Selamat pagi...";
+    else if (hours >= 10 && hours <= 14 && minutes <= 59) greetingH1.innerHTML = "Selamat siang...";
+    else if (hours >= 15 && hours <= 18 && minutes <= 59) greetingH1.innerHTML = "Selamat sore...";
+    else greetingH1.innerHTML = "Selamat malam...";
+  }
   // akhir greeting
 }
 
@@ -60,3 +62,23 @@ setInterval(() => {
 }, 3600000);
 
 // akhir menampilkan tanggal di top info
+
+// status starts
+const queueStatus = document.querySelectorAll(".status");
+queueStatus.forEach((bg) => {
+  if (bg.textContent == "Menunggu") bg.classList.add("bg-info");
+  else if (bg.textContent == "Diproses") bg.classList.add("bg-warning-subtle");
+  else if (bg.textContent == "Ditunda") bg.classList.add("bg-warning");
+  else if (bg.textContent == "Selesai") {
+    bg.classList.add("bg-success");
+    bg.classList.add("text-white");
+  } else if (bg.textContent == "Invalid") bg.classList.add("bg-danger-subtle");
+  else if (bg.textContent == "Dibatalkan") {
+    bg.classList.add("bg-secondary");
+    bg.classList.add("text-white");
+  } else if (bg.textContent == "Gagal") {
+    bg.classList.add("bg-danger");
+    bg.classList.add("text-white");
+  } else if (bg.textContent == "Sukses") bg.classList.add("bg-success-subtle");
+});
+// status ends

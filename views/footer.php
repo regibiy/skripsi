@@ -24,15 +24,8 @@
                 <a href="index.php" class="text-decoration-none text-white d-block fs-7">Beranda</a>
                 <a href="poly-rooms.php" class="text-decoration-none text-white d-block fs-7">Pendaftaran</a>
                 <?php
-                if (!check_status_login_pasien()) {
-                ?>
-                    <a href="index.php#information" class="text-decoration-none text-white fs-7">Informasi</a>
-                <?php
-                } else {
-                ?>
-                    <a href="index.php" class="text-decoration-none text-white fs-7">Informasi</a>
-                <?php
-                }
+                if (!check_status_login_pasien()) echo "<a href='index.php#information' class='text-decoration-none text-white fs-7'>Informasi</a>";
+                else echo "<a href='index.php' class='text-decoration-none text-white fs-7'>Informasi</a>";
                 ?>
             </div>
         </div>
@@ -49,9 +42,13 @@
 <!-- toaster ends -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <?php
 if (isset($_SESSION['toaster'])) toaster_message();
 ?>
+<script>
+    AOS.init();
+</script>
 </body>
 
 </html>

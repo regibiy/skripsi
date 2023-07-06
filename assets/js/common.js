@@ -72,6 +72,11 @@ function validasiFormDaftar() {
 const registerDateInput = document.getElementById("treatmentDate");
 const minggu = document.getElementById("minggu");
 const listPoly = document.getElementById("listPoly");
+let descMinggu = "<div class='col-xl-6 col-12 text-xl-end text-center' data-aos='zoom-in-up'>";
+descMinggu += "<img src='assets/images/close.jpg' alt='' class='img-fluid' width='500'></div>";
+descMinggu += "<div class='col-xl-6 col-12 text-xl-start text-center' data-aos='zoom-in-up'><h3 class='fs-4'>Maaf...</h3>";
+descMinggu += "<p class='fs-7 mb-2'>Puskesmas tidak melayani apapun pada hari Minggu.</p>";
+descMinggu += "<p class='fs-7'>Silakan pilih tanggal berobat yang lain.</p></div>";
 if (registerDateInput) {
   let dateLimit = new Date();
   let minYear = dateLimit.getFullYear();
@@ -113,8 +118,8 @@ function validasiTanggalDaftar() {
   else if (selectedDay === 0) {
     alertP.style.display = "none";
     minggu.classList.remove("d-none");
-    minggu.classList.add("d-block");
     listPoly.classList.add("d-none");
+    minggu.innerHTML = descMinggu;
   } else if (currentDate === selectedDate) {
     if (currentTime >= limitTime) alertError("Tanggal tidak dapat diterapkan karena jam pelayanan! Silakan pilih hari lain");
     else valid = true;

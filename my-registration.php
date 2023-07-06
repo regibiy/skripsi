@@ -11,19 +11,13 @@ include("views/header.php");
 ?>
 
 <div class="mx-3 my-mtb-body">
-    <div class="container  shadow-sm rounded border py-3">
+    <div class="container shadow-sm rounded border py-3">
         <h1 class="text-dark-emphasis fs-6 text-center mb-3">Pendaftaran Saya</h1>
-        <div class="table-responsive fs-7 border rounded p-2">
-            <table id="my-registration" class="table table-striped">
+        <div class="fs-7 border rounded p-2">
+            <table id="my-registration" class="table table-borderless display" style="width: 100%;">
                 <thead>
                     <tr class="fw-medium">
-                        <td>Tanggal Daftar</td>
-                        <td>No. Antrian</td>
-                        <td>Pasien</td>
-                        <td>Tujuan Ruang Poli</td>
-                        <td>Tanggal Berobat</td>
-                        <td>Status Pendaftaran</td>
-                        <td>Aksi</td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,25 +30,33 @@ include("views/header.php");
                         $enc_nik = encrypt($row['nik']);
                         $id_daftar = $row['id_pendaftaran'];
                         echo "<tr>";
-                        echo "<td>" . format_date($row['tanggal_daftar']) . "</td>";
-                        echo "<td>" . $row['nomor_antrian'] . "</td>";
-                        echo "<td>" . $row['no_rekam_medis'] . " | " . $row['nama_depan'] . " " . $row['nama_belakang'] .  "</td>";
-                        echo "<td>" . $row['nama_ruang_poli'] . "</td>";
-                        echo "<td>" . format_date($row['tanggal_berobat']) . "</td>";
-                        echo "<td>" . $row['status_pendaftaran'] . "</td>";
-                        if ($row['status_pendaftaran'] === "Diproses" || $row['status_pendaftaran'] === "Selesai" || $row['status_pendaftaran'] === "Sukses") {
-                            echo "<td>
-                            <a href='print-registration.php?nik=" . urlencode($enc_nik) . "&iddaftar=" . $id_daftar . "' class='btn btn-sm btn-success'>Cetak</a>
-                            </td>";
-                        } elseif ($row['status_pendaftaran'] === "Menunggu" || $row['status_pendaftaran'] === "Ditunda") {
-                            echo "<td>
-                            <a href='print-registration.php?nik=" . urlencode($enc_nik) . "&iddaftar=" . $id_daftar . "' class='btn btn-sm btn-success'>Cetak</a>";
+                        echo "<td class='overflow-hidden'>";
+                        echo "<div class='border rounded p-2 shadow-sm fs-7' data-aos='fade-up'>";
+                        echo "<div class='d-flex justify-content-between border-bottom'>";
+                        echo "<div>";
+                        echo "<p class='fw-medium m-0'>" . $row['nomor_antrian'] . "</p>";
+                        echo "<p class='m-0'>" . format_date($row['tanggal_daftar']) . "</p>";
+                        echo "</div>";
+                        echo "<p class='status p-1 rounded'>" . $row['status_pendaftaran'] . "</p>";
+                        echo "</div>";
+                        echo "<div class='py-3 border-bottom'>";
+                        echo "<p class='m-0 fw-medium'>" . $row['nama_ruang_poli'] . "</p>";
+                        echo "<p class='m-0'>" . format_date($row['tanggal_berobat']) . "</p>";
+                        echo "<p class='m-0'>" . $row['no_rekam_medis'] . " | " . $row['nama_depan'] . " " . $row['nama_belakang'] . "</p>";
+                        echo "</div>";
+                        echo "<div class='pt-2 d-flex justify-content-end gap-2'>";
+                        if ($row['status_pendaftaran'] === "Diproses" || $row['status_pendaftaran'] === "Selesai" || $row['status_pendaftaran'] === "Sukses")
+                            echo "<a href='print-registration.php?nik=" . urlencode($enc_nik) . "&iddaftar=" . $id_daftar . "' class='btn btn-sm btn-success'>Cetak</a>";
+                        elseif ($row['status_pendaftaran'] === "Menunggu" || $row['status_pendaftaran'] === "Ditunda") {
+                            echo "<a href='print-registration.php?nik=" . urlencode($enc_nik) . "&iddaftar=" . $id_daftar . "' class='btn btn-sm btn-success'>Cetak</a>";
                     ?>
                             <a href="cancel-registration.php?iddaftar=<?= $id_daftar ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Batalkan pendaftaran <?= $row['nama_ruang_poli'] ?> dengan nomor antrian <?= $row['nomor_antrian'] ?>?')">Batal</a>
                     <?php
+                            echo "</div>";
+                            echo "</div>";
                             echo "</td>";
                             echo "</tr>";
-                        } else echo "<td></td>";
+                        }
                     }
                     ?>
                 </tbody>

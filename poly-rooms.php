@@ -22,7 +22,6 @@ $queue_number = generate_queue_number($treatment_date);
 include("views/header.php");
 
 ?>
-
 <div class="text-center my-mtb-body">
     <div class="container d-flex flex-wrap justify-content-center align-items-center">
         <div class="col-12 text-dark-emphasis">
@@ -61,21 +60,23 @@ include("views/header.php");
         <p id="alert" class="bg-danger text-white py-1 px-2 rounded mb-0 mt-3 fs-7" style="display: none;"></p>
     </div>
 </div>
-
-<div class="container d-flex justify-content-center align-items-center flex-column d-none" id="minggu">
-    <img src="assets/images/close.jpg" alt="" class="img-fluid" width="600">
-    <p class=" fs-7 mb-2">Maaf, Puskesmas tidak melayani apapun pada hari Minggu.</p>
-    <p class="fs-7">Silakan pilih tanggal berobat yang lain.</p>
-</div>
+<!-- info minggu starts -->
+<div class="container d-flex flex-wrap justify-content-center align-items-center text-dark-emphasis d-none" id="minggu"></div>
+<!-- info minggu ends  -->
 <div class="container d-flex justify-content-center flex-wrap gap-4" id="listPoly">
     <?php
     // validasi hari libur nasional
     if (isset($national_holiday)) {
     ?>
-        <div class="d-flex justify-content-center align-items-center flex-column">
-            <img src="assets/images/close.jpg" alt="" class="img-fluid" width="600">
-            <p class="fs-7 mb-2">Maaf, pada tanggal <?= format_date($treatment_date) ?> Puskesmas tidak melayani apapun karena memperingati <?= $national_holiday ?></p>
-            <p class="fs-7">Silakan pilih tanggal berobat yang lain</p>
+        <div class="container d-flex flex-wrap justify-content-center align-items-center">
+            <div class="col-xl-6 col-12 text-end" data-aos="zoom-in-up">
+                <img src="assets/images/close.jpg" alt="" class="img-fluid" width="500">
+            </div>
+            <div class="col-xl-6 col-12 text-xl-start text-center text-dark-emphasis" data-aos="zoom-in-up">
+                <h3 class="fs-4">Maaf...</h3>
+                <p class="fs-7 mb-2">Pada tanggal <span class="fw-medium"><?= format_date($treatment_date) ?></span> Puskesmas tidak melayani apapun karena memperingati <span class="fw-medium"><?= $national_holiday ?></span></p>
+                <p class="fs-7">Silakan pilih tanggal berobat yang lain</p>
+            </div>
         </div>
     <?php
     } else {
@@ -93,7 +94,7 @@ include("views/header.php");
                 if ($row['jumlah_pendaftar'] != 0) $sisa_antrian = $row['jumlah_pendaftar'] - $row['pendaftar_terlayani'];
                 else $sisa_antrian = $row['jumlah_pendaftar'];
                 echo "
-            <div class='card my-animation-poly' style='width: 18rem;'>
+            <div class='card my-animation-poly' style='width: 18rem;' data-aos='zoom-in'>
                 <div class='card-body'>
                     <h5 class='card-title text-dark-emphasis fs-6'>" . $row['nama_ruang_poli'] . "</h5>
                     <img src='admin/assets/images/" . $row['gambar_ruang_poli'] . "' class='card-img-top img-fluid' alt='" . $row['nama_ruang_poli'] . "'>
@@ -113,7 +114,7 @@ include("views/header.php");
                 if ($row['jumlah_pendaftar'] != 0) $sisa_antrian = $row['jumlah_pendaftar'] - $row['pendaftar_terlayani'];
                 else $sisa_antrian = $row['jumlah_pendaftar'];
 
-                echo "<div class='card my-animation-poly' style='width: 18rem;'>";
+                echo "<div class='card my-animation-poly' style='width: 18rem;' data-aos='zoom-in'>";
                 echo "<div class='card-body'>";
                 echo "<h5 class='card-title text-dark-emphasis fs-6'>" . $row['nama_ruang_poli'] . "</h5>";
                 echo "<img src='admin/assets/images/" . $row['gambar_ruang_poli'] . "' class='card-img-top img-fluid' alt='" . $row['nama_ruang_poli'] . "'>";
