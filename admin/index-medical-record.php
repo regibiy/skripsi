@@ -88,13 +88,13 @@ include("views/index-header.php");
 
     <div class="row my-5 p-2 bg-white rounded text-dark-emphasis">
         <?php
-        $tanggal = date('d-m-Y');
+        $tanggal = date('Y-m-d');
         $hari2 = date('N', strtotime($tanggal));
         foreach ($hari as $x => $value) {
             if ($hari2 == $x) $tampil_hari = $value;
         }
         ?>
-        <p class="fs-6 fw-medium px-0 mb-2">Pendaftaran Hari Ini, <?= $tampil_hari ?>, <?= $tanggal ?></p>
+        <p class="fs-6 fw-medium px-0 mb-2">Pendaftaran Hari Ini, <?= $tampil_hari ?>, <?= format_date($tanggal) ?></p>
         <div class="table-responsive border rounded p-2 fs-7">
             <table id="rekmed-registration" class="table rounded shadow-sm table-hover border text-dark-emphasis" style="width:100%">
                 <thead>
@@ -113,7 +113,7 @@ include("views/index-header.php");
                     $sql = "SELECT * FROM pendaftaran INNER JOIN rekam_medis ON pendaftaran.no_rekam_medis = rekam_medis.no_rekam_medis
                             INNER JOIN pasien ON rekam_medis.nik = pasien.nik INNER JOIN akun ON pasien.no_kk = akun.no_kk
                             INNER JOIN ruang_poli ON pendaftaran.id_ruang_poli = ruang_poli.id_ruang_poli
-                            WHERE tanggal_berobat = '2023-06-24' AND status_pendaftaran = 'Diproses' ORDER BY tanggal_ubah"; //TANGGAL UBAH KE CURRENT DATE
+                            WHERE tanggal_berobat = '$tanggal' AND status_pendaftaran = 'Diproses' ORDER BY tanggal_ubah";
                     $result = $conn->query($sql);
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";

@@ -418,7 +418,7 @@ if (isset($_POST['edit_anggota'])) {
         header("Location: edit-family-member.php?nik=" . urlencode($enc_nik));
     } else {
         if ($status_pasien !== $status_pasien_prev) {
-            $sql = "UPDATE rekam_medis SET no_rekam_medis = NULL WHERE nik = '$nik'";
+            $sql = "UPDATE rekam_medis SET no_rekam_medis = '' WHERE nik = '$nik'";
             $result = $conn->query($sql);
         }
         if ($status_hubungan !== $status_hubungan_prev) {

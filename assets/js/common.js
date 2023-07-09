@@ -130,6 +130,17 @@ function validasiTanggalDaftar() {
 }
 // membatasi tanggal ruang poly ends
 
+// validasi minggu saat halaman load starts
+if (registerDateInput) {
+  let treatmentDate = new Date(registerDateInput.value);
+  if (treatmentDate.getDay() === 0) {
+    minggu.classList.remove("d-none");
+    listPoly.classList.add("d-none");
+    minggu.innerHTML = descMinggu;
+  }
+}
+// validasi minggu saat halaman load ends
+
 // memilih pasien starts
 const patient = document.getElementById("patient");
 const patientName = document.getElementById("patientName");

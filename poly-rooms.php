@@ -14,8 +14,8 @@ if (!check_status_login_pasien()) {
     }
 }
 
-if (isset($_GET['nationalholiday'])) $national_holiday = $_GET['nationalholiday'];
-if (isset($get_national_holiday)) $national_holiday = $get_national_holiday;
+if (isset($_GET['nationalholiday'])) $national_holiday = $_GET['nationalholiday']; //jika pasien set tanggal
+if (isset($get_national_holiday)) $national_holiday = $get_national_holiday; //default tanggal hari ini, jika pasien tidak set tanggal
 
 $queue_number = generate_queue_number($treatment_date);
 

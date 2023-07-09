@@ -67,6 +67,15 @@ $html = '
         font-family: chelvetica;
         font-size: 14px;
     }
+    .padding-td {
+        padding: 5px;
+    }
+    .margin-bott-zero {
+        margin-bottom: 0px;
+    }
+    .margin-zero {
+        margin: 0px;
+    }
 </style>
 <div>
     <htmlpagefooter name="MyFooter1">
@@ -101,59 +110,101 @@ $html = '
     <section style="margin-top:16px;">
         <p class="title text-center">LAPORAN KONTAK TAK LANGSUNG</p>
         <p class="sub-title text-center">' . format_date($dec_tanggal_awal) . ' sampai ' . format_date($dec_tanggal_akhir) . '</p>
-    </section>
-
-    <section style="margin-top:16px;">
-        <table class="data" border="1" style="width:100%;">
-            <tr>
-                <th rowspan="2" class="text-center">Tanggal Daftar</th>
-                <th rowspan="2" class="text-center">Jumlah Pendaftaran</th>
-                <th colspan="2" class="text-center">Status</th>
-            </tr>
-            <tr>
-                <th class="text-center">Sukses</th>
-                <th class="text-center">Gagal</th>
-            </tr>';
-$sql = "SELECT tanggal_daftar, COUNT(id_pendaftaran) AS jumlah_pendaftaran, SUM(CASE WHEN status_pendaftaran = 'Gagal' THEN 1 ELSE 0 END) AS jumlah_gagal,
-        SUM(CASE WHEN status_pendaftaran = 'Sukses' THEN 1 ELSE 0 END) AS jumlah_sukses FROM pendaftaran 
-        WHERE (status_pendaftaran = 'Sukses' OR status_pendaftaran = 'Gagal') AND (tanggal_daftar BETWEEN '$dec_tanggal_awal' AND '$dec_tanggal_akhir')
-        GROUP BY tanggal_daftar, status_pendaftaran ORDER BY tanggal_daftar ASC";
+    </section>';
+$sql = "SELECT DISTINCT tanggal_berobat FROM pendaftaran WHERE tanggal_berobat BETWEEN '$dec_tanggal_awal' AND '$dec_tanggal_akhir' ORDER BY tanggal_berobat";
 $result = $conn->query($sql);
 while ($row = $result->fetch_assoc()) {
-    $html .= '<tr>
-                <td class="text-center" style="padding: 5px">' . format_date($row['tanggal_daftar']) . '</td>
-                <td class="text-center" style="padding: 5px">' . $row['jumlah_pendaftaran'] . ' Pendaftaran</td>
-                <td class="text-center" style="padding: 5px">' . $row['jumlah_sukses'] . ' Sukses</td>
-                <td class="text-center" style="padding: 5px">' . $row['jumlah_gagal'] . ' Gagal</td>
-            </tr>';
+    $tanggal_berobat = $row['tanggal_berobat'];
+    $html .= '
+        <section style="margin-top:16px;">
+            <p style="margin-bottom: 10px;">Tanggal : <b>' . format_date($tanggal_berobat) . '</b></p>
+            <table class="data" border="1" style="width:100%;">
+                <tr>
+                    <th class="text-center padding-td" width="200px">Nomor Rekam Medis / NIK</th>
+                    <th class="text-center padding-td" width="200px">Nama Pasien</th>
+                    <th class="text-center padding-td" width="100px">Umur</th>
+                    <th class="text-center padding-td" width="100px">Jenis Kelamin</th>
+                    <th class="text-center padding-td" width="100px">Status</th>
+                </tr>';
+    $sql2 = "SELECT * FROM pendaftaran INNER JOIN rekam_medis ON pendaftaran.no_rekam_medis = rekam_medis.no_rekam_medis
+    INNER JOIN pasien ON rekam_medis.nik = pasien.nik WHERE tanggal_berobat = '$tanggal_berobat' 
+    AND (status_pendaftaran = 'Sukses' OR status_pendaftaran = 'Gagal')";
+    $result2 = $conn->query($sql2);
+    if ($result2->num_rows > 0) {
+        while ($row2 = $result2->fetch_assoc()) {
+            if ($row2['no_rekam_medis'] === NULL || $row2['no_rekam_medis'] === '') $kolom_satu = $row2['nik'];
+            else $kolom_satu = $row2['no_rekam_medis'];
+            $nama_lengkap = $row2['nama_depan'] . " " . $row2['nama_belakang'];
+            $tanggal_lahir = $row2['tanggal_lahir'];
+            $tanggal_berobat_umur = $row2['tanggal_berobat'];
+            $selisih = date_diff(date_create($tanggal_lahir), date_create($tanggal_berobat_umur));
+            $umur = $selisih->y;
+            $html .= '
+                <tr>
+                    <td class="padding-td">' . $kolom_satu . '</td>
+                    <td class="padding-td">' . $nama_lengkap . '</td>
+                    <td class="padding-td">' . $umur . ' Tahun</td>
+                    <td class="padding-td">' . $row2['jenis_kelamin'] . '</td>
+                    <td class="padding-td">' . $row2['status_pendaftaran'] . '</td>
+                </tr>';
+        }
+
+        $sql3 = "SELECT COUNT(id_pendaftaran) AS jumlah_kunjungan FROM pendaftaran WHERE tanggal_berobat = '$tanggal_berobat' AND (status_pendaftaran = 'Sukses' OR status_pendaftaran = 'Gagal')";
+        $result3 = $conn->query($sql3);
+        $data = $result3->fetch_assoc();
+        $html .= '
+                <tr>
+                    <th colspan="3" class="padding-td text-right">Jumlah Kunjungan : </th>
+                    <th colspan="2">' . $data['jumlah_kunjungan'] . ' Kunjungan</th>
+                </tr>';
+        $sql4 = "SELECT COUNT(id_pendaftaran) AS jumlah_sukses FROM pendaftaran WHERE tanggal_berobat = '$tanggal_berobat' AND status_pendaftaran = 'Sukses'";
+        $result4 = $conn->query($sql4);
+        $data2 = $result4->fetch_assoc();
+        $html .= '
+                <tr>
+                    <th colspan="3" class="padding-td text-right">Jumlah Kunjungan yang Sukses : </th>
+                    <th colspan="2">' . $data2['jumlah_sukses'] . ' Kunjungan Sukses</th>
+                </tr>';
+        $sql5 = "SELECT COUNT(id_pendaftaran) AS jumlah_gagal FROM pendaftaran WHERE tanggal_berobat = '$tanggal_berobat' AND status_pendaftaran = 'Gagal'";
+        $result5 = $conn->query($sql5);
+        $data3 = $result5->fetch_assoc();
+        $html .= '
+                <tr>
+                    <th colspan="3" class="padding-td text-right">Jumlah Kunjungan yang Gagal : </th>
+                    <th colspan="2">' . $data3['jumlah_gagal'] . ' Kunjungan Gagal</th>
+                </tr>
+            </table>
+        </section>';
+    } else {
+        $html .= '<tr>
+                    <td colspan="5" class="text-center">Tidak ada pasien yang melakukan pendaftaran ke ruang poli ini</td>
+                </tr>
+                </table>
+                </section>';
+    }
 }
-$sql = "SELECT COUNT(id_pendaftaran) as total_pendaftaran FROM pendaftaran 
-        WHERE (status_pendaftaran = 'Sukses' OR status_pendaftaran = 'Gagal') AND (tanggal_daftar BETWEEN '$dec_tanggal_awal' AND '$dec_tanggal_akhir')";
-$result = $conn->query($sql);
-$data = $result->fetch_assoc();
-$html .= '  <tr>
-                <th colspan="3" class="text-right" style="padding: 5px">Total Pendaftaran Bulan Ini :</th>
-                <th>' . $data['total_pendaftaran'] . ' Pendaftaran</th>
-            </tr>';
-$sql = "SELECT COUNT(id_pendaftaran) as total_sukses FROM pendaftaran 
-        WHERE status_pendaftaran = 'Sukses' AND (tanggal_daftar BETWEEN '$dec_tanggal_awal' AND '$dec_tanggal_akhir')";
-$result = $conn->query($sql);
-$data = $result->fetch_assoc();
-$html .= '  <tr>
-                <th colspan="3" class="text-right" style="padding: 5px">Total Pendaftaran yang Sukses :</th>
-                <th>' . $data['total_sukses'] . ' Sukses</th>
-            </tr>';
-$sql = "SELECT COUNT(id_pendaftaran) as total_gagal FROM pendaftaran 
-        WHERE status_pendaftaran = 'Gagal' AND (tanggal_daftar BETWEEN '$dec_tanggal_awal' AND '$dec_tanggal_akhir')";
-$result = $conn->query($sql);
-$data = $result->fetch_assoc();
-$html .= '  <tr>
-                <th colspan="3" class="text-right" style="padding: 5px">Total Pendaftaran yang Gagal :</th>
-                <th>' . $data['total_gagal'] . ' Gagal</th>
-            </tr>
-        </table>
-    </section>
-</div>';
+$sql6 = "SELECT COUNT(id_pendaftaran) AS total_kunjungan FROM pendaftaran WHERE tanggal_berobat BETWEEN '$dec_tanggal_awal' AND '$dec_tanggal_akhir' AND (status_pendaftaran = 'Sukses' OR status_pendaftaran = 'Gagal')";
+$result6 = $conn->query($sql6);
+$data4 = $result6->fetch_assoc();
+$sql7 = "SELECT COUNT(id_pendaftaran) AS total_sukses FROM pendaftaran WHERE tanggal_berobat BETWEEN '$dec_tanggal_awal' AND '$dec_tanggal_akhir' AND status_pendaftaran = 'Sukses'";
+$result7 = $conn->query($sql7);
+$data5 = $result7->fetch_assoc();
+$sql8 = "SELECT COUNT(id_pendaftaran) AS total_gagal FROM pendaftaran WHERE tanggal_berobat BETWEEN '$dec_tanggal_awal' AND '$dec_tanggal_akhir' AND status_pendaftaran = 'Gagal'";
+$result8 = $conn->query($sql8);
+$data6 = $result8->fetch_assoc();
+$html .= '
+        <section style="margin-top:16px;">
+        <p class="margin-bott-zero">Total Kunjungan dari ' . format_date($dec_tanggal_awal) . ' sampai ' . format_date($dec_tanggal_akhir) . ' : </p>
+        <p class="margin-zero"><b>' . $data4['total_kunjungan'] . ' Kunjungan</b></p>
+        </section>
+        <section style="margin-top:16px;">
+        <p class="margin-bott-zero">Total Kunjungan yang Sukses dari ' . format_date($dec_tanggal_awal) . ' sampai ' . format_date($dec_tanggal_akhir) . ' : </p>
+        <p class="margin-zero"><b>' . $data5['total_sukses'] . ' Kunjungan Sukses</b></p>
+        </section>
+        <section style="margin-top:16px;">
+        <p class="margin-bott-zero">Total Kunjungan yang Gagal dari ' . format_date($dec_tanggal_awal) . ' sampai ' . format_date($dec_tanggal_akhir) . ' : </p>
+        <p class="margin-zero"><b>' . $data6['total_gagal'] . ' Kunjungan Gagal</b></p>
+        </section>';
 
 $mpdf->WriteHTML($html);
 

@@ -23,10 +23,11 @@ if (isset($_GET['tanggalAwal']) && isset($_GET['tanggalAkhir'])) {
     INNER JOIN ruang_poli ON pendaftaran.id_ruang_poli = ruang_poli.id_ruang_poli
     WHERE tanggal_berobat BETWEEN '$dec_tanggal_awal' AND '$dec_tanggal_akhir'";
 } else {
+    $tanggal = date('Y-m-d');
     $sql = "SELECT * FROM pendaftaran INNER JOIN rekam_medis ON pendaftaran.no_rekam_medis = rekam_medis.no_rekam_medis
     INNER JOIN pasien ON rekam_medis.nik = pasien.nik INNER JOIN akun ON pasien.no_kk = akun.no_kk
     INNER JOIN ruang_poli ON pendaftaran.id_ruang_poli = ruang_poli.id_ruang_poli
-    WHERE tanggal_berobat = CURRENT_DATE";
+    WHERE tanggal_berobat = '$tanggal'";
 }
 
 include("views/index-header.php");
