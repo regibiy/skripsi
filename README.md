@@ -1,10 +1,7 @@
 # skripsi
 
-web pendaftaran rawat jalan upt puskesmas alianyang
-
-<!-- TO DO -->
-
-PERHATIKAN PADA QUERY SQL PADA FILE INDEX PETUGAS PENDAFTARAN DAN REKAM MEDIS ATAU MENU DASHBOARD DAN MENU PENDAFARAN
-TANGGAL MENGGUNAKAN DATA '2023-06-20'. GANTI DENGAN TREATMENT CURRENT DATE ATAU $treatment_date!!! SESUAIKAN!!! GUNAKAN SEARCH AGAR CEPAT!!!
-
-SELESAIKAN SEMUA PADA HARI MINGGU
+npm = 19412550
+nama = regi ridho biyantomo
+no hp = 081398300260
+judul = perancangan sistem informasi pendaftaran rawat jalan pada upt puskesmas alianyang
+www.puskesmasalianyangpnk.my.id
