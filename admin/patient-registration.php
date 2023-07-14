@@ -48,7 +48,8 @@ include("views/index-header.php");
                         echo "<td>" . format_date($row['tanggal_lahir']) . "</td>";
                         echo "<td>" . $row['jenis_kelamin'] . "</td>";
                         echo "<td>" . $row['agama'] . "</td>";
-                        echo "<td>" . $row['no_hp'] . "</td>";
+                        if ($row['no_hp'] === NULL || $row['no_hp'] === "") echo "<td>Tidak ada</td>";
+                        else echo "<td>" . $row['no_hp'] . "</td>";
                         echo "<td class='text-secondary'><button type='button' class='btn btn-sm btn-outline-secondary fs-7' data-bs-toggle='modal' data-bs-target='#ktp" . $row['no_rekam_medis'] . "'>Lihat KTP</button></td>";
                         echo "</tr>";
                     ?>

@@ -97,7 +97,7 @@ if (isset($_POST['edit_petugas'])) {
     $result = $conn->query($sql);
     if ($result) {
         $_SESSION['toaster'] = "Data Petugas berhasil diperbarui";
-        header("location: officer.php");
+        header("Location: officer.php");
     }
 }
 
@@ -131,13 +131,15 @@ if (isset($_POST['edit_ruang'])) {
     $enc_id_ruang = encrypt($id_ruang);
 
     if ($gambar_ruang = $_FILES['gambar']['error'] === 4) $gambar_edit = $prev_image;
-    else $gambar_edit = upload_file($_FILES['gambar']['name'], $_FILES['gambar']['size'], $_FILES['gambar']['tmp_name'], 'assets/images/');
+    else {
+        unlink('assets/images/' . $prev_image);
+        $gambar_edit = upload_file($_FILES['gambar']['name'], $_FILES['gambar']['size'], $_FILES['gambar']['tmp_name'], 'assets/images/');
+    }
 
     if (!$gambar_edit) {
         $_SESSION['error_msg'] = "Silakan masukkan gambar dengan ekstensi .jpg, .jpeg, atau .png dengan ukuran kurang dari 3MB";
         header("Location: edit-poly-room-head.php?idruang=" . urlencode($enc_id_ruang));
     } else {
-        unlink('assets/images/' . $prev_image);
         $sql = "UPDATE ruang_poli SET nama_ruang_poli = '$nama_ruang', gambar_ruang_poli = '$gambar_edit', status_ruang_poli = '$status_ruang' WHERE id_ruang_poli = '$id_ruang'";
         $result = $conn->query($sql);
         if ($result) {
@@ -190,13 +192,15 @@ if (isset($_POST['edit_informasi'])) {
     $enc_id_informasi = encrypt($id_informasi);
 
     if ($gambar = $_FILES['gambar']['error'] === 4) $gambar_edit = $prev_gambar;
-    else $gambar_edit = upload_file($_FILES['gambar']['name'], $_FILES['gambar']['size'], $_FILES['gambar']['tmp_name'], 'assets/images/');
+    else {
+        unlink('assets/images/' . $prev_gambar);
+        $gambar_edit = upload_file($_FILES['gambar']['name'], $_FILES['gambar']['size'], $_FILES['gambar']['tmp_name'], 'assets/images/');
+    }
 
     if (!$gambar_edit) {
         $_SESSION['error_msg'] = "Silakan masukkan gambar dengan ekstensi .jpg, .jpeg, atau .png dengan ukuran kurang dari 3MB";
         header("Location: edit-activity-registration.php?idInformasi=" . $enc_id_informasi);
     } else {
-        unlink('assets/images/' . $prev_gambar);
         $sql = "UPDATE informasi SET judul = '$judul', tanggal_ubah = '$tanggal_ubah', deskripsi = '$deskripsi', gambar = '$gambar_edit', tanggal = '$tanggal', jam_mulai = '$jam_mulai', 
         jam_selesai = '$jam_selesai', id_dokter = '$id_dokter' WHERE id_informasi = '$id_informasi'";
         $result = $conn->query($sql);
@@ -313,8 +317,8 @@ if (isset($_POST['edit_data_kk_rekmed'])) {
     $kecamatan = $akun->get_kecamatan();
     $email = $_POST['email'];
     $enc_no_kk = encrypt($no_kk);
-    $sql = "UPDATE akun SET no_kk = '$no_kk', no_indeks = '$no_indeks', kata_sandi = '$password',
-    alamat = '$alamat', rt = '$rt', rw = '$rw', kelurahan_desa = '$kel_desa', kecamatan = '$kecamatan' WHERE no_kk = '$no_kk'";
+    $sql = "UPDATE akun SET no_kk = '$no_kk', no_indeks = '$no_indeks', kata_sandi = '$password', alamat = '$alamat', rt = '$rt', rw = '$rw', kelurahan_desa = '$kel_desa', 
+    kecamatan = '$kecamatan' WHERE no_kk = '$no_kk'";
     $result = $conn->query($sql);
     if ($result) {
         $sql = "SELECT pasien.nik, nama_depan, nama_belakang, no_rekam_medis, no_kk FROM pasien INNER JOIN rekam_medis ON pasien.nik = rekam_medis.nik 
@@ -325,7 +329,7 @@ if (isset($_POST['edit_data_kk_rekmed'])) {
         $no_rekam_medis = $data['no_rekam_medis'];
         $nama = $data['nama_depan'] . " " . $data['nama_belakang'];
         // validasi rekam medis
-        if ($no_rekam_medis === NULL || $no_rekam_medis === "") {
+        if ($no_rekam_medis === $nik) {
             $no_rekam_medis = "00" . $no_indeks;
             $sql = "UPDATE rekam_medis SET no_rekam_medis = '$no_rekam_medis' WHERE nik = '$nik'";
             $result = $conn->query($sql);
@@ -382,11 +386,38 @@ if (isset($_POST['edit_data_nik_rekmed'])) {
     $pekerjaan = $pasien->get_pekerjaan();
     $status_hubungan = $_POST['status_hubungan'];
     $status_pasien = $_POST['status_pasien'];
+    $status_pasien_prev = $_POST['status_pasien_prev'];
     $status_hubungan_prev = $_POST['status_hubungan_prev'];
     $no_rekmed_prev = $_POST['no_rek_med_prev'];
+    $enc_nik = encrypt($nik);
+    $enc_no_kk = encrypt($no_kk);
+    $kode_rekmed = array("Kepala Keluarga" => "00", "Istri" => "10", "Anak 1" => "01", "Anak 2" => "02", "Anak 3" => "03", "Anak 4" => "04", "Anak 5" => "05", "Anak 6" => "06", "Anak 7" => "07", "Anak 8" => "08", "Anak 9" => "09");
+
+    if ($status_pasien !== $status_pasien_prev) {
+        $sql = "SELECT COUNT(no_kk) AS total_anggota FROM pasien WHERE no_kk = '$no_kk'";
+        $result = $conn->query($sql);
+        $data = $result->fetch_assoc();
+        if ($data['total_anggota'] > 1) {
+            if ($status_pasien === "Dalam KK") {
+                $sql = "SELECT * FROM akun WHERE no_kk = '$no_kk'";
+                $result = $conn->query($sql);
+                $data = $result->fetch_assoc();
+                foreach ($kode_rekmed as $key => $value) {
+                    if ($status_hubungan === $key) $set_status_hubungan = $value;
+                }
+                $no_rekmed = $set_status_hubungan;
+                $no_rekmed .= $data['no_indeks'];
+                $sql = "UPDATE rekam_medis SET no_rekam_medis = '$no_rekmed' WHERE nik = '$nik'";
+            } else $sql = "UPDATE rekam_medis SET no_rekam_medis = '$nik' WHERE nik = '$nik'";
+            $result = $conn->query($sql);
+        } else {
+            $_SESSION['error_msg'] = "Status pasien tidak dapat diubah karena jumlah anggota keluarga Anda";
+            header("Location: edit-patient-medical-record.php?nik=" . urlencode($enc_nik));
+            exit;
+        }
+    }
 
     if ($status_hubungan !== $status_hubungan_prev) {
-        $kode_rekmed = array("Kepala Keluarga" => "00", "Istri" => "10", "Anak 1" => "01", "Anak 2" => "02", "Anak 3" => "03", "Anak 4" => "04", "Anak 5" => "05", "Anak 6" => "06", "Anak 7" => "07", "Anak 8" => "08", "Anak 9" => "09");
         foreach ($kode_rekmed as $key => $value) {
             if ($status_hubungan === $key) $set_status_hubungan = $value;
         }
@@ -396,17 +427,15 @@ if (isset($_POST['edit_data_nik_rekmed'])) {
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             $_SESSION['error_msg'] = "Status hubungan telah ada dalam data anggota keluarga pasien";
-            $enc_nik = encrypt($nik);
             header("Location: edit-patient-medical-record.php?nik=" . urlencode($enc_nik));
         } else {
-            $sql = "UPDATE rekam_medis SET no_rekam_medis = '$no_rekmed' WHERE no_rekam_medis = '$no_rekmed_prev'";
+            $sql = "UPDATE rekam_medis SET no_rekam_medis = '$no_rekmed' WHERE nik = '$nik'";
             $result = $conn->query($sql);
             $sql = "UPDATE pasien SET nik = '$nik', nama_depan = '$nama_depan', nama_belakang = '$nama_belakang', tempat_lahir = '$tempat_lahir', tanggal_lahir = '$tanggal_lahir', 
             jenis_kelamin = '$jenis_kelamin', agama = '$agama', pekerjaan = '$pekerjaan', status_hubungan = '$status_hubungan', status_pasien = '$status_pasien' WHERE nik = '$nik'";
             $result = $conn->query($sql);
             if ($result) {
                 $_SESSION['success_msg'] = "Data Pasien berhasil diperbarui";
-                $enc_no_kk = encrypt($no_kk);
                 header("Location: detail-patient-medical-record.php?noKk=" . urlencode($enc_no_kk));
             }
         }
@@ -416,7 +445,6 @@ if (isset($_POST['edit_data_nik_rekmed'])) {
         $result = $conn->query($sql);
         if ($result) {
             $_SESSION['success_msg'] = "Data Pasien berhasil diperbarui";
-            $enc_no_kk = encrypt($no_kk);
             header("Location: detail-patient-medical-record.php?noKk=" . urlencode($enc_no_kk));
         }
     }

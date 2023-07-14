@@ -26,13 +26,9 @@ while ($row = $result->fetch_assoc()) {
     $password_edit = $row['password'];
     $role_edit = $row['role'];
     $status_edit = $row['status_petugas'];
-    if ($role_edit === "kapus") {
-        $show_role = "Kepala Puskesmas";
-    } elseif ($role_edit === "daftar") {
-        $show_role = "Pendaftaran";
-    } elseif ($role_edit === "rekmed") {
-        $show_role = "Rekam Medis";
-    }
+    if ($role_edit === "kapus") $show_role = "Kepala Puskesmas";
+    elseif ($role_edit === "daftar") $show_role = "Pendaftaran";
+    elseif ($role_edit === "rekmed") $show_role = "Rekam Medis";
 }
 
 include("views/index-header.php");

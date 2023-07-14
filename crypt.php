@@ -16,8 +16,8 @@ function decrypt($ciphertext)
     $ciphertext = substr($ciphertext, openssl_cipher_iv_length('aes-128-cbc'));
     $data = openssl_decrypt($ciphertext, 'aes-128-cbc', 'sensitive_data', OPENSSL_RAW_DATA, $iv);
     if ($data === false) {
-        if (isset($_SESSION['role'])) header("Location: ../error-page.php");
-        else header("Location: error-page.php");
+        if (isset($_SESSION['role'])) echo "<script>window.location='../error-page.php'</script>";
+        else echo "<script>window.location='error-page.php'</script>";
         exit;
     } else {
         return $data;

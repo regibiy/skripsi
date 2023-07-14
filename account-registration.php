@@ -106,7 +106,8 @@ $status_hubungan = array("---", "Kepala Keluarga", "Istri", "Anak 1", "Anak 2", 
                                 }
                             } else {
                                 foreach ($jenis_kelamin  as $value) {
-                                    echo "<option value='" . $value . "'> " . $value . "</option>";
+                                    if ($value === "---") echo "<option value='" . $value . "' hidden>Silakan pilih jenis kelamin Anda</option>";
+                                    else echo "<option value='" . $value . "'> " . $value . "</option>";
                                 }
                             }
                             ?>
@@ -125,7 +126,8 @@ $status_hubungan = array("---", "Kepala Keluarga", "Istri", "Anak 1", "Anak 2", 
                                 }
                             } else {
                                 foreach ($agama as $value) {
-                                    echo "<option value='" . $value . "'> " . $value . "</option>";
+                                    if ($value === "---") echo "<option value='" . $value . "' hidden>Silakan pilih agama Anda</option>";
+                                    else echo "<option value='" . $value . "'> " . $value . "</option>";
                                 }
                             }
                             ?>
@@ -189,12 +191,12 @@ $status_hubungan = array("---", "Kepala Keluarga", "Istri", "Anak 1", "Anak 2", 
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-7">KTP <?= $data['nama_depan'] ?></h1>
+                                    <h1 class="modal-title fs-7">KTP <?= isset($data) ? $data['nama_depan'] : "" ?></h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body text-center">
-                                    <img src="assets/patient_data/<?= $data['ktp'] ?>" class="img-fluid" width="800" alt="kk" />
-                                    <input type="hidden" name="prev_ktp" value="<?= $data['ktp'] ?>">
+                                    <img src="assets/patient_data/<?= isset($data) ? $data['ktp'] : "" ?>" class="img-fluid" width="800" alt="ktp" />
+                                    <input type="hidden" name="prev_ktp" value="<?= isset($data) ? $data['ktp'] : "" ?>">
                                 </div>
                             </div>
                         </div>

@@ -13,7 +13,6 @@ if ($result->num_rows > 0) {
             $kuota = $row['kuota_tersedia'];
         }
         $_SESSION['toaster'] = "Kuota pendaftaran berhasil diatur";
-        header("Location: poly-room-head.php");
     }
 } else {
     $kuota = 0;
@@ -26,7 +25,6 @@ if ($result->num_rows > 0) {
             $kuota = $row['kuota_tersedia'];
         }
         $_SESSION['toaster'] = "Kuota pendaftaran berhasil diatur";
-        header("Location: poly-room-head.php");
     }
 }
 ?>
@@ -36,8 +34,8 @@ if ($result->num_rows > 0) {
         <p class="bg-danger text-white fs-7 mb-0 p-1 rounded" style="display: none;" id="alert">Pesan Kesalahan</p>
         <label for="kuota" class="form-label form-label-sm mb-0">Kuota Tersedia</label>
         <?php
-        if ($kuota === 0) echo "<input type='number' class='form-control form-control-sm' name='kuota' id='kuotaInput' placeholder='" . $kuota . "' readonly>";
-        else echo "<input type='number' class='form-control form-control-sm' name='kuota' id='kuotaInput' value='" .  $kuota . "' readonly>";
+        if ($kuota === 0) echo "<input type='number' class='form-control form-control-sm' name='kuota' id='kuotaInput' min='10' max='1000' placeholder='" . $kuota . "' readonly>";
+        else echo "<input type='number' class='form-control form-control-sm' name='kuota' id='kuotaInput' min='10' max='1000' value='" .  $kuota . "' readonly>";
         ?>
         <div>
             <button type="button" class="btn btn-sm btn-primary" id="kuotaBtn">Edit</button>

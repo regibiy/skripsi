@@ -46,7 +46,7 @@ if (check_status_login_pasien()) {
                         <label for="floatingInput" class="form-label form-label-sm fs-7">Nomor Berobat</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control form-control-sm" id="floatingPassword" name="password" placeholder="******">
+                        <input type="password" class="form-control form-control-sm" id="floatingPassword" name="password" placeholder="******" autocomplete="off">
                         <label for="floatingPassword" class="form-label form-label-sm fs-7">Kata Sandi</label>
                         <div class="form-check text-start mt-1">
                             <input class="form-check-input" type="checkbox" id="flexCheckDefault" onclick="showPassword()">
@@ -69,8 +69,6 @@ if (check_status_login_pasien()) {
 <div class="container information">
     <?php
     if (!check_status_login_pasien()) echo "<h2 class='text-center text-dark-emphasis my-5 fs-5' id='information'>Informasi Kegiatan Kami</h2>";
-    ?>
-    <?php
     $hari = array("1" => "Senin", "2" => "Selasa", "3" => "Rabu", "4" => "Kamis", "5" => "Jumat", "6" => "Sabtu", "7" => "Minggu");
     $sql = "SELECT * FROM informasi INNER JOIN petugas ON informasi.username = petugas.username ORDER BY tanggal_unggah DESC";
     $result = $conn->query($sql);

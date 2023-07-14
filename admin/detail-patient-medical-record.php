@@ -264,7 +264,8 @@ include("views/index-header.php");
                     echo "<td>" . $row['agama'] . "</td>";
                     echo "<td>" . $row['pekerjaan'] . "</td>";
                     echo "<td>" . $row['status_hubungan'] . "</td>";
-                    echo "<td>" . $row['no_hp'] . "</td>";
+                    if ($row['no_hp'] === NULL || $row['no_hp'] === "") echo "<td>Tidak ada</td>";
+                    else echo "<td>" . $row['no_hp'] . "</td>";
                     ?>
                     <td><button type="button" class="btn btn-sm btn-outline-secondary fs-7" data-bs-toggle="modal" data-bs-target="#<?= $row['nik'] ?>">Lihat KTP</button></td>
                     <!-- Modal starts-->

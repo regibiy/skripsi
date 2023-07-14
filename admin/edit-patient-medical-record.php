@@ -29,6 +29,8 @@ $data = $result->fetch_assoc();
 
 $agama = array("Budha", "Islam", "Hindu", "Katolik", "Konghucu", "Kristen");
 $status_hubungan = array("Kepala Keluarga", "Istri", "Anak 1", "Anak 2", "Anak 3", "Anak 4", "Anak 5", "Anak 6", "Anak 7", "Anak 8", "Anak 9");
+$jenis_kelamin = array("Laki-Laki", "Perempuan");
+$status_pasien = array("Dalam KK", "Luar KK");
 
 include("views/index-header.php");
 ?>
@@ -94,9 +96,12 @@ include("views/index-header.php");
                             <td>
                                 <div class="col-lg-8 col-12">
                                     <select class="form-select form-select-sm text-dark-emphasis edit-nik-rekmed" name="jenis_kelamin" id="jenisKelamin" disabled required>
-                                        <option value="<?= $data['jenis_kelamin'] ?>" hidden><?= $data['jenis_kelamin'] ?></option>
-                                        <option value="Laki-Laki">Laki-Laki</option>
-                                        <option value="Perempuan">Perempuan</option>
+                                        <?php
+                                        foreach ($jenis_kelamin as $value) {
+                                            $selected = ($value === $data['jenis_kelamin']) ? "selected" : "";
+                                            echo "<option value'" . $value . "' . " . $selected . ">" . $value . "</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </td>
@@ -110,10 +115,10 @@ include("views/index-header.php");
                             <td>
                                 <div class="col-lg-8 col-12">
                                     <select class="form-select form-select-sm text-dark-emphasis edit-nik-rekmed" name="agama" id="agama" disabled required>
-                                        <option value="<?= $data['agama'] ?>" hidden><?= $data['agama'] ?></option>
                                         <?php
                                         foreach ($agama as $value) {
-                                            echo "<option value='" . $value . "'>" . $value . "</option>";
+                                            $selected = ($value === $data['agama']) ? "selected" : "";
+                                            echo "<option value='" . $value . "' . " . $selected . ">" . $value . "</option>";
                                         }
                                         ?>
                                     </select>
@@ -133,10 +138,10 @@ include("views/index-header.php");
                             <td>
                                 <div class="col-lg-8 col-12">
                                     <select class="form-select form-select-sm fs-7 edit-nik-rekmed" name="status_hubungan" id="status_hubungan" disabled required>
-                                        <option value="<?= $data['status_hubungan'] ?>" hidden><?= $data['status_hubungan'] ?></option>
                                         <?php
                                         foreach ($status_hubungan as $value) {
-                                            echo "<option value='" . $value . "'>" . $value . "</option>";
+                                            $selected = ($value === $data['status_hubungan']) ? "selected" : "";
+                                            echo "<option value='" . $value . "' . " . $selected . ">" . $value . "</option>";
                                         }
                                         ?>
                                     </select>
@@ -152,10 +157,14 @@ include("views/index-header.php");
                             <td><label for="statusPasien" class="form-label form-label-sm">Status Pasien</label></td>
                             <td class="fw-medium text-secondary">
                                 <div class="col-lg-8 col-12">
+                                    <input type="hidden" name="status_pasien_prev" value="<?= $data['status_pasien'] ?>">
                                     <select class="form-select form-select-sm fs-7 edit-nik-rekmed" name="status_pasien" id="statusPasien" disabled required>
-                                        <option value="<?= $data['status_pasien'] ?>" hidden><?= $data['status_pasien'] ?></option>
-                                        <option value="Dalam KK">Dalam KK</option>
-                                        <option value="Luar KK">Luar KK</option>
+                                        <?php
+                                        foreach ($status_pasien as $value) {
+                                            $selected = ($value === $data['status_pasien']) ? "selected" : "";
+                                            echo "<option value='" . $value . "' . " . $selected . ">" . $value . "</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </td>

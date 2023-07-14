@@ -18,6 +18,8 @@ $data = $result->fetch_assoc();
 
 $agama = array("Budha", "Islam", "Hindu", "Katolik", "Konghucu", "Kristen");
 $status_hubungan = array("Kepala Keluarga", "Istri", "Anak 1", "Anak 2", "Anak 3", "Anak 4", "Anak 5", "Anak 6", "Anak 7", "Anak 8", "Anak 9");
+$jenis_kelamin = array("Laki-Laki", "Perempuan");
+$status_pasien = array("Dalam KK", "Luar KK");
 
 include("views/header.php");
 ?>
@@ -41,7 +43,7 @@ include("views/header.php");
                     </div>
                     <div class="col-12">
                         <label for="nama_depan" class="form-label form-label-sm fs-7">Nama Depan <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control form-control-sm fs-7" name="nama_depan" id="nama_depan" value="<?= $data['nama_depan'] ?>" required>
+                        <input type="text" class="form-control form-control-sm fs-7" name="nama_depan" id="nama_depan" value="<?= $data['nama_depan'] ?>" required autocomplete="off">
                     </div>
                     <div class="col-12">
                         <label for="nama_belakang" class="form-label form-label-sm fs-7">Nama Belakang</label>
@@ -62,18 +64,21 @@ include("views/header.php");
                     <div class="col-12">
                         <label for="jenis_kelamin" class="form-label form-label-sm fs-7">Jenis Kelamin <span class="text-danger">*</span></label>
                         <select class="form-select form-select-sm fs-7" name="jenis_kelamin" id="jenis_kelamin" required>
-                            <option value="<?= $data['jenis_kelamin'] ?>" hidden><?= $data['jenis_kelamin'] ?></option>;
-                            <option value='Laki-Laki'>Laki-Laki</option>;
-                            <option value='Perempuan'>Perempuan</option>;
+                            <?php
+                            foreach ($jenis_kelamin as $value_jk) {
+                                $selected_jk = ($value_jk === $data['jenis_kelamin']) ? "selected" : "";
+                                echo "<option value='" . $value_jk . "' . " . $selected_jk . ">" . $value_jk . "</option>";
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="col-12">
                         <label for="agama" class="form-label form-label-sm fs-7">Agama <span class="text-danger">*</span></label>
                         <select class="form-select form-select-sm fs-7" name="agama" id="agama" required>
-                            <option value="<?= $data['agama'] ?>" hidden><?= $data['agama'] ?></option>;
                             <?php
-                            foreach ($agama as $value) {
-                                echo "<option value='" . $value . "'>" . $value . "</option>";
+                            foreach ($agama as $value_agama) {
+                                $selected_agama = ($value_agama === $data['agama']) ? "selected" : "";
+                                echo "<option value='" . $value_agama . "' . " . $selected_agama . ">" . $value_agama . "</option>";
                             }
                             ?>
                         </select>
@@ -86,10 +91,10 @@ include("views/header.php");
                         <label for="status_hubungan" class="form-label form-label-sm fs-7">Status Hubungan <span class="text-danger">*</span></label>
                         <input type="hidden" name="status_hubungan_prev" value="<?= $data['status_hubungan'] ?>">
                         <select class="form-select form-select-sm fs-7" name="status_hubungan" id="status_hubungan" required>
-                            <option value="<?= $data['status_hubungan'] ?>" hidden><?= $data['status_hubungan'] ?></option>;
                             <?php
-                            foreach ($status_hubungan as $value) {
-                                echo "<option value='" . $value . "'>" . $value . "</option>";
+                            foreach ($status_hubungan as $value_sh) {
+                                $selected_sh = ($value_sh === $data['status_hubungan']) ? "selected" : "";
+                                echo "<option value='" . $value_sh . "' . " . $selected_sh . ">" . $value_sh . "</option>";
                             }
                             ?>
                         </select>
@@ -98,9 +103,12 @@ include("views/header.php");
                         <label for="statusPasien" class="form-label form-label-sm fs-7">Status Pasien <span class="text-danger">*</span></label>
                         <input type="hidden" name="status_pasien_prev" value="<?= $data['status_pasien'] ?>">
                         <select class="form-select form-select-sm fs-7" name="status_pasien" id="statusPasien" required>
-                            <option value="<?= $data['status_pasien'] ?>" hidden><?= $data['status_pasien'] ?></option>
-                            <option value="Dalam KK">Dalam KK</option>
-                            <option value="Luar KK">Luar KK</option>
+                            <?php
+                            foreach ($status_pasien as $value_sp) {
+                                $selected_sp = ($value_sp === $data['status_pasien']) ? "selected" : "";
+                                echo "<option value'" . $value_sp . "' . " . $selected_sp . ">" . $value_sp . "</option>";
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>
@@ -108,7 +116,7 @@ include("views/header.php");
                 <div class="d-flex flex-column align-items-start col-lg-3 col-12 gap-3">
                     <h2 class="text-dark-emphasis fs-7 m-0">Data Kontak Anggota Keluarga</h2>
                     <div class="col-12">
-                        <label for="noHp" class="form-label form-label-sm fs-7">No. HP <span class="text-danger">*</span></label>
+                        <label for="noHp" class="form-label form-label-sm fs-7">No. HP</label>
                         <input type="number" class="form-control form-control-sm fs-7" name="no_hp" id="noHp" value="<?= $data['no_hp'] ?>" autocomplete="off">
                     </div>
                     <h2 class="text-dark-emphasis fs-7 mt-2 mb-0">Data Pendukung</h2>

@@ -27,6 +27,11 @@ $sql = "SELECT * FROM informasi INNER JOIN dokter ON informasi.id_dokter = dokte
 $result = $conn->query($sql);
 $data = $result->fetch_assoc();
 
+$result_doctor = get_data("dokter");
+while ($row = $result_doctor->fetch_assoc()) {
+    $doctors[$row['id_dokter']] = $row['nama_dokter'];
+}
+
 include("views/index-header.php");
 ?>
 
@@ -81,11 +86,10 @@ include("views/index-header.php");
                     <div class="col-12 fs-7">
                         <label for="dokter" class="form-label form-label-sm">Dokter</label>
                         <select class="form-select form-select-sm text-dark-emphasis" name="dokter" id="dokter">
-                            <option value="<?= $data['id_dokter'] ?>" selected hidden><?= $data['nama_dokter'] ?></option>
                             <?php
-                            $result_doctor = get_data("dokter");
-                            while ($row = $result_doctor->fetch_assoc()) {
-                                echo "<option value='" . $row['id_dokter'] . "'>" . $row['nama_dokter'] . "</option>";
+                            foreach ($doctors as $key => $value) {
+                                $selected = ($key == $data['id_dokter']) ? "selected" : "";
+                                echo "<option value='" . $key . "' . " . $selected . ">" . $value . "</option>";
                             }
                             ?>
                         </select>

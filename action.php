@@ -46,6 +46,14 @@ if (isset($_POST['login'])) {
     }
 }
 
+if (isset($_SESSION['status_login_pasien'])) {
+    $no_kk = $_SESSION['no_kk'];
+    $sql = "SELECT * FROM pasien WHERE no_kk = '$no_kk' AND status_hubungan = 'Kepala Keluarga'";
+    $result = $conn->query($sql);
+    $data = $result->fetch_assoc();
+    $_SESSION['nama_pasien'] = $data['nama_depan']; //update nama
+}
+
 if (isset($_POST['daftar_akun_pasien'])) {
     $pasien = new Pasien;
     $pasien->set_daftar_data_identitas($_POST['no_kk'], $_POST['nik'], $_POST['nama_depan'], $_POST['nama_belakang'], $_POST['tempat_lahir'], $_POST['tanggal_lahir']);
@@ -74,13 +82,13 @@ if (isset($_POST['daftar_akun_pasien'])) {
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $_SESSION['error_msg'] = "Nomor KK sudah terdaftar! Silakan ke <a href='forgot-account.php' class='text-decoration-none text-white fw-semibold'>halaman lupa akun</a> untuk dikirimkan nomor berobat dan kata sandi";
-        header("Location: account-registration.php?nik=" . $enc_nik);
+        header("Location: account-registration.php?nik=" . urlencode($enc_nik));
     } else {
         $ktp = upload_file($_FILES['ktp']['name'], $_FILES['ktp']['size'], $_FILES['ktp']['tmp_name'], 'assets/patient_data/');
         $kk = upload_file($_FILES['kk']['name'], $_FILES['kk']['size'], $_FILES['kk']['tmp_name'], 'assets/patient_data/');
         if (!$ktp || !$kk) {
             $_SESSION['error_msg'] = "Silakan masukkan gambar dengan ekstensi .jpg, .jpeg, atau .png dengan ukuran kurang dari 3MB";
-            header("Location: account-registration.php?nik=" . $enc_nik);
+            header("Location: account-registration.php?nik=" . urlencode($enc_nik));
         } else {
             $temp_password = substr($tanggal_lahir, 0, 4);
             $sql = "INSERT INTO akun VALUES ('$no_kk', NULL, '$email', '$temp_password', '$alamat', '$rt', '$rw', '$kel_desa', '$kecamatan', '$kk')";
@@ -94,7 +102,7 @@ if (isset($_POST['daftar_akun_pasien'])) {
             } else {
                 $sql = "INSERT INTO pasien VALUES ('$nik', '$no_kk', '$nama_depan', '$nama_belakang', '$tempat_lahir', '$tanggal_lahir', '$jenis_kelamin', '$agama', '$pekerjaan', 'Kepala Keluarga', '$no_hp', '$ktp', 'Dalam KK')";
                 $result_pasien = $conn->query($sql);
-                $sql = "INSERT INTO rekam_medis VALUES (NULL, '$nik', NULL, NULL)";
+                $sql = "INSERT INTO rekam_medis VALUES ('$nik', '$nik', NULL, NULL)";
                 $result = $conn->query($sql);
             }
             if ($result_akun && $result_pasien) {
@@ -106,9 +114,10 @@ if (isset($_POST['daftar_akun_pasien'])) {
                     Salam,<br><br>
                     <b>UPT Puskesmas Alianyang</b><br>
                     Jl. Pangeran Natakusuma, Pontianak Kota";
-                sendMail($email, $nama_lengkap, $title, $content);
-                $_SESSION['success_msg'] = "Pendaftaran berhasil! Silakan cek pesan di email Anda";
-                header("Location: account-registration.php");
+                if (sendMail($email, $nama_lengkap, $title, $content)) {
+                    $_SESSION['success_msg'] = "Pendaftaran berhasil! Silakan cek pesan di email Anda";
+                    header("Location: account-registration.php");
+                }
             }
         }
     }
@@ -262,7 +271,7 @@ if (isset($_POST['edit_domisili'])) {
 
 if (isset($_POST['cek_nik'])) {
     $nik = $_POST['nik_check'];
-    $sql = "SELECT * FROM pasien WHERE nik = '$nik'"; //mencari nik yang tidak sama dengan session login saat ini
+    $sql = "SELECT * FROM pasien WHERE nik = '$nik'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -418,9 +427,19 @@ if (isset($_POST['edit_anggota'])) {
         header("Location: edit-family-member.php?nik=" . urlencode($enc_nik));
     } else {
         if ($status_pasien !== $status_pasien_prev) {
-            $sql = "UPDATE rekam_medis SET no_rekam_medis = '' WHERE nik = '$nik'";
+            $sql = "SELECT COUNT(no_kk) AS total_anggota FROM pasien WHERE no_kk = '$no_kk'";
             $result = $conn->query($sql);
+            $data = $result->fetch_assoc();
+            if ($data['total_anggota'] > 1) {
+                $sql = "UPDATE rekam_medis SET no_rekam_medis = '$nik' WHERE nik = '$nik'";
+                $result = $conn->query($sql);
+            } else {
+                $_SESSION['error_msg'] = "Status pasien tidak dapat diubah karena jumlah anggota keluarga Anda";
+                header("Location: edit-family-member.php?nik=" . urlencode($enc_nik));
+                exit;
+            }
         }
+
         if ($status_hubungan !== $status_hubungan_prev) {
             foreach ($kode_rekmed as $key => $value) {
                 if ($status_hubungan === $key) $set_status_hubungan = $value;

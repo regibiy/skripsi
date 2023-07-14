@@ -1,26 +1,4 @@
 <?php
-date_default_timezone_set("Asia/Jakarta");
-
-//jika ada tanggal berobat sama dengan hari ini dan jam pelayanan sudah 30 menit dan status pendaftaran masih menunggu atau ditunda maka invalid
-$jam = (date('H:i'));
-$jam_sekarang = strtotime($jam);
-
-$hari = date('Y-m-d');
-$hari_ini = date('N', strtotime($hari));
-if ($hari_ini >= 1 && $hari_ini <= 4) {
-    $invalid = "11:30";
-    $jam_invalid = strtotime($invalid);
-} else {
-    $invalid = "09:30";
-    $jam_invalid = strtotime($invalid);
-}
-
-// $sql = "SELECT * FROM pendaftaran WHERE tanggal_berobat = CURRENT_DATE AND (status_pendaftaran = 'Menunggu' OR status_pendaftaran = 'Ditunda')";
-if ($jam_sekarang > $jam_invalid) {
-    $sql = "UPDATE pendaftaran SET status_pendaftaran = 'Invalid' WHERE tanggal_berobat = CURRENT_DATE AND (status_pendaftaran = 'Menunggu' OR status_pendaftaran = 'Ditunda')";
-    $result = $conn->query($sql);
-}
-
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
@@ -32,9 +10,9 @@ function sendMail($emailReceiver, $nameReceiver, $title, $content)
     $emailSender = "puskesmasalianyangpnkkota@gmail.com";
     $senderName = "Puskesmas Alianyang";
     //Load Composer's autoloader
-    $autoload = "vendor\autoload.php";
-    if (file_exists($autoload)) require $autoload;
-    else require '..\vendor\autoload.php';
+    $autoload = "vendor/autoload.php";
+    if (file_exists($autoload)) require 'vendor/autoload.php';
+    else require '../vendor/autoload.php';
 
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
@@ -64,6 +42,28 @@ function sendMail($emailReceiver, $nameReceiver, $title, $content)
     } catch (Exception $e) {
         return false;
     }
+}
+
+date_default_timezone_set("Asia/Jakarta");
+
+//jika ada tanggal berobat sama dengan hari ini dan jam pelayanan sudah 30 menit dan status pendaftaran masih menunggu atau ditunda maka invalid
+$jam = (date('H:i'));
+$jam_sekarang = strtotime($jam);
+
+$hari = date('Y-m-d');
+$hari_ini = date('N', strtotime($hari));
+if ($hari_ini >= 1 && $hari_ini <= 4) {
+    $invalid = "11:30";
+    $jam_invalid = strtotime($invalid);
+} else {
+    $invalid = "09:30";
+    $jam_invalid = strtotime($invalid);
+}
+
+// $sql = "SELECT * FROM pendaftaran WHERE tanggal_berobat = CURRENT_DATE AND (status_pendaftaran = 'Menunggu' OR status_pendaftaran = 'Ditunda')";
+if ($jam_sekarang > $jam_invalid) {
+    $sql = "UPDATE pendaftaran SET status_pendaftaran = 'Invalid' WHERE tanggal_berobat = CURRENT_DATE AND (status_pendaftaran = 'Menunggu' OR status_pendaftaran = 'Ditunda')";
+    $result = $conn->query($sql);
 }
 
 function check_status_login_pasien()

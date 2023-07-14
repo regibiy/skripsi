@@ -130,11 +130,11 @@ include("views/index-header.php");
                         echo "<tr>";
                         echo "<td>";
                         if ($row['no_rekam_medis'] === NULL) echo "Tidak ada";
-                        else echo "<button type='button' class='btn btn-sm btn-outline-secondary fs-7' data-bs-toggle='modal' data-bs-target='#" . $row['no_rekam_medis'] . "'>" . $row['no_rekam_medis'] . "</button>";
+                        else echo "<button type='button' class='btn btn-sm btn-outline-secondary fs-7' data-bs-toggle='modal' data-bs-target='#rm" . $row['no_rekam_medis'] . "'>" . $row['no_rekam_medis'] . "</button>";
                         echo "</td>";
                     ?>
                         <!-- Modal starts-->
-                        <div class="modal fade" id="<?= $row['no_rekam_medis'] ?>" tabindex="-1">
+                        <div class="modal fade" id="rm<?= $row['no_rekam_medis'] ?>" tabindex="-1">
                             <div class="modal-dialog modal-sm modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -173,9 +173,9 @@ include("views/index-header.php");
                         if ($row['no_hp'] === NULL || $row['no_hp'] === "") echo "<td>Tidak ada</td>";
                         else echo "<td>" . $row['no_hp'] . "</td>";
                         ?>
-                        <td class="text-secondary"><button type="button" class="btn btn-sm btn-outline-secondary fs-7" data-bs-toggle="modal" data-bs-target="#<?= $row['nik'] ?>">Lihat KTP</button></td>
+                        <td class="text-secondary"><button type="button" class="btn btn-sm btn-outline-secondary fs-7" data-bs-toggle="modal" data-bs-target="#nik<?= $row['nik'] ?>">Lihat KTP</button></td>
                         <!-- Modal starts-->
-                        <div class="modal fade" id="<?= $row['nik'] ?>" tabindex="-1">
+                        <div class="modal fade" id="nik<?= $row['nik'] ?>" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">

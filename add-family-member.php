@@ -18,6 +18,7 @@ if ($result->num_rows > 0) $data = $result->fetch_assoc();
 
 $agama = array("---", "Budha", "Islam", "Hindu", "Katolik", "Konghucu", "Kristen");
 $status_hubungan = array("---", "Kepala Keluarga", "Istri", "Anak 1", "Anak 2", "Anak 3", "Anak 4", "Anak 5", "Anak 6", "Anak 7", "Anak 8", "Anak 9");
+$jenis_kelamin = array("---", "Laki-Laki", "Perempuan");
 
 include("views/header.php");
 
@@ -80,13 +81,17 @@ include("views/header.php");
                         <select class="form-select form-select-sm fs-7" name="jenis_kelamin" id="jenisKelamin" required>
                             <?php
                             if (isset($data)) {
-                                echo "<option value='" . $data['jenis_kelamin'] . "' hidden>" . $data['jenis_kelamin'] . "</option>";
-                                echo "<option value='Laki-Laki'>Laki-Laki</option>";
-                                echo "<option value='Perempuan'>Perempuan</option>";
+                                foreach ($jenis_kelamin as $value) {
+                                    if ($value !== "---") { //menghindari ---
+                                        $selected = ($value === $data['jenis_kelamin']) ? "selected" : "";
+                                        echo "<option value='" . $value . "' . " . $selected . ">" . $value . "</option>";
+                                    }
+                                }
                             } else {
-                                echo "<option value='---' hidden>Silakan pilih jenis kelamin</option>";
-                                echo "<option value='Laki-Laki'>Laki-Laki</option>";
-                                echo "<option value='Perempuan'>Perempuan</option>";
+                                foreach ($jenis_kelamin  as $value) {
+                                    if ($value === "---") echo "<option value='" . $value . "' hidden>Silakan pilih jenis kelamin</option>";
+                                    else echo "<option value='" . $value . "'> " . $value . "</option>";
+                                }
                             }
                             ?>
                         </select>
@@ -96,15 +101,16 @@ include("views/header.php");
                         <select class="form-select form-select-sm fs-7" name="agama" id="agama" required>
                             <?php
                             if (isset($data)) {
-                                echo "<option value='" . $data['agama'] . "' hidden>" . $data['agama'] . "</option>";
                                 foreach ($agama as $value) {
-                                    if ($value === "---") echo "<option value='" . $value . "' hidden>Silakan pilih agama</option>";
-                                    else echo "<option value='" . $value . "'>" . $value . "</option>";
+                                    if ($value !== "---") { //menghindari ---
+                                        $selected = ($value === $data['agama']) ? "selected" : "";
+                                        echo "<option value='" . $value . "' . " . $selected . ">" . $value . "</option>";
+                                    }
                                 }
                             } else {
                                 foreach ($agama as $value) {
-                                    if ($value === "---") echo "<option value='" . $value . "' hidden>Silakan pilih agama</option>";
-                                    else echo "<option value='" . $value . "'>" . $value . "</option>";
+                                    if ($value === "---") echo "<option value='" . $value . "' hidden>Silakan pilih agama Anda</option>";
+                                    else echo "<option value='" . $value . "'> " . $value . "</option>";
                                 }
                             }
                             ?>

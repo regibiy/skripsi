@@ -24,7 +24,7 @@ include("views/header.php");
                     <?php
                     $no_kk = $_SESSION['no_kk'];
                     $sql = "SELECT * FROM pendaftaran INNER JOIN rekam_medis ON pendaftaran.no_rekam_medis = rekam_medis.no_rekam_medis INNER JOIN pasien ON rekam_medis.nik = pasien.nik
-                        INNER JOIN ruang_poli ON pendaftaran.id_ruang_poli = ruang_poli.id_ruang_poli WHERE pasien.no_kk = '$no_kk' ORDER BY tanggal_daftar DESC, tanggal_berobat DESC, nomor_antrian DESC";
+                            INNER JOIN ruang_poli ON pendaftaran.id_ruang_poli = ruang_poli.id_ruang_poli WHERE pasien.no_kk = '$no_kk' ORDER BY tanggal_daftar DESC, tanggal_berobat DESC, nomor_antrian DESC";
                     $result = $conn->query($sql);
                     while ($row = $result->fetch_assoc()) {
                         $enc_nik = encrypt($row['nik']);
