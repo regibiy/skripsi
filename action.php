@@ -50,8 +50,8 @@ if (isset($_SESSION['status_login_pasien'])) {
     $no_kk = $_SESSION['no_kk'];
     $sql = "SELECT * FROM pasien WHERE no_kk = '$no_kk' AND status_hubungan = 'Kepala Keluarga'";
     $result = $conn->query($sql);
-    $data = $result->fetch_assoc();
-    $_SESSION['nama_pasien'] = $data['nama_depan']; //update nama
+    $data_header = $result->fetch_assoc();
+    $_SESSION['nama_pasien'] = $data_header['nama_depan']; //update nama
 }
 
 if (isset($_POST['daftar_akun_pasien'])) {
@@ -80,11 +80,19 @@ if (isset($_POST['daftar_akun_pasien'])) {
     $sql = "SELECT * FROM akun WHERE no_kk = '$no_kk'";
     $enc_nik = encrypt($nik);
     $result = $conn->query($sql);
+    $prev_ktp = $_POST['prev_ktp'];
     if ($result->num_rows > 0) {
         $_SESSION['error_msg'] = "Nomor KK sudah terdaftar! Silakan ke <a href='forgot-account.php' class='text-decoration-none text-white fw-semibold'>halaman lupa akun</a> untuk dikirimkan nomor berobat dan kata sandi";
         header("Location: account-registration.php?nik=" . urlencode($enc_nik));
     } else {
-        $ktp = upload_file($_FILES['ktp']['name'], $_FILES['ktp']['size'], $_FILES['ktp']['tmp_name'], 'assets/patient_data/');
+
+        if (($prev_ktp === NULL || $prev_ktp === "") && $ktp = $_FILES['ktp']['error'] === 4) $ktp = NULL;
+        elseif (($prev_ktp === NULL || $prev_ktp === "") && $ktp = $_FILES['ktp']['error'] === 0) $ktp = upload_file($_FILES['ktp']['name'], $_FILES['ktp']['size'], $_FILES['ktp']['tmp_name'], 'assets/patient_data/');
+        elseif (($prev_ktp !== NULL || $prev_ktp !== "") && $ktp = $_FILES['ktp']['error'] === 0) {
+            $ktp = upload_file($_FILES['ktp']['name'], $_FILES['ktp']['size'], $_FILES['ktp']['tmp_name'], 'assets/patient_data/');
+            if ($ktp) unlink('assets/patient_data/' . $prev_ktp);
+        } else $ktp = $prev_ktp;
+
         $kk = upload_file($_FILES['kk']['name'], $_FILES['kk']['size'], $_FILES['kk']['tmp_name'], 'assets/patient_data/');
         if (!$ktp || !$kk) {
             $_SESSION['error_msg'] = "Silakan masukkan gambar dengan ekstensi .jpg, .jpeg, atau .png dengan ukuran kurang dari 3MB";
@@ -273,20 +281,15 @@ if (isset($_POST['cek_nik'])) {
     $nik = $_POST['nik_check'];
     $sql = "SELECT * FROM pasien WHERE nik = '$nik'";
     $result = $conn->query($sql);
+    $enc_nik = encrypt($nik);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $status_pasien = $row['status_pasien'];
         if ($status_pasien === "Dalam KK") {
             $_SESSION['error_msg'] = "NIK " . $nik . " terikat dengan KK lain! Silakan ubah status pasien pada akun yang terikat terlebih dahulu";
             header("Location: family-members.php");
-        } else {
-            $enc_nik = encrypt($nik);
-            header("Location: add-family-member.php?nik=" . urlencode($enc_nik));
-        }
-    } else {
-        $enc_nik = encrypt($nik);
-        header("Location: add-family-member.php?nik=" . urlencode($enc_nik));
-    }
+        } else header("Location: add-family-member.php?nik=" . urlencode($enc_nik));
+    } else header("Location: add-family-member.php?nik=" . urlencode($enc_nik));
 }
 
 if (isset($_POST['cek_nik_daftar'])) {

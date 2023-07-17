@@ -203,8 +203,9 @@ $status_hubungan = array("---", "Kepala Keluarga", "Istri", "Anak 1", "Anak 2", 
                     </div>
                     <!-- Modal ends -->
                     <div class="col-12 fs-7">
-                        <label for="ktp" class="form-label form-label-sm text-dark-emphasis">Kartu Tanda Penduduk Kepala Keluarga <span class="text-danger">*</span></label>
-                        <input type="file" class="form-control form-control-sm text-dark-emphasis" name="ktp" id="ktp" required>
+                        <label for="ktp" class="form-label form-label-sm text-dark-emphasis">Kartu Tanda Penduduk Kepala Keluarga <?= !isset($data) ? "<span class='text-danger'>*</span>" : "" ?></label>
+                        <input type="hidden" name="ktp_prev" value="<?= $data['ktp'] ?>">
+                        <input type="file" class="form-control form-control-sm text-dark-emphasis" name="ktp" id="ktp" <?= !isset($data) ? "required" : "" ?>>
                     </div>
                     <div class="col-12 mb-3 fs-7">
                         <label for="kk" class="form-label form-label-sm text-dark-emphasis">Kartu Keluarga <span class="text-danger">*</span></label>

@@ -177,7 +177,7 @@ while ($row = $result->fetch_assoc()) {
         </section>';
     } else {
         $html .= '<tr>
-                    <td colspan="5" class="text-center">Tidak ada pasien yang melakukan pendaftaran ke ruang poli ini</td>
+                    <td colspan="5" class="text-center">Data pendaftaran tidak dapat ditampilkan karena status pendaftaran Invalid atau Dibatalkan</td>
                 </tr>
                 </table>
                 </section>';
