@@ -12,7 +12,7 @@ if (isset($_GET['idInformasi'])) {
     </script>";
 }
 
-$hari = array("1" => "Senin", "2" => "Selasa", "3" => "Rabu", "4" => "Kamis", "5" => "Jumat", "6" => "Sabtu", "7" => "Minggu");
+$hari = array("1" => "Sensin", "2" => "Selasa", "3" => "Rabu", "4" => "Kamis", "5" => "Jumat", "6" => "Sabtu", "7" => "Minggu");
 
 $sql = "SELECT * FROM informasi INNER JOIN petugas ON informasi.username = petugas.username 
         INNER JOIN dokter ON informasi.id_dokter = dokter.id_dokter WHERE id_informasi = '$dec_id_informasi' ORDER BY tanggal_unggah";
