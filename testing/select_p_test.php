@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Contohf Penggunaan Select dan Update Nilai pada Paragraf</title>
+    <title>Contoh Penggunaan Select dan Update Nilai pada Paragraf</title>
 </head>
 
 <body>
