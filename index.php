@@ -79,13 +79,7 @@ if (check_status_login_pasien()) {
             echo "<div class='card shadow-sm'>";
             echo "<div class='card-body'>";
             echo "<h5 class='card-title text-dark-emphasis fs-6'>" . $row['judul'] . "</h5>";
-            $deskripsi = $row['deskripsi'];
-            $kata = str_word_count($deskripsi, 1); //https://www.php.net/manual/en/function.str-word-count.php
-            $kataFiltered = array_filter($kata, function ($kata2) {
-                return $kata2 !== "br";
-            });
-            $rangkai = implode(' ', array_slice($kataFiltered, 0, 20));
-            echo "<p class='card-text text-secondary fs-7'>" . $rangkai . "</p>";
+            echo "<p class='card-text text-secondary fs-7 limit-text'>" . $row['deskripsi'] . "</p>";
             $tanggal = date('N', strtotime($row['tanggal']));
             foreach ($hari as $x => $val) {
                 if ($tanggal == $x) $hari2 = $val;

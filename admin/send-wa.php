@@ -57,7 +57,7 @@ if ($arr_res_validate['status'] === true) {
                 window.location='index-registration.php';
                 </script>";
             }
-        } else if ($arr_res_send['process'] === "sent" || $arr_res_send['process'] === "processing") {
+        } else if ($arr_res_send['process'] === "sent" || $arr_res_send['process'] === "processing" || $arr_res_send['process'] === "pending") {
             $_SESSION['toaster'] = "Pesan berhasil dikirim! Kontrol semua pesan dengan mengunjungi link fonnte.com";
             header("Location: index-registration.php");
         }
